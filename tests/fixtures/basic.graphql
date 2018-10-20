@@ -1,0 +1,131 @@
+schema {
+  query: Query
+  mutation: Mutation
+  subscription: Subscription
+}
+
+type Query {
+  stringField: String!
+  variousScalars: VariousScalars!
+  lists: Lists!
+
+  scalarsInput(arg: VariousScalarsInput!): String!
+  listsInput(arg: ListsInput!): String!
+  recursiveInput(arg: RecursiveInput!): String!
+  nonrecursiveInput(arg: NonrecursiveInput!): String!
+  enumInput(arg: SampleField!): String!
+  argNamedQuery(query: Int!): Int!
+  customScalarField(argOptional: CustomScalar, argRequired: CustomScalar!): CustomScalarObject!
+
+  dogOrHuman: DogOrHuman!
+
+  nestedObject: NestedObject!
+}
+
+type Mutation {
+  mutationWithError: MutationWithErrorResult!
+}
+
+type Subscription {
+  simpleSubscription: DogOrHuman!
+  simpleNullableSubscription: DogOrHuman
+}
+
+type MutationWithErrorResult {
+  value: SampleResult
+  errors: [SampleError!]
+}
+
+type SampleResult {
+  stringField: String!
+}
+
+type SampleError {
+  field: SampleField!
+  message: String!
+}
+
+enum SampleField {
+  FIRST
+  SECOND
+  THIRD
+}
+
+type VariousScalars {
+  nullableString: String
+  string: String!
+  nullableInt: Int
+  int: Int!
+  nullableFloat: Float
+  float: Float!
+  nullableBoolean: Boolean
+  boolean: Boolean!
+  nullableID: ID
+  id: ID!
+}
+
+type Lists {
+  nullableOfNullable: [String]
+  nullableOfNonNullable: [String!]
+  nonNullableOfNullable: [String]!
+  nonNullableOfNonNullable: [String!]!
+}
+
+input VariousScalarsInput {
+  nullableString: String
+  string: String!
+  nullableInt: Int
+  int: Int!
+  nullableFloat: Float
+  float: Float!
+  nullableBoolean: Boolean
+  boolean: Boolean!
+  nullableID: ID
+  id: ID!
+}
+
+input ListsInput {
+  nullableOfNullable: [String]
+  nullableOfNonNullable: [String!]
+  nonNullableOfNullable: [String]!
+  nonNullableOfNonNullable: [String!]!
+}
+
+input NonrecursiveInput {
+  field: String
+  enum: SampleField
+}
+
+input RecursiveInput {
+  otherField: String
+  inner: RecursiveInput
+  enum: SampleField
+}
+
+type Dog {
+  name: String!
+  barkVolume: Float!
+}
+
+type Human {
+  name: String!
+}
+
+union DogOrHuman = Dog | Human
+
+type NestedObject {
+  inner: NestedObject
+
+  field: String!
+}
+
+type WithArgField {
+  argField(arg1: String, arg2: Int): NestedObject
+}
+
+scalar CustomScalar
+
+type CustomScalarObject {
+  nullable: CustomScalar
+  nonNullable: CustomScalar!
+}

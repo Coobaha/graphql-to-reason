@@ -1,0 +1,35 @@
+{
+  "name": "graphql-to-reason-test",
+  "sources": [
+    {
+      "dir": "output",
+      "generators": [
+        {"name": "graphql", "edge": ["basic.re", ":", "../fixtures/basic.graphql"]},
+        {"name": "graphql", "edge": ["directives.re", ":", "../fixtures/directives.graphql"]},
+        {"name": "graphql", "edge": ["scalar.re", ":", "../fixtures/scalar.graphql"]},
+        {"name": "graphql", "edge": ["user.re", ":", "../fixtures/user.graphql"]},
+        {"name": "graphql", "edge": ["github.re", ":", "../fixtures/github.graphql"]},
+        {"name": "graphql", "edge": ["swapi.re", ":", "../fixtures/swapi.graphql"]},
+        {"name": "graphql", "edge": ["sketchsh.re", ":", "../fixtures/sketchsh.graphql"]},
+        {"name": "graphql", "edge": ["extend.re", ":", "../fixtures/extend.graphql"]}
+      ]
+    }
+  ],
+  "generators": [
+    {
+      "name": "graphql",
+      "command": "npx gqlschema -i $in -o $in.json  && ../../../_build/default/graphql_to_reason.exe $in.json $out"
+    }
+  ],
+  "package-specs": [
+    {
+      "module": "es6",
+      "in-source": true
+    }
+  ],
+  "suffix": ".bs.js",
+  "bs-dependencies": [],
+  "refmt": 3,
+  "namespace": true,
+  "bsc-flags": ["-bs-super-errors"]
+}

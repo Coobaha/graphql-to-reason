@@ -1,0 +1,8 @@
+scalar JSON
+
+scalar DateTime
+
+type Query {
+    json: JSON!
+    dateTime: DateTime!
+}

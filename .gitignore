@@ -1,0 +1,12 @@
+.merlin
+node_modules
+_build
+_release
+_esy
+*.log
+*.byte
+*.native
+*.install
+tests/fixtures/*.graphql.json
+tests/lib
+tests/output/*.bs.js

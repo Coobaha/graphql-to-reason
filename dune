@@ -1,0 +1,7 @@
+(executable
+  (name graphql_to_reason)
+  (public_name graphql_to_reason.exe)
+;_  (flags (:include ./discover/dune.flags))
+  (libraries lib reason)
+  (preprocess (pps ppx_let)))
+

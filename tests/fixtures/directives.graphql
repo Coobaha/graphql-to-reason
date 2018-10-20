@@ -1,0 +1,8 @@
+directive @isAuthenticated on QUERY | FIELD
+directive @hasScope(scope: [String]) on QUERY | FIELD
+directive @upper on FIELD_DEFINITION
+directive @concat(value: String!) on FIELD_DEFINITION
+
+type Query {
+    foo: String @concat(value: "@gmail.com") @upper
+}

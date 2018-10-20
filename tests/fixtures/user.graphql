@@ -1,0 +1,44 @@
+enum UserTypes {
+    SuperUser
+    Administrator
+    Customer
+}
+
+enum Gender {
+    Male
+    Female
+    NonBinary
+}
+
+input Wrapper {
+    foo: String
+}
+
+input GenderInput {
+    check: Boolean!
+    another: ID
+    listOfStrings: [String]!
+    nullableListOfStrings: [String]
+    wrapper: Wrapper!
+    gender: Gender
+}
+
+interface UserLike {
+    name: String!
+}
+
+type User implements UserLike {
+    name: String!
+    email: String!
+    gender: Gender
+    listNullable: [String]
+    list: [String]!
+    getGender(
+        check: GenderInput
+    ): Gender!
+    self(check: Boolean!): User!
+}
+
+type Query {
+    user: User
+}
