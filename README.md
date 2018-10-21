@@ -1,9 +1,9 @@
 # graphql-to-reason
 
+This tool will transform existing GraphQL schema to ReasonML types to be used on server side.
+
 [![Build Status](https://travis-ci.org/Coobaha/graphql-to-reason.svg?branch=master)](https://travis-ci.org/Coobaha/graphql-to-reason)
 ![npm](https://img.shields.io/npm/v/graphql-to-reason.svg)
-
-This tool will transform existing GraphQL schema to ReasonML types to be used on server side.
 
 ## Usage
 
