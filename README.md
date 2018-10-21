@@ -5,7 +5,7 @@ This tool will transform existing GraphQL schema to ReasonML types to be used on
 [![Build Status](https://travis-ci.org/Coobaha/graphql-to-reason.svg?branch=master)](https://travis-ci.org/Coobaha/graphql-to-reason)
 ![npm](https://img.shields.io/npm/v/graphql-to-reason.svg)
 
-## Usage
+## Installation
 
 First, add this package as a dependency to your package.json:
 ```
@@ -14,12 +14,43 @@ yarn add --dev graphql_ppx
 npm install --saveDev graphql_ppx
 ```
 
-`graphql-to-reason` requires json variant (aka introspection query) of `schema.graphql`.
+Integration with Bucklescript can be done via [generators](https://bucklescript.github.io/docs/en/build-advanced#customize-rules-generators-support)
 
-`schema.json` can be generated with [graphql-tools](https://github.com/apollographql/graphql-tools) and `npx gqlschema -i schema.graphql -o schema.json`).
+```
+{
+  "generators": [
+    {
+      "name": "introspect-and-generate-schematypes", // requires graphql-tools
+      "command":
+        "npx gqlschema -i $in -o $in.json  && npx graphql-to-reason $in.json $out"
+    },
+    {
+      "name": "generate-schematypes",
+      "command":
+        "npx graphql-to-reason $in $out"
+    }
+  ],
+  "sources": [
+    {
+      "dir": "src",
+      "generators": [
+        {
+          "name": "introspect-and-generate-schematypes",
+          "edge": ["SchemaTypes_builder.re", ":", "schema.graphql"]
+        },
+        {
+          "name": "generate-schematypes",
+          "edge": [ "SchemaTypes_builder.re", ":", "schema.json"]
+        }
+      ]
+    }
+  ]
+}
+```
 
+### Usage Example 
 
-Our simple graphql schema
+Simple `schema.graphql`
 
 ```graphql
 scalar Click
@@ -32,6 +63,10 @@ type Mutation {
     click(payload: String!): Click!
 }
 ```
+
+`graphql-to-reason` requires json variant (aka introspection query) of `schema.graphql`.
+
+`schema.json` can be generated with [graphql-tools](https://github.com/apollographql/graphql-tools) and `npx gqlschema -i schema.graphql -o schema.json`).
 
 Next we generate ReasonML code from it:
 `npx graphql-to-reason schema.json SchemaTypes_builder.re`
@@ -86,38 +121,4 @@ let mutationResolvers =
   );
 ```
 
-### Bucklescript integration
 
-Example setup done via [Bucklescript generators](https://bucklescript.github.io/docs/en/build-advanced#customize-rules-generators-support)
-
-```
-{
-  "generators": [
-    {
-      "name": "introspect-and-generate-schematypes", // requires graphql-tools
-      "command":
-        "npx gqlschema -i $in -o $in.json  && npx graphql-to-reason $in.json $out"
-    },
-    {
-      "name": "generate-schematypes",
-      "command":
-        "npx graphql-to-reason $in $out"
-    }
-  ],
-  "sources": [
-    {
-      "dir": "src",
-      "generators": [
-        {
-          "name": "introspect-and-generate-schematypes",
-          "edge": ["SchemaTypes_builder.re", ":", "schema.graphql"]
-        },
-        {
-          "name": "generate-schematypes",
-          "edge": [ "SchemaTypes_builder.re", ":", "schema.json"]
-        }
-      ]
-    }
-  ]
-}
-```
