@@ -86,17 +86,15 @@ Example setup done via [Bucklescript generators](https://bucklescript.github.io/
 ```
 {
   "generators": [
-    // requires graphql-tools
     {
-      "name": "introspect-and-generate-schematypes",
+      "name": "introspect-and-generate-schematypes", // requires graphql-tools
       "command":
-        "npx gqlschema -i $in -o $in.json  && ../../../_build/default/graphql_to_reason.exe $in.json $out"
+        "npx gqlschema -i $in -o $in.json  && npx graphql_to_reason $in.json $out"
     },
-    // or without introspection step
     {
       "name": "generate-schematypes",
       "command":
-        "npx gqlschema -i $in -o $in.json  && ../../../_build/default/graphql_to_reason.exe $in.json $out"
+        "npx graphql_to_reason $in $out"
     }
   ],
   "sources": [
@@ -105,24 +103,11 @@ Example setup done via [Bucklescript generators](https://bucklescript.github.io/
       "generators": [
         {
           "name": "introspect-and-generate-schematypes",
-          "edge": [
-            // generated files are before ':'
-            "SchemaTypes_builder.re",
-            ":",
-            // input file to watch
-            "../fixtures/schema.graphql"
-          ]
+          "edge": ["SchemaTypes_builder.re", ":", "schema.graphql"]
         },
-        // or without introspection step
         {
           "name": "generate-schematypes",
-          "edge": [
-            // generated files are before ':'
-            "SchemaTypes_builder.re",
-            ":",
-            // input file to watch
-            "../fixtures/introspection_schema.json"
-          ]
+          "edge": [ "SchemaTypes_builder.re", ":", "schema.json"]
         }
       ]
     }
