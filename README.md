@@ -7,13 +7,12 @@ This tool will transform existing GraphQL schema to ReasonML types to be used on
 
 ## Usage
 
-`graphql-to-reason` requires you to have json variant of `schema.graphql` (To generate it you can use `graphql-tools` `npx gqlschema -i schema.graphql -o schema.json`).
+`graphql-to-reason` requires json variant of `schema.graphql` aka introspection query
 
-To generate reason file
-`./graphql_to_reason.exe graphql_schema.json SchemaTypes_builder.re`
+`schema.json` can be generated with [graphql-tools](https://github.com/apollographql/graphql-tools) and `npx gqlschema -i schema.graphql -o schema.json`).
 
 
-Usage example:
+Our simple graphql schema
 
 ```graphql
 scalar Click
@@ -27,6 +26,10 @@ type Mutation {
 }
 ```
 
+Next we generate ReasonML code from it:
+`npx graphql-to-reason schema.json SchemaTypes_builder.re`
+
+It will output `SchemaTypes_builder.re` which we can use in another modules:
 ```reasonml
 include SchemaTypes_builder.MakeSchema({
   /*
