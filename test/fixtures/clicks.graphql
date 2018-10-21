@@ -1,0 +1,9 @@
+scalar Click
+
+type Query {
+    clicks: Click!
+}
+
+type Mutation {
+    click(payload: String!): Click!
+}

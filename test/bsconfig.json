@@ -5,6 +5,7 @@
       "dir": "output",
       "generators": [
         {"name": "graphql", "edge": ["basic.re", ":", "../fixtures/basic.graphql"]},
+        {"name": "graphql", "edge": ["clicks.re", ":", "../fixtures/clicks.graphql"]},
         {"name": "graphql", "edge": ["directives.re", ":", "../fixtures/directives.graphql"]},
         {"name": "graphql", "edge": ["scalar.re", ":", "../fixtures/scalar.graphql"]},
         {"name": "graphql", "edge": ["user.re", ":", "../fixtures/user.graphql"]},

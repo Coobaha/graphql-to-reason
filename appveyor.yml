@@ -1,22 +1,26 @@
 platform:
     - x64
+    - x86
+
+environment:
+    NODE_ENV: production
 
 cache:
     - C:\Users\appveyor\.esy
-
-# Workaround for esy/esy#388
-environment:
-    HOME: C:\Users\appveyor
+    - C:\Users\appveyor\.npm
+    - node_modules
+    - test/node_moduels
 
 install:
-    # The x64 is required as a workaround for esy/esy#412
-    - ps: Install-Product node 8 x64
-    - npm install -g esy@0.2.11
+    - ps: Install-Product node 10
+    - npm install --global esy@latest
+    - esy install
     # Retry is necessary due to esy/esy#413 and esy/esy#414
     - appveyor-retry esy install
+    - cd test && yarn install && cd ..
 
 build_script:
     - esy build
-    - _build\default\bin\Hello.exe
 
-test: off
+test_script:
+    - esy test

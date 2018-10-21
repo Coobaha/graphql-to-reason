@@ -1,7 +1,7 @@
 
 install:
 	esy install
-	cd tests && yarn
+	cd test && yarn
 
 build:
 	esy build
@@ -11,11 +11,11 @@ ci:
 
 test:
 	esy build
-	cd tests && yarn build
+	cd test && yarn build
 
 clean:
 	esy dune clean
-	rm -rf _build _esy tests/lib
+	rm -rf _build _esy test/lib
 
 watch:
 	nodemon -e re -q -w ./lib/ -w graphql_to_reason.re --exec 'esy build'

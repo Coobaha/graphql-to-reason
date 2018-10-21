@@ -22,6 +22,7 @@ let uncap = String.uncapitalize_ascii;
 let uncap_key =
   fun
   | "ID" => "id"
+  | "JSON" => "json"
   | s => uncap(s);
 
 let closed_js_t = fields =>

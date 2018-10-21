@@ -1,13 +1,69 @@
 language: node_js
+
 node_js:
-- 8
+  - 10
+
 os:
-- linux
-- osx
+  - linux
+  - osx
+
+env:
+  - NODE_ENV=production
+
+before_install:
+  - npm install --global esy@latest
+  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then export TARGET_NAME=darwin-x64; fi
+  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then export TARGET_NAME=linux-x64; fi
+
+cache:
+  timeout: 360
+  yarn: true
+  directories:
+    - "$HOME/.esy/"
+    - node_modules/
+    - test/node_modules/
+
 install:
-- npm install --global esy@latest
-- esy install
+  - esy install
+  - cd test && yarn install && cd ..
+
 script:
-- esy build
-- esy ./_build/default/bin/bin.exe
-- esy x bin.exe
+  - esy build
+  - esy test
+  - mv _build/default/graphql_to_reason.exe graphql-to-reason-$TARGET_NAME.exe
+
+deploy:
+  provider: releases
+  skip_cleanup: true
+  file_glob: true
+  api_key:
+    secure: cjaJIPmR88ie5s0JHiv1GUxU9J8M0R6BHmzpr3tGS2jjVQlsu6OIJDaF2vmavvuBqxgEBbxqSQC/cUN9rLHEht49lv1xW9bFFn2uO6OO1v06uF+8AqL4kN1wZnmaITV1mkpnGqLaDzjEoBrjAgaCay37/UOm9cScVS/XUgkfgcNKLOOCbOMA+uKLSfRpN5x5YvzETXeqdaPqvocKi8kznFDgS4CX7NFNWdX132nL018MmojwpLMdUyDMDDosnydmrP1dLAQWXdduPPM38hcK9tRvJU1vlRihTKqc9Mg/ONLoGaCG1DE225SgDrSccV4iClaTvgqQEN3twYSQL0N+tHi/1FYiIjnf44PZWTh2hpoDqqytrhXoMZXvFoVt5EDJVFxijXecoweI7bfupB49P/nFqRbLBAP8Ko9jTSxpFVOw4cli51V9HwRIorq8r1oT/woBuHZ9e5VVMQ+a9Dz92EGxHsuO6Iy1CCmIahTYMP9orgg5zeCL0VXZsr1/R4l4DyoPMmPCafMuv2h5lkc4XmuWxybrSG8gzudVZdvb1O5+hw/7WjB8a/F6kW0DtEG65KNvyF4lzuwmBlk5PnFbuWManKxz0b/MoH45IHxIf24Qpy+4xiA66F9skGkrDx7itzvWyzTUGijD7nVSBPYh9qJXDy1TafcDS57x57oKhoY=
+  file: graphql-to-reason-*.exe
+  on:
+    tags: true
+    repo: Coobaha/graphql-to-reason
+
+
+jobs:
+  include:
+    - stage: Deploy to npm
+      addons:
+        apt:
+          sources: []
+          packages: []
+      before_install: skip
+      yarn: false
+      cache: false
+      install: skip
+      before_script: skip
+      script:
+        - bash -e ci/download_binaries.sh
+      deploy:
+        skip_cleanup: true
+        provider: npm
+        email: coobaha@gmail.com
+        api_key:
+          secure: flmqg6YExB6i5UtWUn0oG/04BHg/dm7tV72v9VTTL+L6N9Tdci1zDVelDlAKXJ+76Vn6Hv/bf6Ipr+MEBIBBrE5OhihbbJVLii6+hcvMKXiXF1D+2T4Gt/mfHeS/OVEsmYjVlJ7vMc27h7VQKZbJDHQlF8KDOOvfDI3ofCN7lc0rfMD0Cxb9pGgjn0FH7VHmp7cG1Sbsinc5G9vMxSRQLGQC3x0oMoAwiaa98G6Ous76Gk4IudOd8VbxJxsxz6L3hUoRB2wfSbipKAUdALTSn5yjyARpZZDkUOcw+EKx7vtbUHvM3FkuJYw2wklFw2oXITN53Q8GUZAn6px34aRfmZ3df1tBxDT4cVC8wb5p/mOi8lV3bIqj4RAxYtMF+Z+wfqN5GtXsWRNpt7B20F2mOQSgG2764h22lAlmgsT1NVqWz2y3anW0vjM+kFWYB8MMr3P8Vx3iq3HBR64NhGsGx2phBHbulq3MAScjdE18GBU5AdG4gnxEsg81MbUSm+ivalGquidpNe13NMVG4xK1a0kvjONYebF5/PtkzKKB5dN9vDrEbI65zbdQ5pLfAjsHh/k9JVDcsUnI/aWxAPGMkoRsD1RRQi2phCAjtc+QjaXrsUJsTXRbCpkhfCFWTDltawDZsVYhGOgI1bKebfpWu2sFAyBfTa9j95KqaR9umDo=
+        on:
+          tags: true
+          repo: Coobaha/graphql-to-reason

@@ -1,5 +1,4 @@
 (library
   (name lib)
-;_  (flags (:include ../discover/dune.flags))
   (libraries core ppxlib yojson)
   (preprocess (pps ppx_tools_versioned.metaquot_404)))

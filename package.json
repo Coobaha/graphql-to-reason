@@ -1,33 +1,15 @@
 {
   "name": "graphql-to-reason",
-  "version": "0.1.0",
-  "description": "Converts graphql schema to reason types",
+  "version": "0.0.1",
+  "description": "Converts Graphql schema to ReasonML types",
+  "repository": "https://github.com/Coobaha/graphql-to-reason",
+  "bugs": "https://github.com/Coobaha/graphql-to-reason/issues",
+  "author": "Alexander Ryzhikov <coobaha@gmail.com>",
   "license": "MIT",
+  "bin": {
+    "graphql-to-reason": "./bin.js"
+  },
   "scripts": {
-    "watch":
-      "nodemon -e re -q -w ./lib/ -w ./graphql-to-reason.re --exec 'esy build'"
-  },
-  "esy": {
-    "build": "refmterr dune build -p #{self.name}",
-    "buildsInSource": "_build"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "cd .. && make test",
-      "pre-push": "cd .. && make test"
-    }
-  },
-  "dependencies": {
-    "@esy-ocaml/reason": "3.3.3",
-    "@opam/core": "v0.11.3",
-    "@opam/dune": "*",
-    "@opam/ocaml-migrate-parsetree": "*",
-    "@opam/ppx_tools": "5.1+4.06.0",
-    "@opam/ppx_tools_versioned": "*",
-    "@opam/yojson": "*",
-    "ocaml": "~4.6.0",
-    "refmterr": "*"
-  },
-  "resolutions": { "@opam/menhir": "20171013" },
-  "devDependencies": { "@esy-ocaml/merlin": "*" }
+    "postinstall": "node postinstall.js"
+  }
 }

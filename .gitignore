@@ -7,6 +7,6 @@ _esy
 *.byte
 *.native
 *.install
-tests/fixtures/*.graphql.json
-tests/lib
-tests/output/*.bs.js
+test/fixtures/*.graphql.json
+test/lib
+test/output/*.bs.js

@@ -1,6 +1,6 @@
 module type SchemaConfig = {
   module Scalars: {
-    type jSON;
+    type json;
     type dateTime;
   };
   type resolver('payload, 'fieldType, 'result);
@@ -14,7 +14,7 @@ module MakeSchema = (Config: SchemaConfig) => {
   type query = {
     .
     "__typename": string,
-    "json": jSON,
+    "json": json,
     "dateTime": dateTime,
   };
   module Queries = {
@@ -23,7 +23,7 @@ module MakeSchema = (Config: SchemaConfig) => {
       [@bs.optional]
       __typename: resolver(unit, string, string),
       [@bs.optional]
-      json: resolver(unit, jSON, jSON),
+      json: resolver(unit, json, json),
       [@bs.optional]
       dateTime: resolver(unit, dateTime, dateTime),
     };
