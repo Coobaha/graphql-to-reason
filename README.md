@@ -7,7 +7,14 @@ This tool will transform existing GraphQL schema to ReasonML types to be used on
 
 ## Usage
 
-`graphql-to-reason` requires json variant of `schema.graphql` aka introspection query
+First, add this package as a dependency to your package.json:
+```
+yarn add --dev graphql_ppx
+# or, if you use npm:
+npm install --saveDev graphql_ppx
+```
+
+`graphql-to-reason` requires json variant (aka introspection query) of `schema.graphql`.
 
 `schema.json` can be generated with [graphql-tools](https://github.com/apollographql/graphql-tools) and `npx gqlschema -i schema.graphql -o schema.json`).
 
@@ -89,12 +96,12 @@ Example setup done via [Bucklescript generators](https://bucklescript.github.io/
     {
       "name": "introspect-and-generate-schematypes", // requires graphql-tools
       "command":
-        "npx gqlschema -i $in -o $in.json  && npx graphql_to_reason $in.json $out"
+        "npx gqlschema -i $in -o $in.json  && npx graphql-to-reason $in.json $out"
     },
     {
       "name": "generate-schematypes",
       "command":
-        "npx graphql_to_reason $in $out"
+        "npx graphql-to-reason $in $out"
     }
   ],
   "sources": [
