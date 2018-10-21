@@ -80,7 +80,7 @@ let mutationResolvers =
 
 Example setup done via [Bucklescript generators](https://bucklescript.github.io/docs/en/build-advanced#customize-rules-generators-support)
 
-```json
+```
 {
   "generators": [
     // requires graphql-tools
