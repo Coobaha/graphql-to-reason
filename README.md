@@ -29,7 +29,7 @@ type Mutation {
 Next we generate ReasonML code from it:
 `npx graphql-to-reason schema.json SchemaTypes_builder.re`
 
-It will output `SchemaTypes_builder.re` which we can use in another modules:
+It will output `SchemaTypes_builder.re` to use it in other modules:
 ```reasonml
 include SchemaTypes_builder.MakeSchema({
   /*
