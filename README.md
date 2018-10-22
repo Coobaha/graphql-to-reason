@@ -16,7 +16,7 @@ npm install --saveDev graphql_ppx
 
 `graphql-to-reason` requires json variant (aka introspection query) of `schema.graphql`.
 
-`schema.json` can be generated with [graphql-tools](https://github.com/apollographql/graphql-tools) and `npx gqlschema -i schema.graphql -o schema.json`).
+`schema.json` can be generated with [graphql-tools](https://github.com/apollographql/graphql-tools) and `npx gqlschema -i schema.graphql -o schema.json`.
 
 Integration with Bucklescript can be done via [generators](https://bucklescript.github.io/docs/en/build-advanced#customize-rules-generators-support)
 
