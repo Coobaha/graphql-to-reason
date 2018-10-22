@@ -63,7 +63,6 @@ jobs:
         provider: npm
         email: coobaha@gmail.com
         api_key:
-          secure: flmqg6YExB6i5UtWUn0oG/04BHg/dm7tV72v9VTTL+L6N9Tdci1zDVelDlAKXJ+76Vn6Hv/bf6Ipr+MEBIBBrE5OhihbbJVLii6+hcvMKXiXF1D+2T4Gt/mfHeS/OVEsmYjVlJ7vMc27h7VQKZbJDHQlF8KDOOvfDI3ofCN7lc0rfMD0Cxb9pGgjn0FH7VHmp7cG1Sbsinc5G9vMxSRQLGQC3x0oMoAwiaa98G6Ous76Gk4IudOd8VbxJxsxz6L3hUoRB2wfSbipKAUdALTSn5yjyARpZZDkUOcw+EKx7vtbUHvM3FkuJYw2wklFw2oXITN53Q8GUZAn6px34aRfmZ3df1tBxDT4cVC8wb5p/mOi8lV3bIqj4RAxYtMF+Z+wfqN5GtXsWRNpt7B20F2mOQSgG2764h22lAlmgsT1NVqWz2y3anW0vjM+kFWYB8MMr3P8Vx3iq3HBR64NhGsGx2phBHbulq3MAScjdE18GBU5AdG4gnxEsg81MbUSm+ivalGquidpNe13NMVG4xK1a0kvjONYebF5/PtkzKKB5dN9vDrEbI65zbdQ5pLfAjsHh/k9JVDcsUnI/aWxAPGMkoRsD1RRQi2phCAjtc+QjaXrsUJsTXRbCpkhfCFWTDltawDZsVYhGOgI1bKebfpWu2sFAyBfTa9j95KqaR9umDo=
+          secure: WGYV5ngWAFr2dSf31wji6pbLBk+VuG1WDE9XLt/hoc5/JSNKD4pBPLKviKthRvqjYW1mFrFJ/ss0wkUuMM93qDLaJe+RQhWxplyiqgRp36VxlRvhjzyH02j92xzFSGp5ZyHnaWZnF+4qGEOepuDM8jLXwCGxhlOKZ2EM4WjNhJ/RVB7c9qAVeTVHTrjgJlzHH+NS2bto8iTARKh8E0nsfJZywB6wIcB315GJsXbYl6G9FDc5heU7CZPtnQbtSfNxC/msA199sHGz71fbIJzEKYS+yxl0TiXinFdJtsQDXpoku76r3lhwek0Ja81jJkqcwbHuIGFICnN+GwTgCLv4y7NTu8aqOWqp7Lia/fcSKKtGf8ZAT02pqs8l/WnfDPiTuYZNqJM3XDrml5SVxzb+Ba/JBTthweJjip9d1LgR+pKB1n9DGWPXvUTjCErxg9JtR5ogPtjuEDj5LkmIX2BrwVWpdxJuqCvDYVSa66Thx4wMUF+p2Ac6AIb3Z8zqgLGfliqQgWppnNf2uud33wUyJS+ilARjIo+bbFDHvYafh3Mqr3AVlza2mrpufcH5H7yRRfL0u099/eZh4uR6s+k6SkkdkbS6k7Hf8+QIhrcAUDu1Xiyr6oVENdMBxgVbwhdQFZd9cuZlwxCEZioDvJrWreEqyXDJCPr/1XnBRlNEam0=
         on:
-          tags: true
           repo: Coobaha/graphql-to-reason
