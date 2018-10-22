@@ -14,20 +14,19 @@ yarn add --dev graphql_ppx
 npm install --saveDev graphql_ppx
 ```
 
+`graphql-to-reason` requires json variant (aka introspection query) of `schema.graphql`.
+
+`schema.json` can be generated with [graphql-tools](https://github.com/apollographql/graphql-tools) and `npx gqlschema -i schema.graphql -o schema.json`).
+
 Integration with Bucklescript can be done via [generators](https://bucklescript.github.io/docs/en/build-advanced#customize-rules-generators-support)
 
+a) With already introspected schema
 ```
 {
   "generators": [
     {
-      "name": "introspect-and-generate-schematypes", // requires graphql-tools
-      "command":
-        "npx gqlschema -i $in -o $in.json  && npx graphql-to-reason $in.json $out"
-    },
-    {
       "name": "generate-schematypes",
-      "command":
-        "npx graphql-to-reason $in $out"
+      "command": "npx graphql-to-reason $in $out"
     }
   ],
   "sources": [
@@ -35,12 +34,32 @@ Integration with Bucklescript can be done via [generators](https://bucklescript.
       "dir": "src",
       "generators": [
         {
-          "name": "introspect-and-generate-schematypes",
-          "edge": ["SchemaTypes_builder.re", ":", "schema.graphql"]
-        },
-        {
           "name": "generate-schematypes",
           "edge": [ "SchemaTypes_builder.re", ":", "schema.json"]
+        }
+      ]
+    }
+  ]
+}
+```
+
+b) From `.graphql` (requires `graphql-tools`)
+
+```
+{
+  "generators": [
+    {
+      "name": "generate-schematypes",
+      "command": "npx gqlschema -i $in -o $in.json  && npx graphql-to-reason $in.json $out"
+    },
+  ],
+  "sources": [
+    {
+      "dir": "src",
+      "generators": [
+        {
+          "name": "generate-schematypes",
+          "edge": ["SchemaTypes_builder.re", ":", "schema.graphql"]
         }
       ]
     }
@@ -63,10 +82,6 @@ type Mutation {
     click(payload: String!): Click!
 }
 ```
-
-`graphql-to-reason` requires json variant (aka introspection query) of `schema.graphql`.
-
-`schema.json` can be generated with [graphql-tools](https://github.com/apollographql/graphql-tools) and `npx gqlschema -i schema.graphql -o schema.json`).
 
 Next we generate ReasonML code from it:
 `npx graphql-to-reason schema.json SchemaTypes_builder.re`
