@@ -43,7 +43,6 @@ deploy:
     tags: true
     repo: Coobaha/graphql-to-reason
 
-
 jobs:
   include:
     - stage: Deploy to npm
