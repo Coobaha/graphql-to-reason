@@ -65,4 +65,5 @@ jobs:
         api_key:
           secure: WGYV5ngWAFr2dSf31wji6pbLBk+VuG1WDE9XLt/hoc5/JSNKD4pBPLKviKthRvqjYW1mFrFJ/ss0wkUuMM93qDLaJe+RQhWxplyiqgRp36VxlRvhjzyH02j92xzFSGp5ZyHnaWZnF+4qGEOepuDM8jLXwCGxhlOKZ2EM4WjNhJ/RVB7c9qAVeTVHTrjgJlzHH+NS2bto8iTARKh8E0nsfJZywB6wIcB315GJsXbYl6G9FDc5heU7CZPtnQbtSfNxC/msA199sHGz71fbIJzEKYS+yxl0TiXinFdJtsQDXpoku76r3lhwek0Ja81jJkqcwbHuIGFICnN+GwTgCLv4y7NTu8aqOWqp7Lia/fcSKKtGf8ZAT02pqs8l/WnfDPiTuYZNqJM3XDrml5SVxzb+Ba/JBTthweJjip9d1LgR+pKB1n9DGWPXvUTjCErxg9JtR5ogPtjuEDj5LkmIX2BrwVWpdxJuqCvDYVSa66Thx4wMUF+p2Ac6AIb3Z8zqgLGfliqQgWppnNf2uud33wUyJS+ilARjIo+bbFDHvYafh3Mqr3AVlza2mrpufcH5H7yRRfL0u099/eZh4uR6s+k6SkkdkbS6k7Hf8+QIhrcAUDu1Xiyr6oVENdMBxgVbwhdQFZd9cuZlwxCEZioDvJrWreEqyXDJCPr/1XnBRlNEam0=
         on:
+          tags: true
           repo: Coobaha/graphql-to-reason
