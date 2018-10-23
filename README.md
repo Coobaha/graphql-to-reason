@@ -9,9 +9,9 @@ This tool will transform existing GraphQL schema to ReasonML types to be used on
 
 First, add this package as a dependency to your package.json:
 ```
-yarn add --dev graphql_ppx
+yarn add --dev graphql-to-reason
 # or, if you use npm:
-npm install --saveDev graphql_ppx
+npm install --saveDev graphql-to-reason
 ```
 
 `graphql-to-reason` requires json variant (aka introspection query) of `schema.graphql`.
