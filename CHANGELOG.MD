@@ -8,7 +8,13 @@
 > - :house:      [Internal]
 > - :nail_care:  [Polish]
 
+
+## 0.2.2 - 2018-10-23
+
+- :bug: Fix cli params ([98eb89cb](https://github.com/Coobaha/graphql-to-reason/commit/98eb89cb))
+
 ## 0.2.1 - 2018-10-23
+
 - :bug: [#3](https://github.com/Coobaha/graphql-to-reason/issues/3) Fix nullable list type
 
 ## 0.2.0 - 2018-10-23
