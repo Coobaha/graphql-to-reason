@@ -33,11 +33,8 @@ if (!supported) {
   console.error("please open an issue at our repository, linked above. Please");
   console.error("specify that you are on the " + platform + " platform,");
   console.error("on the " + arch + " architecture.");
-
-  if (!process.env.SKIP_GRAPHQL_TO_REASON_BINARIES) {
-    process.exit(1);
-  }
 }
+
 var delegate_args = process.argv.slice(2);
 
 try {
