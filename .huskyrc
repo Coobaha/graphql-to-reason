@@ -1,0 +1,6 @@
+{
+  "hooks": {
+    "pre-commit": "cd .. && make test",
+    "pre-push": "cd .. && make test"
+  }
+}

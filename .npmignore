@@ -30,3 +30,5 @@ dune
 
 yarn.lock
 dune-project
+
+.huskyrc

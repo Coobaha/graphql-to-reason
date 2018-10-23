@@ -12,12 +12,6 @@
     "build": "refmterr dune build -p #{self.name}",
     "buildsInSource": "_build"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "cd .. && make test",
-      "pre-push": "cd .. && make test"
-    }
-  },
   "dependencies": {
     "@esy-ocaml/reason": "3.3.3",
     "@opam/core": "v0.11.3",
