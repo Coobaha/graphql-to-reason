@@ -34,7 +34,7 @@ module MakeSchema = (Config: SchemaConfig) => {
     "__typename": string,
     "id": string,
     "name": string,
-    "friends": array(Js.Nullable.t(character)),
+    "friends": Js.Nullable.t(array(Js.Nullable.t(character))),
     "friendsConnection": friendsConnection,
     "appearsIn": array(Js.Nullable.t(episode)),
   }
@@ -48,7 +48,7 @@ module MakeSchema = (Config: SchemaConfig) => {
     "__typename": string,
     "id": string,
     "name": string,
-    "friends": array(Js.Nullable.t(character)),
+    "friends": Js.Nullable.t(array(Js.Nullable.t(character))),
     "friendsConnection": friendsConnection,
     "appearsIn": array(Js.Nullable.t(episode)),
     "primaryFunction": Js.Nullable.t(string),
@@ -57,16 +57,16 @@ module MakeSchema = (Config: SchemaConfig) => {
     .
     "__typename": string,
     "totalCount": Js.Nullable.t(int),
-    "edges": array(Js.Nullable.t(friendsEdge)),
-    "friends": array(Js.Nullable.t(character)),
+    "edges": Js.Nullable.t(array(Js.Nullable.t(friendsEdge))),
+    "friends": Js.Nullable.t(array(Js.Nullable.t(character))),
     "pageInfo": pageInfo,
   }
   and query = {
     .
     "__typename": string,
     "hero": Js.Nullable.t(character),
-    "reviews": array(Js.Nullable.t(review)),
-    "search": array(Js.Nullable.t(searchResult)),
+    "reviews": Js.Nullable.t(array(Js.Nullable.t(review))),
+    "search": Js.Nullable.t(array(Js.Nullable.t(searchResult))),
     "character": Js.Nullable.t(character),
     "droid": Js.Nullable.t(droid),
     "human": Js.Nullable.t(human),
@@ -91,10 +91,10 @@ module MakeSchema = (Config: SchemaConfig) => {
     "homePlanet": Js.Nullable.t(string),
     "height": Js.Nullable.t(float),
     "mass": Js.Nullable.t(float),
-    "friends": array(Js.Nullable.t(character)),
+    "friends": Js.Nullable.t(array(Js.Nullable.t(character))),
     "friendsConnection": friendsConnection,
     "appearsIn": array(Js.Nullable.t(episode)),
-    "starships": array(Js.Nullable.t(starship)),
+    "starships": Js.Nullable.t(array(Js.Nullable.t(starship))),
   }
   and pageInfo = {
     .
@@ -109,7 +109,7 @@ module MakeSchema = (Config: SchemaConfig) => {
     "id": string,
     "name": string,
     "length": Js.Nullable.t(float),
-    "coordinates": array(array(float)),
+    "coordinates": Js.Nullable.t(array(array(float))),
   }
   and review = {
     .
@@ -138,14 +138,14 @@ module MakeSchema = (Config: SchemaConfig) => {
         resolver(
           {. "episode": abs_episode},
           review,
-          array(Js.Nullable.t(review)),
+          Js.Nullable.t(array(Js.Nullable.t(review))),
         ),
       [@bs.optional]
       search:
         resolver(
           {. "text": Js.Nullable.t(string)},
           searchResult,
-          array(Js.Nullable.t(searchResult)),
+          Js.Nullable.t(array(Js.Nullable.t(searchResult))),
         ),
       [@bs.optional]
       character:

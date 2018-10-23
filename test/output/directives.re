@@ -37,7 +37,10 @@ module MakeSchema = (Config: SchemaConfig) => {
       deprecated: directiveResolver({. "reason": Js.Nullable.t(string)}),
       [@bs.optional]
       hasScope:
-        directiveResolver({. "scope": array(Js.Nullable.t(string))}),
+        directiveResolver({
+          .
+          "scope": Js.Nullable.t(array(Js.Nullable.t(string))),
+        }),
       [@bs.optional]
       upper: directiveResolver(unit),
       [@bs.optional]

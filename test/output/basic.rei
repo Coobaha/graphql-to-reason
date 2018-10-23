@@ -24,8 +24,8 @@ module MakeSchema:
       .
       "nonNullableOfNonNullable": array(string),
       "nonNullableOfNullable": array(Js.Nullable.t(string)),
-      "nullableOfNonNullable": array(string),
-      "nullableOfNullable": array(Js.Nullable.t(string)),
+      "nullableOfNonNullable": Js.Nullable.t(array(string)),
+      "nullableOfNullable": Js.Nullable.t(array(Js.Nullable.t(string))),
     }
     and variousScalarsInput = {
       .
@@ -92,7 +92,7 @@ module MakeSchema:
     and mutationWithErrorResult = {
       .
       "__typename": string,
-      "errors": array(sampleError),
+      "errors": Js.Nullable.t(array(sampleError)),
       "value": Js.Nullable.t(sampleResult),
     }
     and dog = {
@@ -122,8 +122,8 @@ module MakeSchema:
       "__typename": string,
       "nonNullableOfNonNullable": array(string),
       "nonNullableOfNullable": array(Js.Nullable.t(string)),
-      "nullableOfNonNullable": array(string),
-      "nullableOfNullable": array(Js.Nullable.t(string)),
+      "nullableOfNonNullable": Js.Nullable.t(array(string)),
+      "nullableOfNullable": Js.Nullable.t(array(Js.Nullable.t(string))),
     }
     and sampleResult = {
       .

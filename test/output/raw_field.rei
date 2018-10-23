@@ -12,7 +12,8 @@ module MakeSchema:
     type mutation = {
       .
       "__typename": string,
-      "nullableArrayOfNullableInts": array(Js.Nullable.t(int)),
+      "nullableArrayOfNullableInts":
+        Js.Nullable.t(array(Js.Nullable.t(int))),
     }
     and query = {
       .
@@ -35,11 +36,7 @@ module MakeSchema:
         __typename: resolver(unit, string, string),
         [@bs.optional]
         nullableArrayOfNullableInts:
-          resolver(
-            unit,
-            int,
-            array(Js.Nullable.t(int)),
-          ),
+          resolver(unit, int, Js.Nullable.t(array(Js.Nullable.t(int)))),
       };
     };
     module Subscriptions: {};

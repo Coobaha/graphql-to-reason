@@ -24,8 +24,8 @@ module MakeSchema = (Config: SchemaConfig) => {
   }
   and listsInput = {
     .
-    "nullableOfNullable": array(Js.Nullable.t(string)),
-    "nullableOfNonNullable": array(string),
+    "nullableOfNullable": Js.Nullable.t(array(Js.Nullable.t(string))),
+    "nullableOfNonNullable": Js.Nullable.t(array(string)),
     "nonNullableOfNullable": array(Js.Nullable.t(string)),
     "nonNullableOfNonNullable": array(string),
   }
@@ -95,7 +95,7 @@ module MakeSchema = (Config: SchemaConfig) => {
     .
     "__typename": string,
     "value": Js.Nullable.t(sampleResult),
-    "errors": array(sampleError),
+    "errors": Js.Nullable.t(array(sampleError)),
   }
   and dog = {
     .
@@ -122,8 +122,8 @@ module MakeSchema = (Config: SchemaConfig) => {
   and lists = {
     .
     "__typename": string,
-    "nullableOfNullable": array(Js.Nullable.t(string)),
-    "nullableOfNonNullable": array(string),
+    "nullableOfNullable": Js.Nullable.t(array(Js.Nullable.t(string))),
+    "nullableOfNonNullable": Js.Nullable.t(array(string)),
     "nonNullableOfNullable": array(Js.Nullable.t(string)),
     "nonNullableOfNonNullable": array(string),
   }

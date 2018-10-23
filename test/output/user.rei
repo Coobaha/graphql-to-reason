@@ -25,7 +25,7 @@ module MakeSchema:
       "check": bool,
       "gender": Js.Nullable.t(abs_gender),
       "listOfStrings": array(Js.Nullable.t(string)),
-      "nullableListOfStrings": array(Js.Nullable.t(string)),
+      "nullableListOfStrings": Js.Nullable.t(array(Js.Nullable.t(string))),
       "wrapper": wrapper,
     };
     type userLike = {
@@ -45,7 +45,7 @@ module MakeSchema:
       "gender": Js.Nullable.t(gender),
       "getGender": gender,
       "list": array(Js.Nullable.t(string)),
-      "listNullable": array(Js.Nullable.t(string)),
+      "listNullable": Js.Nullable.t(array(Js.Nullable.t(string))),
       "name": string,
       "self": user,
     };

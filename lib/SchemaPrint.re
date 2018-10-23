@@ -124,7 +124,7 @@ let print = schema => {
         Js.Nullable.t([%t name |> uncap_key |> gql_type])
       ]
     | NonNull(tr) => print_type_ref_nonNullable(~uncap_key, tr)
-    | List(tr) => [%type: array([%t print_type_ref(~uncap_key, tr)])]
+    | List(tr) => [%type: Js.Nullable.t(array([%t print_type_ref(~uncap_key, tr)]))]
     };
 
   let rec print_field_type_name = (~uncap_key=uncap_key, tm) =>

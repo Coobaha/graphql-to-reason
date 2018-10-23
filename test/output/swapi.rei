@@ -35,7 +35,7 @@ module MakeSchema:
       .
       "__typename": string,
       "appearsIn": array(Js.Nullable.t(episode)),
-      "friends": array(Js.Nullable.t(character)),
+      "friends": Js.Nullable.t(array(Js.Nullable.t(character))),
       "friendsConnection": friendsConnection,
       "id": string,
       "name": string,
@@ -49,7 +49,7 @@ module MakeSchema:
       .
       "__typename": string,
       "appearsIn": array(Js.Nullable.t(episode)),
-      "friends": array(Js.Nullable.t(character)),
+      "friends": Js.Nullable.t(array(Js.Nullable.t(character))),
       "friendsConnection": friendsConnection,
       "id": string,
       "name": string,
@@ -58,8 +58,8 @@ module MakeSchema:
     and friendsConnection = {
       .
       "__typename": string,
-      "edges": array(Js.Nullable.t(friendsEdge)),
-      "friends": array(Js.Nullable.t(character)),
+      "edges": Js.Nullable.t(array(Js.Nullable.t(friendsEdge))),
+      "friends": Js.Nullable.t(array(Js.Nullable.t(character))),
       "pageInfo": pageInfo,
       "totalCount": Js.Nullable.t(int),
     }
@@ -70,8 +70,8 @@ module MakeSchema:
       "droid": Js.Nullable.t(droid),
       "hero": Js.Nullable.t(character),
       "human": Js.Nullable.t(human),
-      "reviews": array(Js.Nullable.t(review)),
-      "search": array(Js.Nullable.t(searchResult)),
+      "reviews": Js.Nullable.t(array(Js.Nullable.t(review))),
+      "search": Js.Nullable.t(array(Js.Nullable.t(searchResult))),
       "starship": Js.Nullable.t(starship),
     }
     and friendsEdge = {
@@ -89,14 +89,14 @@ module MakeSchema:
       .
       "__typename": string,
       "appearsIn": array(Js.Nullable.t(episode)),
-      "friends": array(Js.Nullable.t(character)),
+      "friends": Js.Nullable.t(array(Js.Nullable.t(character))),
       "friendsConnection": friendsConnection,
       "height": Js.Nullable.t(float),
       "homePlanet": Js.Nullable.t(string),
       "id": string,
       "mass": Js.Nullable.t(float),
       "name": string,
-      "starships": array(Js.Nullable.t(starship)),
+      "starships": Js.Nullable.t(array(Js.Nullable.t(starship))),
     }
     and pageInfo = {
       .
@@ -108,7 +108,7 @@ module MakeSchema:
     and starship = {
       .
       "__typename": string,
-      "coordinates": array(array(float)),
+      "coordinates": Js.Nullable.t(array(array(float))),
       "id": string,
       "length": Js.Nullable.t(float),
       "name": string,
@@ -140,14 +140,14 @@ module MakeSchema:
           resolver(
             {. "episode": abs_episode},
             review,
-            array(Js.Nullable.t(review)),
+            Js.Nullable.t(array(Js.Nullable.t(review))),
           ),
         [@bs.optional]
         search:
           resolver(
             {. "text": Js.Nullable.t(string)},
             searchResult,
-            array(Js.Nullable.t(searchResult)),
+            Js.Nullable.t(array(Js.Nullable.t(searchResult))),
           ),
         [@bs.optional]
         character:

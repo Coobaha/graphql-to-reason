@@ -26,7 +26,7 @@ module MakeSchema = (Config: SchemaConfig) => {
     "check": bool,
     "another": Js.Nullable.t(string),
     "listOfStrings": array(Js.Nullable.t(string)),
-    "nullableListOfStrings": array(Js.Nullable.t(string)),
+    "nullableListOfStrings": Js.Nullable.t(array(Js.Nullable.t(string))),
     "wrapper": wrapper,
     "gender": Js.Nullable.t(abs_gender),
   };
@@ -46,7 +46,7 @@ module MakeSchema = (Config: SchemaConfig) => {
     "name": string,
     "email": string,
     "gender": Js.Nullable.t(gender),
-    "listNullable": array(Js.Nullable.t(string)),
+    "listNullable": Js.Nullable.t(array(Js.Nullable.t(string))),
     "list": array(Js.Nullable.t(string)),
     "getGender": gender,
     "self": user,

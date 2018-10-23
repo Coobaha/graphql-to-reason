@@ -143,12 +143,12 @@ module MakeSchema = (Config: SchemaConfig) => {
     "_eq": Js.Nullable.t(timestamptz),
     "_gt": Js.Nullable.t(timestamptz),
     "_gte": Js.Nullable.t(timestamptz),
-    "_in": array(Js.Nullable.t(timestamptz)),
+    "_in": Js.Nullable.t(array(Js.Nullable.t(timestamptz))),
     "_is_null": Js.Nullable.t(bool),
     "_lt": Js.Nullable.t(timestamptz),
     "_lte": Js.Nullable.t(timestamptz),
     "_neq": Js.Nullable.t(timestamptz),
-    "_nin": array(Js.Nullable.t(timestamptz)),
+    "_nin": Js.Nullable.t(array(Js.Nullable.t(timestamptz))),
   }
   and user_identity_type_set_input = {
     .
@@ -156,15 +156,16 @@ module MakeSchema = (Config: SchemaConfig) => {
   }
   and user_identity_type_bool_exp = {
     .
-    "_and": array(Js.Nullable.t(user_identity_type_bool_exp)),
+    "_and":
+      Js.Nullable.t(array(Js.Nullable.t(user_identity_type_bool_exp))),
     "_not": Js.Nullable.t(user_identity_type_bool_exp),
-    "_or": array(Js.Nullable.t(user_identity_type_bool_exp)),
+    "_or": Js.Nullable.t(array(Js.Nullable.t(user_identity_type_bool_exp))),
     "user_identity_type": Js.Nullable.t(varchar_comparison_exp),
   }
   and note_revision_delete_key_input = {. "data": Js.Nullable.t(string)}
   and note_revision_delete_at_path_input = {
     .
-    "data": array(Js.Nullable.t(string)),
+    "data": Js.Nullable.t(array(Js.Nullable.t(string))),
   }
   and note_delete_key_input = {. "data": Js.Nullable.t(string)}
   and note_revision_on_conflict = {
@@ -201,16 +202,16 @@ module MakeSchema = (Config: SchemaConfig) => {
     "_eq": Js.Nullable.t(jsonb),
     "_gt": Js.Nullable.t(jsonb),
     "_gte": Js.Nullable.t(jsonb),
-    "_in": array(Js.Nullable.t(jsonb)),
+    "_in": Js.Nullable.t(array(Js.Nullable.t(jsonb))),
     "_is_null": Js.Nullable.t(bool),
     "_lt": Js.Nullable.t(jsonb),
     "_lte": Js.Nullable.t(jsonb),
     "_neq": Js.Nullable.t(jsonb),
-    "_nin": array(Js.Nullable.t(jsonb)),
+    "_nin": Js.Nullable.t(array(Js.Nullable.t(jsonb))),
   }
   and user_identity_delete_at_path_input = {
     .
-    "data": array(Js.Nullable.t(string)),
+    "data": Js.Nullable.t(array(Js.Nullable.t(string))),
   }
   and user_set_input = {
     .
@@ -226,9 +227,9 @@ module MakeSchema = (Config: SchemaConfig) => {
   and note_append_input = {. "data": Js.Nullable.t(jsonb)}
   and user_identity_bool_exp = {
     .
-    "_and": array(Js.Nullable.t(user_identity_bool_exp)),
+    "_and": Js.Nullable.t(array(Js.Nullable.t(user_identity_bool_exp))),
     "_not": Js.Nullable.t(user_identity_bool_exp),
-    "_or": array(Js.Nullable.t(user_identity_bool_exp)),
+    "_or": Js.Nullable.t(array(Js.Nullable.t(user_identity_bool_exp))),
     "data": Js.Nullable.t(jsonb_comparison_exp),
     "identity_id": Js.Nullable.t(varchar_comparison_exp),
     "identity_type": Js.Nullable.t(varchar_comparison_exp),
@@ -273,12 +274,15 @@ module MakeSchema = (Config: SchemaConfig) => {
   }
   and user_identity_delete_key_input = {. "data": Js.Nullable.t(string)}
   and note_revision_delete_elem_input = {. "data": Js.Nullable.t(int)}
-  and note_delete_at_path_input = {. "data": array(Js.Nullable.t(string))}
+  and note_delete_at_path_input = {
+    .
+    "data": Js.Nullable.t(array(Js.Nullable.t(string))),
+  }
   and note_bool_exp = {
     .
-    "_and": array(Js.Nullable.t(note_bool_exp)),
+    "_and": Js.Nullable.t(array(Js.Nullable.t(note_bool_exp))),
     "_not": Js.Nullable.t(note_bool_exp),
-    "_or": array(Js.Nullable.t(note_bool_exp)),
+    "_or": Js.Nullable.t(array(Js.Nullable.t(note_bool_exp))),
     "created_at": Js.Nullable.t(timestamptz_comparison_exp),
     "data": Js.Nullable.t(jsonb_comparison_exp),
     "id": Js.Nullable.t(varchar_comparison_exp),
@@ -304,9 +308,9 @@ module MakeSchema = (Config: SchemaConfig) => {
   }
   and note_revision_bool_exp = {
     .
-    "_and": array(Js.Nullable.t(note_revision_bool_exp)),
+    "_and": Js.Nullable.t(array(Js.Nullable.t(note_revision_bool_exp))),
     "_not": Js.Nullable.t(note_revision_bool_exp),
-    "_or": array(Js.Nullable.t(note_revision_bool_exp)),
+    "_or": Js.Nullable.t(array(Js.Nullable.t(note_revision_bool_exp))),
     "created_at": Js.Nullable.t(timestamptz_comparison_exp),
     "data": Js.Nullable.t(jsonb_comparison_exp),
     "note": Js.Nullable.t(note_bool_exp),
@@ -316,9 +320,9 @@ module MakeSchema = (Config: SchemaConfig) => {
   and note_revision_append_input = {. "data": Js.Nullable.t(jsonb)}
   and user_bool_exp = {
     .
-    "_and": array(Js.Nullable.t(user_bool_exp)),
+    "_and": Js.Nullable.t(array(Js.Nullable.t(user_bool_exp))),
     "_not": Js.Nullable.t(user_bool_exp),
-    "_or": array(Js.Nullable.t(user_bool_exp)),
+    "_or": Js.Nullable.t(array(Js.Nullable.t(user_bool_exp))),
     "avatar": Js.Nullable.t(varchar_comparison_exp),
     "created_at": Js.Nullable.t(timestamptz_comparison_exp),
     "email": Js.Nullable.t(varchar_comparison_exp),
@@ -345,14 +349,14 @@ module MakeSchema = (Config: SchemaConfig) => {
     "_gt": Js.Nullable.t(string),
     "_gte": Js.Nullable.t(string),
     "_ilike": Js.Nullable.t(string),
-    "_in": array(Js.Nullable.t(string)),
+    "_in": Js.Nullable.t(array(Js.Nullable.t(string))),
     "_is_null": Js.Nullable.t(bool),
     "_like": Js.Nullable.t(string),
     "_lt": Js.Nullable.t(string),
     "_lte": Js.Nullable.t(string),
     "_neq": Js.Nullable.t(string),
     "_nilike": Js.Nullable.t(string),
-    "_nin": array(Js.Nullable.t(string)),
+    "_nin": Js.Nullable.t(array(Js.Nullable.t(string))),
     "_nlike": Js.Nullable.t(string),
     "_nsimilar": Js.Nullable.t(string),
     "_similar": Js.Nullable.t(string),
@@ -363,14 +367,14 @@ module MakeSchema = (Config: SchemaConfig) => {
     "_gt": Js.Nullable.t(string),
     "_gte": Js.Nullable.t(string),
     "_ilike": Js.Nullable.t(string),
-    "_in": array(Js.Nullable.t(string)),
+    "_in": Js.Nullable.t(array(Js.Nullable.t(string))),
     "_is_null": Js.Nullable.t(bool),
     "_like": Js.Nullable.t(string),
     "_lt": Js.Nullable.t(string),
     "_lte": Js.Nullable.t(string),
     "_neq": Js.Nullable.t(string),
     "_nilike": Js.Nullable.t(string),
-    "_nin": array(Js.Nullable.t(string)),
+    "_nin": Js.Nullable.t(array(Js.Nullable.t(string))),
     "_nlike": Js.Nullable.t(string),
     "_nsimilar": Js.Nullable.t(string),
     "_similar": Js.Nullable.t(string),

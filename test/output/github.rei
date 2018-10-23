@@ -538,10 +538,10 @@ module MakeSchema:
       "dismissesStaleReviews": Js.Nullable.t(bool),
       "isAdminEnforced": Js.Nullable.t(bool),
       "pattern": string,
-      "pushActorIds": array(string),
+      "pushActorIds": Js.Nullable.t(array(string)),
       "repositoryId": string,
       "requiredApprovingReviewCount": Js.Nullable.t(int),
-      "requiredStatusCheckContexts": array(string),
+      "requiredStatusCheckContexts": Js.Nullable.t(array(string)),
       "requiresApprovingReviews": Js.Nullable.t(bool),
       "requiresCodeOwnerReviews": Js.Nullable.t(bool),
       "requiresCommitSignatures": Js.Nullable.t(bool),
@@ -549,7 +549,7 @@ module MakeSchema:
       "requiresStrictStatusChecks": Js.Nullable.t(bool),
       "restrictsPushes": Js.Nullable.t(bool),
       "restrictsReviewDismissals": Js.Nullable.t(bool),
-      "reviewDismissalActorIds": array(string),
+      "reviewDismissalActorIds": Js.Nullable.t(array(string)),
     }
     and updatePullRequestReviewInput = {
       .
@@ -561,7 +561,8 @@ module MakeSchema:
       .
       "body": Js.Nullable.t(string),
       "clientMutationId": Js.Nullable.t(string),
-      "comments": array(Js.Nullable.t(draftPullRequestReviewComment)),
+      "comments":
+        Js.Nullable.t(array(Js.Nullable.t(draftPullRequestReviewComment))),
       "commitOID": Js.Nullable.t(gitObjectID),
       "event": Js.Nullable.t(abs_pullRequestReviewEvent),
       "pullRequestId": string,
@@ -685,9 +686,9 @@ module MakeSchema:
       .
       "clientMutationId": Js.Nullable.t(string),
       "pullRequestId": string,
-      "teamIds": array(string),
+      "teamIds": Js.Nullable.t(array(string)),
       "union": Js.Nullable.t(bool),
-      "userIds": array(string),
+      "userIds": Js.Nullable.t(array(string)),
     }
     and moveProjectCardInput = {
       .
@@ -708,9 +709,9 @@ module MakeSchema:
       "dismissesStaleReviews": Js.Nullable.t(bool),
       "isAdminEnforced": Js.Nullable.t(bool),
       "pattern": Js.Nullable.t(string),
-      "pushActorIds": array(string),
+      "pushActorIds": Js.Nullable.t(array(string)),
       "requiredApprovingReviewCount": Js.Nullable.t(int),
-      "requiredStatusCheckContexts": array(string),
+      "requiredStatusCheckContexts": Js.Nullable.t(array(string)),
       "requiresApprovingReviews": Js.Nullable.t(bool),
       "requiresCodeOwnerReviews": Js.Nullable.t(bool),
       "requiresCommitSignatures": Js.Nullable.t(bool),
@@ -718,7 +719,7 @@ module MakeSchema:
       "requiresStrictStatusChecks": Js.Nullable.t(bool),
       "restrictsPushes": Js.Nullable.t(bool),
       "restrictsReviewDismissals": Js.Nullable.t(bool),
-      "reviewDismissalActorIds": array(string),
+      "reviewDismissalActorIds": Js.Nullable.t(array(string)),
     }
     and teamRepositoryOrder = {
       .
@@ -758,7 +759,7 @@ module MakeSchema:
     }
     and commitAuthor = {
       .
-      "emails": array(string),
+      "emails": Js.Nullable.t(array(string)),
       "id": Js.Nullable.t(string),
     }
     and deleteProjectInput = {
@@ -875,7 +876,7 @@ module MakeSchema:
       "__typename": string,
       "databaseId": Js.Nullable.t(int),
       "id": string,
-      "reactionGroups": array(reactionGroup),
+      "reactionGroups": Js.Nullable.t(array(reactionGroup)),
       "reactions": reactionConnection,
       "viewerCanReact": bool,
     }
@@ -1009,8 +1010,8 @@ module MakeSchema:
     and reactingUserConnection = {
       .
       "__typename": string,
-      "edges": array(Js.Nullable.t(reactingUserEdge)),
-      "nodes": array(Js.Nullable.t(user)),
+      "edges": Js.Nullable.t(array(Js.Nullable.t(reactingUserEdge))),
+      "nodes": Js.Nullable.t(array(Js.Nullable.t(user))),
       "pageInfo": pageInfo,
       "totalCount": int,
     }
@@ -1108,24 +1109,24 @@ module MakeSchema:
     and organizationConnection = {
       .
       "__typename": string,
-      "edges": array(Js.Nullable.t(organizationEdge)),
-      "nodes": array(Js.Nullable.t(organization)),
+      "edges": Js.Nullable.t(array(Js.Nullable.t(organizationEdge))),
+      "nodes": Js.Nullable.t(array(Js.Nullable.t(organization))),
       "pageInfo": pageInfo,
       "totalCount": int,
     }
     and releaseConnection = {
       .
       "__typename": string,
-      "edges": array(Js.Nullable.t(releaseEdge)),
-      "nodes": array(Js.Nullable.t(release)),
+      "edges": Js.Nullable.t(array(Js.Nullable.t(releaseEdge))),
+      "nodes": Js.Nullable.t(array(Js.Nullable.t(release))),
       "pageInfo": pageInfo,
       "totalCount": int,
     }
     and reviewRequestConnection = {
       .
       "__typename": string,
-      "edges": array(Js.Nullable.t(reviewRequestEdge)),
-      "nodes": array(Js.Nullable.t(reviewRequest)),
+      "edges": Js.Nullable.t(array(Js.Nullable.t(reviewRequestEdge))),
+      "nodes": Js.Nullable.t(array(Js.Nullable.t(reviewRequest))),
       "pageInfo": pageInfo,
       "totalCount": int,
     }
@@ -1148,16 +1149,16 @@ module MakeSchema:
     and pullRequestReviewConnection = {
       .
       "__typename": string,
-      "edges": array(Js.Nullable.t(pullRequestReviewEdge)),
-      "nodes": array(Js.Nullable.t(pullRequestReview)),
+      "edges": Js.Nullable.t(array(Js.Nullable.t(pullRequestReviewEdge))),
+      "nodes": Js.Nullable.t(array(Js.Nullable.t(pullRequestReview))),
       "pageInfo": pageInfo,
       "totalCount": int,
     }
     and externalIdentityConnection = {
       .
       "__typename": string,
-      "edges": array(Js.Nullable.t(externalIdentityEdge)),
-      "nodes": array(Js.Nullable.t(externalIdentity)),
+      "edges": Js.Nullable.t(array(Js.Nullable.t(externalIdentityEdge))),
+      "nodes": Js.Nullable.t(array(Js.Nullable.t(externalIdentity))),
       "pageInfo": pageInfo,
       "totalCount": int,
     }
@@ -1179,8 +1180,8 @@ module MakeSchema:
     and projectColumnConnection = {
       .
       "__typename": string,
-      "edges": array(Js.Nullable.t(projectColumnEdge)),
-      "nodes": array(Js.Nullable.t(projectColumn)),
+      "edges": Js.Nullable.t(array(Js.Nullable.t(projectColumnEdge))),
+      "nodes": Js.Nullable.t(array(Js.Nullable.t(projectColumn))),
       "pageInfo": pageInfo,
       "totalCount": int,
     }
@@ -1211,8 +1212,8 @@ module MakeSchema:
     and commitConnection = {
       .
       "__typename": string,
-      "edges": array(Js.Nullable.t(commitEdge)),
-      "nodes": array(Js.Nullable.t(commit)),
+      "edges": Js.Nullable.t(array(Js.Nullable.t(commitEdge))),
+      "nodes": Js.Nullable.t(array(Js.Nullable.t(commit))),
       "pageInfo": pageInfo,
       "totalCount": int,
     }
@@ -1237,8 +1238,8 @@ module MakeSchema:
     and protectedBranchConnection = {
       .
       "__typename": string,
-      "edges": array(Js.Nullable.t(protectedBranchEdge)),
-      "nodes": array(Js.Nullable.t(protectedBranch)),
+      "edges": Js.Nullable.t(array(Js.Nullable.t(protectedBranchEdge))),
+      "nodes": Js.Nullable.t(array(Js.Nullable.t(protectedBranch))),
       "pageInfo": pageInfo,
       "totalCount": int,
     }
@@ -1295,16 +1296,17 @@ module MakeSchema:
     and releaseAssetConnection = {
       .
       "__typename": string,
-      "edges": array(Js.Nullable.t(releaseAssetEdge)),
-      "nodes": array(Js.Nullable.t(releaseAsset)),
+      "edges": Js.Nullable.t(array(Js.Nullable.t(releaseAssetEdge))),
+      "nodes": Js.Nullable.t(array(Js.Nullable.t(releaseAsset))),
       "pageInfo": pageInfo,
       "totalCount": int,
     }
     and branchProtectionRuleConnection = {
       .
       "__typename": string,
-      "edges": array(Js.Nullable.t(branchProtectionRuleEdge)),
-      "nodes": array(Js.Nullable.t(branchProtectionRule)),
+      "edges":
+        Js.Nullable.t(array(Js.Nullable.t(branchProtectionRuleEdge))),
+      "nodes": Js.Nullable.t(array(Js.Nullable.t(branchProtectionRule))),
       "pageInfo": pageInfo,
       "totalCount": int,
     }
@@ -1326,8 +1328,8 @@ module MakeSchema:
     and deployKeyConnection = {
       .
       "__typename": string,
-      "edges": array(Js.Nullable.t(deployKeyEdge)),
-      "nodes": array(Js.Nullable.t(deployKey)),
+      "edges": Js.Nullable.t(array(Js.Nullable.t(deployKeyEdge))),
+      "nodes": Js.Nullable.t(array(Js.Nullable.t(deployKey))),
       "pageInfo": pageInfo,
       "totalCount": int,
     }
@@ -1364,7 +1366,7 @@ module MakeSchema:
       "abbreviatedOid": string,
       "commitResourcePath": uRI,
       "commitUrl": uRI,
-      "entries": array(treeEntry),
+      "entries": Js.Nullable.t(array(treeEntry)),
       "id": string,
       "oid": gitObjectID,
       "repository": repository,
@@ -1373,9 +1375,9 @@ module MakeSchema:
       .
       "__typename": string,
       "codeCount": int,
-      "edges": array(Js.Nullable.t(searchResultItemEdge)),
+      "edges": Js.Nullable.t(array(Js.Nullable.t(searchResultItemEdge))),
       "issueCount": int,
-      "nodes": array(Js.Nullable.t(searchResultItem)),
+      "nodes": Js.Nullable.t(array(Js.Nullable.t(searchResultItem))),
       "pageInfo": pageInfo,
       "repositoryCount": int,
       "userCount": int,
@@ -1384,8 +1386,8 @@ module MakeSchema:
     and stargazerConnection = {
       .
       "__typename": string,
-      "edges": array(Js.Nullable.t(stargazerEdge)),
-      "nodes": array(Js.Nullable.t(user)),
+      "edges": Js.Nullable.t(array(Js.Nullable.t(stargazerEdge))),
+      "nodes": Js.Nullable.t(array(Js.Nullable.t(user))),
       "pageInfo": pageInfo,
       "totalCount": int,
     }
@@ -1399,8 +1401,8 @@ module MakeSchema:
     and issueCommentConnection = {
       .
       "__typename": string,
-      "edges": array(Js.Nullable.t(issueCommentEdge)),
-      "nodes": array(Js.Nullable.t(issueComment)),
+      "edges": Js.Nullable.t(array(Js.Nullable.t(issueCommentEdge))),
+      "nodes": Js.Nullable.t(array(Js.Nullable.t(issueComment))),
       "pageInfo": pageInfo,
       "totalCount": int,
     }
@@ -1434,8 +1436,8 @@ module MakeSchema:
     and refConnection = {
       .
       "__typename": string,
-      "edges": array(Js.Nullable.t(refEdge)),
-      "nodes": array(Js.Nullable.t(ref)),
+      "edges": Js.Nullable.t(array(Js.Nullable.t(refEdge))),
+      "nodes": Js.Nullable.t(array(Js.Nullable.t(ref))),
       "pageInfo": pageInfo,
       "totalCount": int,
     }
@@ -1539,8 +1541,8 @@ module MakeSchema:
     and languageConnection = {
       .
       "__typename": string,
-      "edges": array(Js.Nullable.t(languageEdge)),
-      "nodes": array(Js.Nullable.t(language)),
+      "edges": Js.Nullable.t(array(Js.Nullable.t(languageEdge))),
+      "nodes": Js.Nullable.t(array(Js.Nullable.t(language))),
       "pageInfo": pageInfo,
       "totalCount": int,
       "totalSize": int,
@@ -1615,16 +1617,18 @@ module MakeSchema:
     and commitCommentConnection = {
       .
       "__typename": string,
-      "edges": array(Js.Nullable.t(commitCommentEdge)),
-      "nodes": array(Js.Nullable.t(commitComment)),
+      "edges": Js.Nullable.t(array(Js.Nullable.t(commitCommentEdge))),
+      "nodes": Js.Nullable.t(array(Js.Nullable.t(commitComment))),
       "pageInfo": pageInfo,
       "totalCount": int,
     }
     and pullRequestReviewCommentConnection = {
       .
       "__typename": string,
-      "edges": array(Js.Nullable.t(pullRequestReviewCommentEdge)),
-      "nodes": array(Js.Nullable.t(pullRequestReviewComment)),
+      "edges":
+        Js.Nullable.t(array(Js.Nullable.t(pullRequestReviewCommentEdge))),
+      "nodes":
+        Js.Nullable.t(array(Js.Nullable.t(pullRequestReviewComment))),
       "pageInfo": pageInfo,
       "totalCount": int,
     }
@@ -1691,8 +1695,8 @@ module MakeSchema:
     and teamRepositoryConnection = {
       .
       "__typename": string,
-      "edges": array(Js.Nullable.t(teamRepositoryEdge)),
-      "nodes": array(Js.Nullable.t(repository)),
+      "edges": Js.Nullable.t(array(Js.Nullable.t(teamRepositoryEdge))),
+      "nodes": Js.Nullable.t(array(Js.Nullable.t(repository))),
       "pageInfo": pageInfo,
       "totalCount": int,
     }
@@ -1705,16 +1709,16 @@ module MakeSchema:
     and commitHistoryConnection = {
       .
       "__typename": string,
-      "edges": array(Js.Nullable.t(commitEdge)),
-      "nodes": array(Js.Nullable.t(commit)),
+      "edges": Js.Nullable.t(array(Js.Nullable.t(commitEdge))),
+      "nodes": Js.Nullable.t(array(Js.Nullable.t(commit))),
       "pageInfo": pageInfo,
       "totalCount": int,
     }
     and userConnection = {
       .
       "__typename": string,
-      "edges": array(Js.Nullable.t(userEdge)),
-      "nodes": array(Js.Nullable.t(user)),
+      "edges": Js.Nullable.t(array(Js.Nullable.t(userEdge))),
+      "nodes": Js.Nullable.t(array(Js.Nullable.t(user))),
       "pageInfo": pageInfo,
       "totalCount": int,
     }
@@ -1750,7 +1754,8 @@ module MakeSchema:
       "pushAllowances": pushAllowanceConnection,
       "repository": Js.Nullable.t(repository),
       "requiredApprovingReviewCount": Js.Nullable.t(int),
-      "requiredStatusCheckContexts": array(Js.Nullable.t(string)),
+      "requiredStatusCheckContexts":
+        Js.Nullable.t(array(Js.Nullable.t(string))),
       "requiresApprovingReviews": bool,
       "requiresCommitSignatures": bool,
       "requiresStatusChecks": bool,
@@ -1856,8 +1861,8 @@ module MakeSchema:
     and projectConnection = {
       .
       "__typename": string,
-      "edges": array(Js.Nullable.t(projectEdge)),
-      "nodes": array(Js.Nullable.t(project)),
+      "edges": Js.Nullable.t(array(Js.Nullable.t(projectEdge))),
+      "nodes": Js.Nullable.t(array(Js.Nullable.t(project))),
       "pageInfo": pageInfo,
       "totalCount": int,
     }
@@ -1886,8 +1891,9 @@ module MakeSchema:
     and pullRequestTimelineConnection = {
       .
       "__typename": string,
-      "edges": array(Js.Nullable.t(pullRequestTimelineItemEdge)),
-      "nodes": array(Js.Nullable.t(pullRequestTimelineItem)),
+      "edges":
+        Js.Nullable.t(array(Js.Nullable.t(pullRequestTimelineItemEdge))),
+      "nodes": Js.Nullable.t(array(Js.Nullable.t(pullRequestTimelineItem))),
       "pageInfo": pageInfo,
       "totalCount": int,
     }
@@ -1943,8 +1949,10 @@ module MakeSchema:
     and reviewDismissalAllowanceConnection = {
       .
       "__typename": string,
-      "edges": array(Js.Nullable.t(reviewDismissalAllowanceEdge)),
-      "nodes": array(Js.Nullable.t(reviewDismissalAllowance)),
+      "edges":
+        Js.Nullable.t(array(Js.Nullable.t(reviewDismissalAllowanceEdge))),
+      "nodes":
+        Js.Nullable.t(array(Js.Nullable.t(reviewDismissalAllowance))),
       "pageInfo": pageInfo,
       "totalCount": int,
     }
@@ -1953,7 +1961,7 @@ module MakeSchema:
       "__typename": string,
       "cursor": string,
       "node": Js.Nullable.t(searchResultItem),
-      "textMatches": array(Js.Nullable.t(textMatch)),
+      "textMatches": Js.Nullable.t(array(Js.Nullable.t(textMatch))),
     }
     and deletePullRequestReviewPayload = {
       .
@@ -1998,7 +2006,7 @@ module MakeSchema:
       "lastEditedAt": Js.Nullable.t(dateTime),
       "publishedAt": Js.Nullable.t(dateTime),
       "pullRequest": Js.Nullable.t(pullRequest),
-      "reactionGroups": array(reactionGroup),
+      "reactionGroups": Js.Nullable.t(array(reactionGroup)),
       "reactions": reactionConnection,
       "repository": repository,
       "resourcePath": uRI,
@@ -2099,8 +2107,8 @@ module MakeSchema:
     and publicKeyConnection = {
       .
       "__typename": string,
-      "edges": array(Js.Nullable.t(publicKeyEdge)),
-      "nodes": array(Js.Nullable.t(publicKey)),
+      "edges": Js.Nullable.t(array(Js.Nullable.t(publicKeyEdge))),
+      "nodes": Js.Nullable.t(array(Js.Nullable.t(publicKey))),
       "pageInfo": pageInfo,
       "totalCount": int,
     }
@@ -2138,24 +2146,24 @@ module MakeSchema:
     and followingConnection = {
       .
       "__typename": string,
-      "edges": array(Js.Nullable.t(userEdge)),
-      "nodes": array(Js.Nullable.t(user)),
+      "edges": Js.Nullable.t(array(Js.Nullable.t(userEdge))),
+      "nodes": Js.Nullable.t(array(Js.Nullable.t(user))),
       "pageInfo": pageInfo,
       "totalCount": int,
     }
     and pullRequestConnection = {
       .
       "__typename": string,
-      "edges": array(Js.Nullable.t(pullRequestEdge)),
-      "nodes": array(Js.Nullable.t(pullRequest)),
+      "edges": Js.Nullable.t(array(Js.Nullable.t(pullRequestEdge))),
+      "nodes": Js.Nullable.t(array(Js.Nullable.t(pullRequest))),
       "pageInfo": pageInfo,
       "totalCount": int,
     }
     and topicConnection = {
       .
       "__typename": string,
-      "edges": array(Js.Nullable.t(topicEdge)),
-      "nodes": array(Js.Nullable.t(topic)),
+      "edges": Js.Nullable.t(array(Js.Nullable.t(topicEdge))),
+      "nodes": Js.Nullable.t(array(Js.Nullable.t(topic))),
       "pageInfo": pageInfo,
       "totalCount": int,
     }
@@ -2176,24 +2184,28 @@ module MakeSchema:
     and branchProtectionRuleConflictConnection = {
       .
       "__typename": string,
-      "edges": array(Js.Nullable.t(branchProtectionRuleConflictEdge)),
-      "nodes": array(Js.Nullable.t(branchProtectionRuleConflict)),
+      "edges":
+        Js.Nullable.t(
+          array(Js.Nullable.t(branchProtectionRuleConflictEdge)),
+        ),
+      "nodes":
+        Js.Nullable.t(array(Js.Nullable.t(branchProtectionRuleConflict))),
       "pageInfo": pageInfo,
       "totalCount": int,
     }
     and pushAllowanceConnection = {
       .
       "__typename": string,
-      "edges": array(Js.Nullable.t(pushAllowanceEdge)),
-      "nodes": array(Js.Nullable.t(pushAllowance)),
+      "edges": Js.Nullable.t(array(Js.Nullable.t(pushAllowanceEdge))),
+      "nodes": Js.Nullable.t(array(Js.Nullable.t(pushAllowance))),
       "pageInfo": pageInfo,
       "totalCount": int,
     }
     and milestoneConnection = {
       .
       "__typename": string,
-      "edges": array(Js.Nullable.t(milestoneEdge)),
-      "nodes": array(Js.Nullable.t(milestone)),
+      "edges": Js.Nullable.t(array(Js.Nullable.t(milestoneEdge))),
+      "nodes": Js.Nullable.t(array(Js.Nullable.t(milestone))),
       "pageInfo": pageInfo,
       "totalCount": int,
     }
@@ -2437,8 +2449,8 @@ module MakeSchema:
     and labelConnection = {
       .
       "__typename": string,
-      "edges": array(Js.Nullable.t(labelEdge)),
-      "nodes": array(Js.Nullable.t(label)),
+      "edges": Js.Nullable.t(array(Js.Nullable.t(labelEdge))),
+      "nodes": Js.Nullable.t(array(Js.Nullable.t(label))),
       "pageInfo": pageInfo,
       "totalCount": int,
     }
@@ -2516,8 +2528,8 @@ module MakeSchema:
     and projectCardConnection = {
       .
       "__typename": string,
-      "edges": array(Js.Nullable.t(projectCardEdge)),
-      "nodes": array(Js.Nullable.t(projectCard)),
+      "edges": Js.Nullable.t(array(Js.Nullable.t(projectCardEdge))),
+      "nodes": Js.Nullable.t(array(Js.Nullable.t(projectCard))),
       "pageInfo": pageInfo,
       "totalCount": int,
     }
@@ -2525,7 +2537,7 @@ module MakeSchema:
       .
       "__typename": string,
       "clientMutationId": Js.Nullable.t(string),
-      "invalidTopicNames": array(string),
+      "invalidTopicNames": Js.Nullable.t(array(string)),
       "repository": repository,
     }
     and deleteBranchProtectionRulePayload = {
@@ -2587,8 +2599,8 @@ module MakeSchema:
     and teamMemberConnection = {
       .
       "__typename": string,
-      "edges": array(Js.Nullable.t(teamMemberEdge)),
-      "nodes": array(Js.Nullable.t(user)),
+      "edges": Js.Nullable.t(array(Js.Nullable.t(teamMemberEdge))),
+      "nodes": Js.Nullable.t(array(Js.Nullable.t(user))),
       "pageInfo": pageInfo,
       "totalCount": int,
     }
@@ -2684,7 +2696,7 @@ module MakeSchema:
       "publishedAt": Js.Nullable.t(dateTime),
       "pullRequest": pullRequest,
       "pullRequestReview": Js.Nullable.t(pullRequestReview),
-      "reactionGroups": array(reactionGroup),
+      "reactionGroups": Js.Nullable.t(array(reactionGroup)),
       "reactions": reactionConnection,
       "replyTo": Js.Nullable.t(pullRequestReviewComment),
       "repository": repository,
@@ -2860,7 +2872,7 @@ module MakeSchema:
       "potentialMergeCommit": Js.Nullable.t(commit),
       "projectCards": projectCardConnection,
       "publishedAt": Js.Nullable.t(dateTime),
-      "reactionGroups": array(reactionGroup),
+      "reactionGroups": Js.Nullable.t(array(reactionGroup)),
       "reactions": reactionConnection,
       "repository": repository,
       "resourcePath": uRI,
@@ -2923,7 +2935,7 @@ module MakeSchema:
       "path": Js.Nullable.t(string),
       "position": Js.Nullable.t(int),
       "publishedAt": Js.Nullable.t(dateTime),
-      "reactionGroups": array(reactionGroup),
+      "reactionGroups": Js.Nullable.t(array(reactionGroup)),
       "reactions": reactionConnection,
       "repository": repository,
       "resourcePath": uRI,
@@ -2966,7 +2978,8 @@ module MakeSchema:
       "name": string,
       "pushAllowances": pushAllowanceConnection,
       "repository": repository,
-      "requiredStatusCheckContexts": array(Js.Nullable.t(string)),
+      "requiredStatusCheckContexts":
+        Js.Nullable.t(array(Js.Nullable.t(string))),
       "reviewDismissalAllowances": reviewDismissalAllowanceConnection,
     }
     and mergedEvent = {
@@ -2994,16 +3007,16 @@ module MakeSchema:
     and followerConnection = {
       .
       "__typename": string,
-      "edges": array(Js.Nullable.t(userEdge)),
-      "nodes": array(Js.Nullable.t(user)),
+      "edges": Js.Nullable.t(array(Js.Nullable.t(userEdge))),
+      "nodes": Js.Nullable.t(array(Js.Nullable.t(user))),
       "pageInfo": pageInfo,
       "totalCount": int,
     }
     and userContentEditConnection = {
       .
       "__typename": string,
-      "edges": array(Js.Nullable.t(userContentEditEdge)),
-      "nodes": array(Js.Nullable.t(userContentEdit)),
+      "edges": Js.Nullable.t(array(Js.Nullable.t(userContentEditEdge))),
+      "nodes": Js.Nullable.t(array(Js.Nullable.t(userContentEdit))),
       "pageInfo": pageInfo,
       "totalCount": int,
     }
@@ -3072,16 +3085,16 @@ module MakeSchema:
     and marketplaceListingConnection = {
       .
       "__typename": string,
-      "edges": array(Js.Nullable.t(marketplaceListingEdge)),
-      "nodes": array(Js.Nullable.t(marketplaceListing)),
+      "edges": Js.Nullable.t(array(Js.Nullable.t(marketplaceListingEdge))),
+      "nodes": Js.Nullable.t(array(Js.Nullable.t(marketplaceListing))),
       "pageInfo": pageInfo,
       "totalCount": int,
     }
     and issueTimelineConnection = {
       .
       "__typename": string,
-      "edges": array(Js.Nullable.t(issueTimelineItemEdge)),
-      "nodes": array(Js.Nullable.t(issueTimelineItem)),
+      "edges": Js.Nullable.t(array(Js.Nullable.t(issueTimelineItemEdge))),
+      "nodes": Js.Nullable.t(array(Js.Nullable.t(issueTimelineItem))),
       "pageInfo": pageInfo,
       "totalCount": int,
     }
@@ -3096,8 +3109,8 @@ module MakeSchema:
     and reactionConnection = {
       .
       "__typename": string,
-      "edges": array(Js.Nullable.t(reactionEdge)),
-      "nodes": array(Js.Nullable.t(reaction)),
+      "edges": Js.Nullable.t(array(Js.Nullable.t(reactionEdge))),
+      "nodes": Js.Nullable.t(array(Js.Nullable.t(reaction))),
       "pageInfo": pageInfo,
       "totalCount": int,
       "viewerHasReacted": bool,
@@ -3129,7 +3142,7 @@ module MakeSchema:
       "participants": userConnection,
       "projectCards": projectCardConnection,
       "publishedAt": Js.Nullable.t(dateTime),
-      "reactionGroups": array(reactionGroup),
+      "reactionGroups": Js.Nullable.t(array(reactionGroup)),
       "reactions": reactionConnection,
       "repository": repository,
       "resourcePath": uRI,
@@ -3190,8 +3203,8 @@ module MakeSchema:
     and repositoryConnection = {
       .
       "__typename": string,
-      "edges": array(Js.Nullable.t(repositoryEdge)),
-      "nodes": array(Js.Nullable.t(repository)),
+      "edges": Js.Nullable.t(array(Js.Nullable.t(repositoryEdge))),
+      "nodes": Js.Nullable.t(array(Js.Nullable.t(repository))),
       "pageInfo": pageInfo,
       "totalCount": int,
       "totalDiskUsage": int,
@@ -3206,8 +3219,8 @@ module MakeSchema:
     and gistCommentConnection = {
       .
       "__typename": string,
-      "edges": array(Js.Nullable.t(gistCommentEdge)),
-      "nodes": array(Js.Nullable.t(gistComment)),
+      "edges": Js.Nullable.t(array(Js.Nullable.t(gistCommentEdge))),
+      "nodes": Js.Nullable.t(array(Js.Nullable.t(gistComment))),
       "pageInfo": pageInfo,
       "totalCount": int,
     }
@@ -3221,7 +3234,7 @@ module MakeSchema:
       .
       "__typename": string,
       "codeOfConduct": Js.Nullable.t(codeOfConduct),
-      "codesOfConduct": array(Js.Nullable.t(codeOfConduct)),
+      "codesOfConduct": Js.Nullable.t(array(Js.Nullable.t(codeOfConduct))),
       "license": Js.Nullable.t(license),
       "licenses": array(Js.Nullable.t(license)),
       "marketplaceCategories": array(marketplaceCategory),
@@ -3245,8 +3258,8 @@ module MakeSchema:
     and deploymentStatusConnection = {
       .
       "__typename": string,
-      "edges": array(Js.Nullable.t(deploymentStatusEdge)),
-      "nodes": array(Js.Nullable.t(deploymentStatus)),
+      "edges": Js.Nullable.t(array(Js.Nullable.t(deploymentStatusEdge))),
+      "nodes": Js.Nullable.t(array(Js.Nullable.t(deploymentStatus))),
       "pageInfo": pageInfo,
       "totalCount": int,
     }
@@ -3291,8 +3304,9 @@ module MakeSchema:
     and organizationInvitationConnection = {
       .
       "__typename": string,
-      "edges": array(Js.Nullable.t(organizationInvitationEdge)),
-      "nodes": array(Js.Nullable.t(organizationInvitation)),
+      "edges":
+        Js.Nullable.t(array(Js.Nullable.t(organizationInvitationEdge))),
+      "nodes": Js.Nullable.t(array(Js.Nullable.t(organizationInvitation))),
       "pageInfo": pageInfo,
       "totalCount": int,
     }
@@ -3322,8 +3336,8 @@ module MakeSchema:
     and teamConnection = {
       .
       "__typename": string,
-      "edges": array(Js.Nullable.t(teamEdge)),
-      "nodes": array(Js.Nullable.t(team)),
+      "edges": Js.Nullable.t(array(Js.Nullable.t(teamEdge))),
+      "nodes": Js.Nullable.t(array(Js.Nullable.t(team))),
       "pageInfo": pageInfo,
       "totalCount": int,
     }
@@ -3336,8 +3350,8 @@ module MakeSchema:
     and starredRepositoryConnection = {
       .
       "__typename": string,
-      "edges": array(Js.Nullable.t(starredRepositoryEdge)),
-      "nodes": array(Js.Nullable.t(repository)),
+      "edges": Js.Nullable.t(array(Js.Nullable.t(starredRepositoryEdge))),
+      "nodes": Js.Nullable.t(array(Js.Nullable.t(repository))),
       "pageInfo": pageInfo,
       "totalCount": int,
     }
@@ -3353,11 +3367,11 @@ module MakeSchema:
       .
       "__typename": string,
       "gitHubServicesSha": gitObjectID,
-      "gitIpAddresses": array(string),
-      "hookIpAddresses": array(string),
-      "importerIpAddresses": array(string),
+      "gitIpAddresses": Js.Nullable.t(array(string)),
+      "hookIpAddresses": Js.Nullable.t(array(string)),
+      "importerIpAddresses": Js.Nullable.t(array(string)),
       "isPasswordAuthenticationVerifiable": bool,
-      "pagesIpAddresses": array(string),
+      "pagesIpAddresses": Js.Nullable.t(array(string)),
     }
     and textMatch = {
       .
@@ -3381,16 +3395,16 @@ module MakeSchema:
     and gistConnection = {
       .
       "__typename": string,
-      "edges": array(Js.Nullable.t(gistEdge)),
-      "nodes": array(Js.Nullable.t(gist)),
+      "edges": Js.Nullable.t(array(Js.Nullable.t(gistEdge))),
+      "nodes": Js.Nullable.t(array(Js.Nullable.t(gist))),
       "pageInfo": pageInfo,
       "totalCount": int,
     }
     and deploymentConnection = {
       .
       "__typename": string,
-      "edges": array(Js.Nullable.t(deploymentEdge)),
-      "nodes": array(Js.Nullable.t(deployment)),
+      "edges": Js.Nullable.t(array(Js.Nullable.t(deploymentEdge))),
+      "nodes": Js.Nullable.t(array(Js.Nullable.t(deployment))),
       "pageInfo": pageInfo,
       "totalCount": int,
     }
@@ -3402,8 +3416,9 @@ module MakeSchema:
     and repositoryCollaboratorConnection = {
       .
       "__typename": string,
-      "edges": array(Js.Nullable.t(repositoryCollaboratorEdge)),
-      "nodes": array(Js.Nullable.t(user)),
+      "edges":
+        Js.Nullable.t(array(Js.Nullable.t(repositoryCollaboratorEdge))),
+      "nodes": Js.Nullable.t(array(Js.Nullable.t(user))),
       "pageInfo": pageInfo,
       "totalCount": int,
     }
@@ -3433,8 +3448,8 @@ module MakeSchema:
     and repositoryTopicConnection = {
       .
       "__typename": string,
-      "edges": array(Js.Nullable.t(repositoryTopicEdge)),
-      "nodes": array(Js.Nullable.t(repositoryTopic)),
+      "edges": Js.Nullable.t(array(Js.Nullable.t(repositoryTopicEdge))),
+      "nodes": Js.Nullable.t(array(Js.Nullable.t(repositoryTopic))),
       "pageInfo": pageInfo,
       "totalCount": int,
     }
@@ -3490,16 +3505,16 @@ module MakeSchema:
     and pullRequestCommitConnection = {
       .
       "__typename": string,
-      "edges": array(Js.Nullable.t(pullRequestCommitEdge)),
-      "nodes": array(Js.Nullable.t(pullRequestCommit)),
+      "edges": Js.Nullable.t(array(Js.Nullable.t(pullRequestCommitEdge))),
+      "nodes": Js.Nullable.t(array(Js.Nullable.t(pullRequestCommit))),
       "pageInfo": pageInfo,
       "totalCount": int,
     }
     and issueConnection = {
       .
       "__typename": string,
-      "edges": array(Js.Nullable.t(issueEdge)),
-      "nodes": array(Js.Nullable.t(issue)),
+      "edges": Js.Nullable.t(array(Js.Nullable.t(issueEdge))),
+      "nodes": Js.Nullable.t(array(Js.Nullable.t(issue))),
       "pageInfo": pageInfo,
       "totalCount": int,
     }
@@ -3949,18 +3964,13 @@ module MakeSchema:
           resolver(
             unit,
             codeOfConduct,
-            array(Js.Nullable.t(codeOfConduct)),
+            Js.Nullable.t(array(Js.Nullable.t(codeOfConduct))),
           ),
         [@bs.optional]
         license:
           resolver({. "key": string}, license, Js.Nullable.t(license)),
         [@bs.optional]
-        licenses:
-          resolver(
-            unit,
-            license,
-            array(Js.Nullable.t(license)),
-          ),
+        licenses: resolver(unit, license, array(Js.Nullable.t(license))),
         [@bs.optional]
         marketplaceCategories:
           resolver(
@@ -3968,7 +3978,7 @@ module MakeSchema:
               .
               "excludeEmpty": Js.Nullable.t(bool),
               "excludeSubcategories": Js.Nullable.t(bool),
-              "includeCategories": array(string),
+              "includeCategories": Js.Nullable.t(array(string)),
             },
             marketplaceCategory,
             array(marketplaceCategory),
@@ -4005,7 +4015,7 @@ module MakeSchema:
               "last": Js.Nullable.t(int),
               "organizationId": Js.Nullable.t(string),
               "primaryCategoryOnly": Js.Nullable.t(bool),
-              "slugs": array(Js.Nullable.t(string)),
+              "slugs": Js.Nullable.t(array(Js.Nullable.t(string))),
               "useTopicAliases": Js.Nullable.t(bool),
               "viewerCanAdmin": Js.Nullable.t(bool),
               "withFreeTrialsOnly": Js.Nullable.t(bool),
