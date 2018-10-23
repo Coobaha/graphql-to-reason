@@ -9,7 +9,7 @@
 > - :nail_care:  [Polish]
 
 ## 0.2.1 - 2018-10-23
-- :bug: #3 Fix nullable list type
+- :bug: [#3](https://github.com/Coobaha/graphql-to-reason/issues/3) Fix nullable list type
 
 ## 0.2.0 - 2018-10-23
 
