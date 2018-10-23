@@ -3,6 +3,7 @@
 
 var child_process = require("child_process");
 var path = require("path");
+var fs = require("fs");
 
 var arch = process.arch;
 var platform = process.platform;
