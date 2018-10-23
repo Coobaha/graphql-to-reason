@@ -3,6 +3,7 @@
   "version": "0.1.1",
   "description": "Converts Graphql schema to ReasonML types",
   "repository": "https://github.com/Coobaha/graphql-to-reason",
+  "keywords": ["graphql", "reason", "generator", "bucklescript", "reasonml"],
   "bugs": "https://github.com/Coobaha/graphql-to-reason/issues",
   "author": "Alexander Ryzhikov <coobaha@gmail.com>",
   "license": "MIT",
