@@ -3948,7 +3948,7 @@ module MakeSchema:
         codesOfConduct:
           resolver(
             unit,
-            array(Js.Nullable.t(codeOfConduct)),
+            codeOfConduct,
             array(Js.Nullable.t(codeOfConduct)),
           ),
         [@bs.optional]
@@ -3958,7 +3958,7 @@ module MakeSchema:
         licenses:
           resolver(
             unit,
-            array(Js.Nullable.t(license)),
+            license,
             array(Js.Nullable.t(license)),
           ),
         [@bs.optional]
@@ -3970,7 +3970,7 @@ module MakeSchema:
               "excludeSubcategories": Js.Nullable.t(bool),
               "includeCategories": array(string),
             },
-            array(marketplaceCategory),
+            marketplaceCategory,
             array(marketplaceCategory),
           ),
         [@bs.optional]
@@ -4021,7 +4021,7 @@ module MakeSchema:
         nodes:
           resolver(
             {. "ids": array(string)},
-            array(Js.Nullable.t(node)),
+            node,
             array(Js.Nullable.t(node)),
           ),
         [@bs.optional]

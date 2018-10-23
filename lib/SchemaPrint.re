@@ -118,13 +118,20 @@ let print = schema => {
     | NonNull(tr) => print_type_ref_nonNullable(~uncap_key, tr)
     | List(tr) => [%type: array([%t print_type_ref(~uncap_key, tr)])]
     }
-  and print_type_ref = (~unwrapNull=false, ~uncap_key=uncap_key, tm) =>
+  and print_type_ref = (~uncap_key=uncap_key, tm) =>
     switch (tm) {
-    | Named(name) =>
-      let tr = name |> uncap_key |> gql_type;
-      unwrapNull ? tr : [%type: Js.Nullable.t([%t tr])];
+    | Named(name) => [%type:
+        Js.Nullable.t([%t name |> uncap_key |> gql_type])
+      ]
     | NonNull(tr) => print_type_ref_nonNullable(~uncap_key, tr)
     | List(tr) => [%type: array([%t print_type_ref(~uncap_key, tr)])]
+    };
+
+  let rec print_field_type_name = (~uncap_key=uncap_key, tm) =>
+    switch (tm) {
+    | Named(name) => name |> uncap_key |> gql_type
+    | NonNull(tr)
+    | List(tr) => print_field_type_name(~uncap_key, tr)
     };
 
   let rec print_fields = (name, fields) =>
@@ -167,7 +174,7 @@ let print = schema => {
               | [] => [%type: unit]
               | _ => closed_js_t(List.map(print_arg, fm_arguments))
               },
-              print_type_ref(~unwrapNull=true, fm_field_type),
+              print_field_type_name(fm_field_type),
               print_type_ref(fm_field_type),
             ],
           ),

@@ -139,14 +139,14 @@ module MakeSchema:
         reviews:
           resolver(
             {. "episode": abs_episode},
-            array(Js.Nullable.t(review)),
+            review,
             array(Js.Nullable.t(review)),
           ),
         [@bs.optional]
         search:
           resolver(
             {. "text": Js.Nullable.t(string)},
-            array(Js.Nullable.t(searchResult)),
+            searchResult,
             array(Js.Nullable.t(searchResult)),
           ),
         [@bs.optional]

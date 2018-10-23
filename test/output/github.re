@@ -3854,20 +3854,11 @@ module MakeSchema = (Config: SchemaConfig) => {
         ),
       [@bs.optional]
       codesOfConduct:
-        resolver(
-          unit,
-          array(Js.Nullable.t(codeOfConduct)),
-          array(Js.Nullable.t(codeOfConduct)),
-        ),
+        resolver(unit, codeOfConduct, array(Js.Nullable.t(codeOfConduct))),
       [@bs.optional]
       license: resolver({. "key": string}, license, Js.Nullable.t(license)),
       [@bs.optional]
-      licenses:
-        resolver(
-          unit,
-          array(Js.Nullable.t(license)),
-          array(Js.Nullable.t(license)),
-        ),
+      licenses: resolver(unit, license, array(Js.Nullable.t(license))),
       [@bs.optional]
       marketplaceCategories:
         resolver(
@@ -3877,7 +3868,7 @@ module MakeSchema = (Config: SchemaConfig) => {
             "excludeSubcategories": Js.Nullable.t(bool),
             "includeCategories": array(string),
           },
-          array(marketplaceCategory),
+          marketplaceCategory,
           array(marketplaceCategory),
         ),
       [@bs.optional]
@@ -3928,7 +3919,7 @@ module MakeSchema = (Config: SchemaConfig) => {
       nodes:
         resolver(
           {. "ids": array(string)},
-          array(Js.Nullable.t(node)),
+          node,
           array(Js.Nullable.t(node)),
         ),
       [@bs.optional]
