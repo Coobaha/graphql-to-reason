@@ -21,7 +21,7 @@ npm install -D graphql-to-reason
 Integration with Bucklescript can be done via [generators](https://bucklescript.github.io/docs/en/build-advanced#customize-rules-generators-support)
 
 a) With already introspected schema
-```
+```json
 {
   "generators": [
     {
@@ -45,7 +45,7 @@ a) With already introspected schema
 
 b) From `.graphql` (requires `graphql-tools`)
 
-```
+```json
 {
   "generators": [
     {
@@ -87,7 +87,7 @@ Next we generate ReasonML code from it:
 `npx graphql-to-reason schema.json SchemaTypes_builder.re`
 
 It will output `SchemaTypes_builder.re` to use it in other modules:
-```reasonml
+```reason
 include SchemaTypes_builder.MakeSchema({
   /*
      we need to configure our server types:
