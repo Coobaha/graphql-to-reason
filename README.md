@@ -16,7 +16,7 @@ npm install -D graphql-to-reason
 
 `graphql-to-reason` requires json variant (aka introspection query) of `schema.graphql`.
 
-`schema.json` can be generated with [graphql-tools](https://github.com/apollographql/graphql-tools) and `npx gqlschema -i schema.graphql -o schema.json`.
+`schema.json` can be generated with [gql-tools](https://github.com/almilo/gql-tools) and `npx gqlschema -i schema.graphql -o schema.json`.
 
 Integration with Bucklescript can be done via [generators](https://bucklescript.github.io/docs/en/build-advanced#customize-rules-generators-support)
 
@@ -43,7 +43,7 @@ a) With already introspected schema
 }
 ```
 
-b) From `.graphql` (requires `graphql-tools`)
+b) From `.graphql` (requires [gql-tools](https://github.com/almilo/gql-tools))
 
 ```json
 {
