@@ -51,7 +51,7 @@ b) From `.graphql` (requires [gql-tools](https://github.com/almilo/gql-tools))
     {
       "name": "generate-schematypes",
       "command": "npx gqlschema -i $in -o $in.json  && npx graphql-to-reason $in.json $out"
-    },
+    }
   ],
   "sources": [
     {
@@ -59,7 +59,7 @@ b) From `.graphql` (requires [gql-tools](https://github.com/almilo/gql-tools))
       "generators": [
         {
           "name": "generate-schematypes",
-          "edge": ["SchemaTypes_builder.re", ":", "schema.graphql"]
+          "edge": ["SchemaTypes_builder.re", "schema.graphql.json", ":", "schema.graphql"]
         }
       ]
     }
@@ -89,20 +89,17 @@ Next we generate ReasonML code from it:
 It will output `SchemaTypes_builder.re` to use it in other modules:
 ```reason
 include SchemaTypes_builder.MakeSchema({
-  /*
-     we need to configure our server types:
+  /* we need to configure our server types:
       - all scalar types
       - resolver type
-      - custom directive resolver type
-  */
+      - custom directive resolver type  */
   module Scalars = {
-    type click = string;
+    type click = int;
   };
-  /*
-   args - our arguments Array
-   fieldType - original field type
-   result - resoved value (for example Js.Nullable.t(fieldType))
-  */
+
+  /* args - our arguments Array
+     fieldType - original field type
+     result - resoved value (for example Js.Nullable.t(fieldType)) */
   type resolver('args, 'fieldType, 'result) =
     (
       unit,
@@ -119,7 +116,7 @@ include SchemaTypes_builder.MakeSchema({
 
 module Clicks = {
   let count = ref(0);
-  /*No need to explicitly type resolver, it will infer correct type later*/
+  /* No need to explicitly type resolver, it will infer correct type later */
   let resolver = (_node, _args, _context, _resolveInfo, _fieldInfo) =>
     Js.Promise.make((~resolve, ~reject) => {
       count := count^ + 1;

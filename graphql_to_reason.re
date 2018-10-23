@@ -17,13 +17,13 @@ let json_file_path =
     }
   );
 
-let output = (~outputFile, ~result) => {
+let output = (~outputFiles, ~result) => {
   let (formatter, oc) =
-    switch (outputFile) {
-    | Some(target) =>
+    switch (outputFiles) {
+    | [target, ...rest] =>
       let oc = Out_channel.create(target);
       (Format.formatter_of_out_channel(oc), Some(oc));
-    | None => (Format.std_formatter, None)
+    | _ => (Format.std_formatter, None)
     };
 
   Reason_toolchain.RE.print_implementation_with_comments(formatter, result);
@@ -42,7 +42,7 @@ let fromFile =
       ~summary="generate reason types from graphql_schema.json",
       {
         let%map_open filepath = anon("filepath" %: json_file_path)
-        and outputFile = anon(maybe("output_path" %: file));
+        and outputFiles = anon(sequence("output_path" %: file));
         () => {
           let result =
             Lib.(
@@ -50,7 +50,7 @@ let fromFile =
               |> SchemaRead.read
               |> SchemaPrint.print
             );
-          output(~outputFile, ~result);
+          output(~outputFiles, ~result);
         };
       },
     )

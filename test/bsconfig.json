@@ -4,16 +4,96 @@
     {
       "dir": "output",
       "generators": [
-        {"name": "graphql", "edge": ["basic.re", ":", "../fixtures/basic.graphql"]},
-        {"name": "graphql", "edge": ["raw_field.re", ":", "../fixtures/raw_field.graphql"]},
-        {"name": "graphql", "edge": ["clicks.re", ":", "../fixtures/clicks.graphql"]},
-        {"name": "graphql", "edge": ["directives.re", ":", "../fixtures/directives.graphql"]},
-        {"name": "graphql", "edge": ["scalar.re", ":", "../fixtures/scalar.graphql"]},
-        {"name": "graphql", "edge": ["user.re", ":", "../fixtures/user.graphql"]},
-        {"name": "graphql", "edge": ["github.re", ":", "../fixtures/github.graphql"]},
-        {"name": "graphql", "edge": ["swapi.re", ":", "../fixtures/swapi.graphql"]},
-        {"name": "graphql", "edge": ["sketchsh.re", ":", "../fixtures/sketchsh.graphql"]},
-        {"name": "graphql", "edge": ["extend.re", ":", "../fixtures/extend.graphql"]}
+        {
+          "name": "graphql",
+          "edge": [
+            "basic.re",
+            "../fixtures/basic.graphql.json",
+            ":",
+            "../fixtures/basic.graphql"
+          ]
+        },
+        {
+          "name": "graphql",
+          "edge": [
+            "raw_field.re",
+            "../fixtures/raw_field.graphql.json",
+            ":",
+            "../fixtures/raw_field.graphql"
+          ]
+        },
+        {
+          "name": "graphql",
+          "edge": [
+            "clicks.re",
+            "../fixtures/clicks.graphql.json",
+            ":",
+            "../fixtures/clicks.graphql"
+          ]
+        },
+        {
+          "name": "graphql",
+          "edge": [
+            "directives.re",
+            "../fixtures/directives.graphql.json",
+            ":",
+            "../fixtures/directives.graphql"
+          ]
+        },
+        {
+          "name": "graphql",
+          "edge": [
+            "scalar.re",
+            "../fixtures/scalar.graphql.json",
+            ":",
+            "../fixtures/scalar.graphql"
+          ]
+        },
+        {
+          "name": "graphql",
+          "edge": [
+            "user.re",
+            "../fixtures/user.graphql.json",
+            ":",
+            "../fixtures/user.graphql"
+          ]
+        },
+        {
+          "name": "graphql",
+          "edge": [
+            "github.re",
+            "../fixtures/github.graphql.json",
+            ":",
+            "../fixtures/github.graphql"
+          ]
+        },
+        {
+          "name": "graphql",
+          "edge": [
+            "swapi.re",
+            "../fixtures/swapi.graphql.json",
+            ":",
+            "../fixtures/swapi.graphql"
+          ]
+        },
+        {
+          "name": "graphql",
+          "edge": [
+            "sketchsh.re",
+            "../fixtures/sketchsh.graphql.json",
+            ":",
+            "../fixtures/sketchsh.graphql"
+          ]
+        },
+        {
+          "name": "graphql",
+          "edge": [
+            "extend.re",
+            "../fixtures/extend.graphql.json",
+            ":",
+            "../fixtures/extend.graphql"
+          ]
+        }
       ]
     }
   ],
