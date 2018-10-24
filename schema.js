@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const fs = require("fs");
 const util = require("util");
 const graphql = require("graphql");
