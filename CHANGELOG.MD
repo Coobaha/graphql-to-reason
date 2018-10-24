@@ -8,6 +8,8 @@
 > - :house:      [Internal]
 > - :nail_care:  [Polish]
 
+## 0.3.1 - 2018-10-24
+- :bug: Fix schema bin env
 
 ## 0.3.0 - 2018-10-24
 
