@@ -9,6 +9,11 @@
 > - :nail_care:  [Polish]
 
 
+## 0.3.0 - 2018-10-24
+
+- :rocket: Add own introspection query ([3c1d1995](https://github.com/Coobaha/graphql-to-reason/commit/3c1d1995))
+- :bug: Fix types for extended queries
+
 ## 0.2.2 - 2018-10-23
 
 - :bug: Fix cli params ([98eb89cb](https://github.com/Coobaha/graphql-to-reason/commit/98eb89cb))
