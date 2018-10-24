@@ -6,8 +6,7 @@ This tool will transform existing GraphQL schema to ReasonML types to be used on
 [![npm](https://img.shields.io/npm/v/graphql-to-reason.svg)](https://www.npmjs.com/package/graphql-to-reason)
 
 ## Installation
-
-First, add this package as a dependency to your package.json:
+First, add this package as a dependency to your package.json
 ```
 yarn add --dev graphql-to-reason
 # or, if you use npm:
@@ -16,7 +15,7 @@ npm install -D graphql-to-reason
 
 `graphql-to-reason` requires json variant (aka introspection query) of `schema.graphql`.
 
-`schema.json` can be generated with [gql-tools](https://github.com/almilo/gql-tools) and `npx gqlschema -i schema.graphql -o schema.json`.
+`schema.json` can be generated with `npx graphql-to-reason-schema schema.graphql schema.json`.
 
 Integration with Bucklescript can be done via [generators](https://bucklescript.github.io/docs/en/build-advanced#customize-rules-generators-support)
 
@@ -43,14 +42,14 @@ a) With already introspected schema
 }
 ```
 
-b) From `.graphql` (requires [gql-tools](https://github.com/almilo/gql-tools))
+b) From `.graphql`
 
 ```json
 {
   "generators": [
     {
       "name": "generate-schematypes",
-      "command": "npx gqlschema -i $in -o $in.json  && npx graphql-to-reason $in.json $out"
+      "command": "npx graphql-to-reason-schema $in $in.json  && npx graphql-to-reason $in.json $out"
     }
   ],
   "sources": [

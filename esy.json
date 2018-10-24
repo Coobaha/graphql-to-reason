@@ -6,7 +6,7 @@
   "scripts": {
     "watch":
       "nodemon -e re -q -w ./lib/ -w ./graphql-to-reason.re --exec 'esy build'",
-    "test":  "make test"
+    "test": "make test"
   },
   "esy": {
     "build": "refmterr dune build -p #{self.name}",
@@ -21,7 +21,9 @@
     "@opam/ppx_tools_versioned": "*",
     "@opam/yojson": "*",
     "ocaml": "~4.6.0",
-    "refmterr": "*"
+    "refmterr": "*",
+    "graphql": "^14.0.0",
+    "graphql-tools": "^4.0.0"
   },
   "resolutions": { "@opam/menhir": "20171013" },
   "devDependencies": { "@esy-ocaml/merlin": "*" }

@@ -12,6 +12,7 @@ module MakeSchema = (Config: SchemaConfig) => {
     .
     "__typename": string,
     "hello": Js.Nullable.t(string),
+    "test": Js.Nullable.t(string),
   };
   module Queries = {
     [@bs.deriving abstract]
@@ -20,6 +21,8 @@ module MakeSchema = (Config: SchemaConfig) => {
       __typename: resolver(unit, string, string),
       [@bs.optional]
       hello: resolver(unit, string, Js.Nullable.t(string)),
+      [@bs.optional]
+      test: resolver(unit, string, Js.Nullable.t(string)),
     };
   };
   module Mutations = {};

@@ -1,12 +1,45 @@
 {
-  "hash": "be1fb1fc95799fa439c2c4d9a3e103c2",
-  "root": "root@path:./package.json",
+  "hash": "91a5c649793ce4dee5550c0d5d955b66",
+  "root": "root@path:./esy.json",
   "node": {
-    "root@path:./package.json": {
+    "zen-observable-ts@0.8.10": {
+      "record": {
+        "name": "zen-observable-ts",
+        "version": "0.8.10",
+        "source":
+          "archive:https://registry.npmjs.org/zen-observable-ts/-/zen-observable-ts-0.8.10.tgz#sha1:18e2ce1c89fe026e9621fd83cc05168228fce829",
+        "files": [],
+        "opam": null
+      },
+      "dependencies": [ "zen-observable@0.8.10" ]
+    },
+    "zen-observable@0.8.10": {
+      "record": {
+        "name": "zen-observable",
+        "version": "0.8.10",
+        "source":
+          "archive:https://registry.npmjs.org/zen-observable/-/zen-observable-0.8.10.tgz#sha1:85ad75d41fed82e5b4651bd64ca117b2af960182",
+        "files": [],
+        "opam": null
+      },
+      "dependencies": []
+    },
+    "uuid@3.3.2": {
+      "record": {
+        "name": "uuid",
+        "version": "3.3.2",
+        "source":
+          "archive:https://registry.npmjs.org/uuid/-/uuid-3.3.2.tgz#sha1:1b4af4955eb3077c501c23872fc6513811587131",
+        "files": [],
+        "opam": null
+      },
+      "dependencies": []
+    },
+    "root@path:./esy.json": {
       "record": {
         "name": "root",
-        "version": "path:./package.json",
-        "source": "path:./package.json",
+        "version": "path:./esy.json",
+        "source": "path:./esy.json",
         "files": [],
         "opam": null
       },
@@ -16,21 +49,22 @@
         "@opam/ocaml-migrate-parsetree@opam:1.1.0",
         "@opam/ppx_tools@opam:5.1+4.06.0",
         "@opam/ppx_tools_versioned@opam:5.2.1", "@opam/yojson@opam:1.4.1",
-        "ocaml@4.6.7", "refmterr@3.1.7"
+        "graphql@14.0.2", "graphql-tools@4.0.2", "ocaml@4.6.7",
+        "refmterr@3.1.9"
       ]
     },
-    "refmterr@3.1.7": {
+    "refmterr@3.1.9": {
       "record": {
         "name": "refmterr",
-        "version": "3.1.7",
+        "version": "3.1.9",
         "source":
-          "archive:https://registry.npmjs.org/refmterr/-/refmterr-3.1.7.tgz#sha1:fdd6a58e212b18c6a0685ff21f27a7df6621b3e8",
+          "archive:https://registry.npmjs.org/refmterr/-/refmterr-3.1.9.tgz#sha1:03d4679c564fb1d1de28d1c0ce8b1fb934406bac",
         "files": [],
         "opam": null
       },
       "dependencies": [
         "@esy-ocaml/reason@3.3.3", "@opam/jbuilder@opam:transition",
-        "@opam/re@opam:1.7.3"
+        "@opam/re@opam:1.7.3", "ocaml@4.6.7"
       ]
     },
     "ocaml@4.6.7": {
@@ -43,6 +77,88 @@
         "opam": null
       },
       "dependencies": []
+    },
+    "iterall@1.2.2": {
+      "record": {
+        "name": "iterall",
+        "version": "1.2.2",
+        "source":
+          "archive:https://registry.npmjs.org/iterall/-/iterall-1.2.2.tgz#sha1:92d70deb8028e0c39ff3164fdbf4d8b088130cd7",
+        "files": [],
+        "opam": null
+      },
+      "dependencies": []
+    },
+    "graphql-tools@4.0.2": {
+      "record": {
+        "name": "graphql-tools",
+        "version": "4.0.2",
+        "source":
+          "archive:https://registry.npmjs.org/graphql-tools/-/graphql-tools-4.0.2.tgz#sha1:9da22974cc6bf6524ed4f4af35556fd15aa6516d",
+        "files": [],
+        "opam": null
+      },
+      "dependencies": [
+        "apollo-link@1.2.3", "apollo-utilities@1.0.23",
+        "deprecated-decorator@0.1.6", "iterall@1.2.2", "uuid@3.3.2"
+      ]
+    },
+    "graphql@14.0.2": {
+      "record": {
+        "name": "graphql",
+        "version": "14.0.2",
+        "source":
+          "archive:https://registry.npmjs.org/graphql/-/graphql-14.0.2.tgz#sha1:7dded337a4c3fd2d075692323384034b357f5650",
+        "files": [],
+        "opam": null
+      },
+      "dependencies": [ "iterall@1.2.2" ]
+    },
+    "fast-json-stable-stringify@2.0.0": {
+      "record": {
+        "name": "fast-json-stable-stringify",
+        "version": "2.0.0",
+        "source":
+          "archive:https://registry.npmjs.org/fast-json-stable-stringify/-/fast-json-stable-stringify-2.0.0.tgz#sha1:d5142c0caee6b1189f87d3a76111064f86c8bbf2",
+        "files": [],
+        "opam": null
+      },
+      "dependencies": []
+    },
+    "deprecated-decorator@0.1.6": {
+      "record": {
+        "name": "deprecated-decorator",
+        "version": "0.1.6",
+        "source":
+          "archive:https://registry.npmjs.org/deprecated-decorator/-/deprecated-decorator-0.1.6.tgz#sha1:00966317b7a12fe92f3cc831f7583af329b86c37",
+        "files": [],
+        "opam": null
+      },
+      "dependencies": []
+    },
+    "apollo-utilities@1.0.23": {
+      "record": {
+        "name": "apollo-utilities",
+        "version": "1.0.23",
+        "source":
+          "archive:https://registry.npmjs.org/apollo-utilities/-/apollo-utilities-1.0.23.tgz#sha1:9416e5da31cc8d9d46502de6f90aa1447cd368c6",
+        "files": [],
+        "opam": null
+      },
+      "dependencies": [ "fast-json-stable-stringify@2.0.0" ]
+    },
+    "apollo-link@1.2.3": {
+      "record": {
+        "name": "apollo-link",
+        "version": "1.2.3",
+        "source":
+          "archive:https://registry.npmjs.org/apollo-link/-/apollo-link-1.2.3.tgz#sha1:9bd8d5fe1d88d31dc91dae9ecc22474d451fb70d",
+        "files": [],
+        "opam": null
+      },
+      "dependencies": [
+        "apollo-utilities@1.0.23", "zen-observable-ts@0.8.10"
+      ]
     },
     "@opam/yojson@opam:1.4.1": {
       "record": {

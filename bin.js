@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 "use strict";
 
-var child_process = require("child_process");
-var path = require("path");
-var fs = require("fs");
+const child_process = require('child_process')
+const path = require('path')
+const fs = require('fs')
 
-var arch = process.arch;
-var platform = process.platform;
+let arch = process.arch
+let platform = process.platform
 
 if (arch === "ia32") {
   arch = "x86";
@@ -16,9 +16,9 @@ if (platform === "win32") {
   platform = "win";
 }
 
-var filename = "graphql-to-reason-" + platform + "-" + arch + ".exe";
-var exe = path.join(__dirname, "bin", filename);
-var supported = fs.existsSync(exe);
+const filename = 'graphql-to-reason-' + platform + '-' + arch + '.exe'
+const exe = path.join(__dirname, 'bin', filename)
+const supported = fs.existsSync(exe)
 
 if (!supported) {
   console.error("graphql-to-reason does not support this platform :(");
@@ -36,7 +36,7 @@ if (!supported) {
   console.error("on the " + arch + " architecture.");
 }
 
-var delegate_args = process.argv.slice(2);
+const delegate_args = process.argv.slice(2)
 
 try {
   child_process.execFileSync(exe, delegate_args, { stdio: "inherit" });
