@@ -13,7 +13,7 @@
     "buildsInSource": "_build"
   },
   "dependencies": {
-    "@esy-ocaml/reason": "3.3.3",
+    "@esy-ocaml/reason": "3.3.7",
     "@opam/core": "v0.11.3",
     "@opam/dune": "*",
     "@opam/ocaml-migrate-parsetree": "*",
@@ -23,7 +23,7 @@
     "ocaml": "~4.6.0",
     "refmterr": "*",
     "graphql": "^14.0.0",
-    "graphql-tools": "^4.0.0"
+    "graphql-tools": "^4.0.3"
   },
   "resolutions": { "@opam/menhir": "20171013" },
   "devDependencies": { "@esy-ocaml/merlin": "*" }

@@ -1,5 +1,5 @@
 {
-  "hash": "91a5c649793ce4dee5550c0d5d955b66",
+  "hash": "bbcec62fa4b6b064799a391fe7366fbf",
   "root": "root@path:./esy.json",
   "node": {
     "zen-observable-ts@0.8.10": {
@@ -44,12 +44,12 @@
         "opam": null
       },
       "dependencies": [
-        "@esy-ocaml/merlin@3.0.5005", "@esy-ocaml/reason@3.3.3",
+        "@esy-ocaml/merlin@3.0.5005", "@esy-ocaml/reason@3.3.7",
         "@opam/core@opam:v0.11.3", "@opam/dune@opam:1.4.0",
         "@opam/ocaml-migrate-parsetree@opam:1.1.0",
         "@opam/ppx_tools@opam:5.1+4.06.0",
         "@opam/ppx_tools_versioned@opam:5.2.1", "@opam/yojson@opam:1.4.1",
-        "graphql@14.0.2", "graphql-tools@4.0.2", "ocaml@4.6.7",
+        "graphql@14.0.2", "graphql-tools@4.0.3", "ocaml@4.6.7",
         "refmterr@3.1.9"
       ]
     },
@@ -63,7 +63,7 @@
         "opam": null
       },
       "dependencies": [
-        "@esy-ocaml/reason@3.3.3", "@opam/jbuilder@opam:transition",
+        "@esy-ocaml/reason@3.3.7", "@opam/jbuilder@opam:transition",
         "@opam/re@opam:1.7.3", "ocaml@4.6.7"
       ]
     },
@@ -89,17 +89,17 @@
       },
       "dependencies": []
     },
-    "graphql-tools@4.0.2": {
+    "graphql-tools@4.0.3": {
       "record": {
         "name": "graphql-tools",
-        "version": "4.0.2",
+        "version": "4.0.3",
         "source":
-          "archive:https://registry.npmjs.org/graphql-tools/-/graphql-tools-4.0.2.tgz#sha1:9da22974cc6bf6524ed4f4af35556fd15aa6516d",
+          "archive:https://registry.npmjs.org/graphql-tools/-/graphql-tools-4.0.3.tgz#sha1:23b5cb52c519212b1b2e4630a361464396ad264b",
         "files": [],
         "opam": null
       },
       "dependencies": [
-        "apollo-link@1.2.3", "apollo-utilities@1.0.23",
+        "apollo-link@1.2.3", "apollo-utilities@1.0.25",
         "deprecated-decorator@0.1.6", "iterall@1.2.2", "uuid@3.3.2"
       ]
     },
@@ -136,12 +136,12 @@
       },
       "dependencies": []
     },
-    "apollo-utilities@1.0.23": {
+    "apollo-utilities@1.0.25": {
       "record": {
         "name": "apollo-utilities",
-        "version": "1.0.23",
+        "version": "1.0.25",
         "source":
-          "archive:https://registry.npmjs.org/apollo-utilities/-/apollo-utilities-1.0.23.tgz#sha1:9416e5da31cc8d9d46502de6f90aa1447cd368c6",
+          "archive:https://registry.npmjs.org/apollo-utilities/-/apollo-utilities-1.0.25.tgz#sha1:899b00f5f990fb451675adf84cb3de82eb6372ea",
         "files": [],
         "opam": null
       },
@@ -157,7 +157,7 @@
         "opam": null
       },
       "dependencies": [
-        "apollo-utilities@1.0.23", "zen-observable-ts@0.8.10"
+        "apollo-utilities@1.0.25", "zen-observable-ts@0.8.10"
       ]
     },
     "@opam/yojson@opam:1.4.1": {
@@ -1674,21 +1674,20 @@
       },
       "dependencies": []
     },
-    "@esy-ocaml/reason@3.3.3": {
+    "@esy-ocaml/reason@3.3.7": {
       "record": {
         "name": "@esy-ocaml/reason",
-        "version": "3.3.3",
+        "version": "3.3.7",
         "source":
-          "archive:https://registry.npmjs.org/@esy-ocaml/reason/-/reason-3.3.3.tgz#sha1:cd4c673504f7217a11a77089b021b5ba9ed1f744",
+          "archive:https://registry.npmjs.org/@esy-ocaml/reason/-/reason-3.3.7.tgz#sha1:4d75b8876807c4178c6fff2359962066bb69d944",
         "files": [],
         "opam": null
       },
       "dependencies": [
-        "@esy-ocaml/esy-installer@0.0.0", "@esy-ocaml/substs@0.0.1",
-        "@opam/jbuilder@opam:transition", "@opam/menhir@opam:20171013",
+        "@opam/dune@opam:1.4.0", "@opam/menhir@opam:20171013",
         "@opam/merlin-extend@opam:0.3",
         "@opam/ocaml-migrate-parsetree@opam:1.1.0",
-        "@opam/ocamlfind@opam:1.8.0", "@opam/result@opam:1.3"
+        "@opam/ocamlfind@opam:1.8.0", "@opam/result@opam:1.3", "ocaml@4.6.7"
       ]
     },
     "@esy-ocaml/merlin@3.0.5005": {
