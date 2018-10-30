@@ -29,7 +29,7 @@ let some_or = (o, v) =>
 
 let add_typename_if_missing = fields =>
   Schema.(
-    if (List.exists(({fm_name}) => fm_name == "__typename", fields)) {
+    if (List.exists(({fm_name, _}) => fm_name == "__typename", fields)) {
       fields;
     } else {
       [typename_field, ...fields];

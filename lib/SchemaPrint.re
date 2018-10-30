@@ -143,25 +143,22 @@ let print = schema => {
       (
         {
           fm_name,
-          fm_description,
-          fm_arguments,
           fm_field_type,
-          fm_deprecation_reason,
+          _
         },
       ) => (
     fm_name,
     [],
     print_type_ref(fm_field_type),
   )
-  and print_resolver = (name, fields) =>
+  and print_resolver = (fields) =>
     List.map(
       (
         {
           fm_name,
-          fm_description,
           fm_arguments,
           fm_field_type,
-          fm_deprecation_reason,
+          _
         },
       ) =>
         Type.field(
@@ -214,7 +211,7 @@ let print = schema => {
       ),
     ];
   }
-  and print_scalar = ({sm_name, sm_description}) =>
+  and print_scalar = ({sm_name, _}) =>
     switch (sm_name) {
     | "String"
     | "Float"
@@ -228,14 +225,14 @@ let print = schema => {
         ),
       )
     }
-  and print_enum = ({em_name, em_description, em_values}) =>
+  and print_enum = ({em_name, em_values, _}) =>
     switch (em_name) {
     | isPrivate when String.sub(isPrivate, 0, 2) == "__" => None
     | em_name =>
       let name = uncap_key(em_name);
       Some(enum(name, List.map(({evm_name, _}) => evm_name, em_values)));
     }
-  and print_union = ({um_name, um_of_types, _}) =>
+  and print_union = ({um_name, _}) =>
     Type.mk({Location.txt: uncap_key(um_name), loc: Location.none})
   and print_union_runtime = ({um_name, um_of_types, _}) => {
     let unionName = uncap_key(um_name);
@@ -267,14 +264,14 @@ let print = schema => {
       um_of_types,
     );
   }
-  and print_interface = ({im_name, im_description, im_fields}) =>
+  and print_interface = ({im_name, im_fields, _}) =>
     Type.mk(
       ~manifest=closed_js_t(List.map(print_field, im_fields)),
       {Location.txt: uncap_key(im_name), loc: Location.none},
     )
-  and print_input = ({iom_name, iom_description, iom_input_fields}) =>
+  and print_input = ({iom_name, iom_input_fields, _}) =>
     print_args(iom_name, iom_input_fields)
-  and print_arg = ({am_name, am_description, am_arg_type}) => (
+  and print_arg = ({am_name, am_arg_type, _}) => (
     am_name,
     [],
     print_type_ref(~uncap_key=uncap_key_resolver, am_arg_type),
@@ -286,7 +283,7 @@ let print = schema => {
     );
 
   Hashtbl.iter(
-    (key, type_meta) =>
+    (_key, type_meta) =>
       switch (type_meta) {
       | Object({om_name, om_fields, _}) =>
         switch (String.lowercase_ascii(om_name)) {
@@ -298,16 +295,16 @@ let print = schema => {
             state.mutations =
               List.append(
                 state.mutations,
-                print_resolver(om_name, om_fields),
+                print_resolver( om_fields),
               )
           | "query" =>
             state.queries =
-              List.append(state.queries, print_resolver(om_name, om_fields))
+              List.append(state.queries, print_resolver(om_fields))
           | "subscription" =>
             state.subscriptions =
               List.append(
                 state.subscriptions,
-                print_resolver(om_name, om_fields),
+                print_resolver(om_fields),
               )
           | _ => ()
           };
@@ -336,7 +333,7 @@ let print = schema => {
   );
 
   Hashtbl.iter(
-    (key, dm) =>
+    (_key, dm) =>
       state.directives =
         List.append(state.directives, print_directive_resolver(dm)),
     schema.directive_map,
@@ -345,7 +342,7 @@ let print = schema => {
   let enums =
     switch (state.enums) {
     | [] => [%str]
-    | enums => [%str
+    | _ => [%str
         %s
         List.map(enum => Str.type_(Recursive, [enum]), state.enums)
       ]
@@ -354,7 +351,7 @@ let print = schema => {
   let inputs =
     switch (state.inputs) {
     | [] => [%str]
-    | inputs => [%str
+    | _ => [%str
         %s
         [Str.type_(Recursive, state.inputs)]
       ]
@@ -362,7 +359,7 @@ let print = schema => {
   let fields =
     switch (state.fields) {
     | [] => [%str]
-    | fields => [%str
+    | _ => [%str
         %s
         [
           Str.type_(
@@ -376,7 +373,7 @@ let print = schema => {
   let queries =
     switch (state.queries) {
     | [] => [%str]
-    | queries => [%str
+    | _ => [%str
         %s
         [Str.type_(Recursive, [abstractRecord("t", state.queries)])]
       ]
@@ -385,7 +382,7 @@ let print = schema => {
   let mutations =
     switch (state.mutations) {
     | [] => [%str]
-    | mutations => [%str
+    | _ => [%str
         %s
         [Str.type_(Recursive, [abstractRecord("t", state.mutations)])]
       ]
@@ -394,7 +391,7 @@ let print = schema => {
   let subscriptions =
     switch (state.subscriptions) {
     | [] => [%str]
-    | subscriptions => [%str
+    | _ => [%str
         %s
         [Str.type_(Recursive, [abstractRecord("t", state.subscriptions)])]
       ]
@@ -402,7 +399,7 @@ let print = schema => {
   let directives =
     switch (state.directives) {
     | [] => [%str]
-    | directives => [%str
+    | _ => [%str
         %s
         [Str.type_(Recursive, [abstractRecord("t", state.directives)])]
       ]

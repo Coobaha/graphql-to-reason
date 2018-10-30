@@ -20,7 +20,7 @@ let json_file_path =
 let output = (~outputFiles, ~result) => {
   let (formatter, oc) =
     switch (outputFiles) {
-    | [target, ...rest] =>
+    | [target, ..._rest] =>
       let oc = Out_channel.create(target);
       (Format.formatter_of_out_channel(oc), Some(oc));
     | _ => (Format.std_formatter, None)
