@@ -8,6 +8,9 @@
 > - :house:      [Internal]
 > - :nail_care:  [Polish]
 
+## 0.4.0 - 2018-11-03
+- :bug: Don't print __typename for fields
+
 ## 0.3.1 - 2018-10-24
 - :bug: Fix schema bin env
 
