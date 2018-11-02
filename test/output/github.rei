@@ -826,7 +826,6 @@ module MakeSchema:
     and searchResultItem
     and actor = {
       .
-      "__typename": string,
       "avatarUrl": uRI,
       "login": string,
       "resourcePath": uRI,
@@ -834,14 +833,12 @@ module MakeSchema:
     }
     and subscribable = {
       .
-      "__typename": string,
       "id": string,
       "viewerCanSubscribe": bool,
       "viewerSubscription": Js.Nullable.t(subscriptionState),
     }
     and gitObject = {
       .
-      "__typename": string,
       "abbreviatedOid": string,
       "commitResourcePath": uRI,
       "commitUrl": uRI,
@@ -851,64 +848,35 @@ module MakeSchema:
     }
     and closable = {
       .
-      "__typename": string,
       "closed": bool,
       "closedAt": Js.Nullable.t(dateTime),
     }
     and lockable = {
       .
-      "__typename": string,
       "activeLockReason": Js.Nullable.t(lockReason),
       "locked": bool,
     }
-    and assignable = {
-      .
-      "__typename": string,
-      "assignees": userConnection,
-    }
-    and deletable = {
-      .
-      "__typename": string,
-      "viewerCanDelete": bool,
-    }
+    and assignable = {. "assignees": userConnection}
+    and deletable = {. "viewerCanDelete": bool}
     and reactable = {
       .
-      "__typename": string,
       "databaseId": Js.Nullable.t(int),
       "id": string,
       "reactionGroups": Js.Nullable.t(array(reactionGroup)),
       "reactions": reactionConnection,
       "viewerCanReact": bool,
     }
-    and registryPackageOwner = {
-      .
-      "__typename": string,
-      "id": string,
-    }
-    and registryPackageSearch = {
-      .
-      "__typename": string,
-      "id": string,
-    }
+    and registryPackageOwner = {. "id": string}
+    and registryPackageSearch = {. "id": string}
     and uniformResourceLocatable = {
       .
-      "__typename": string,
       "resourcePath": uRI,
       "url": uRI,
     }
-    and repositoryNode = {
-      .
-      "__typename": string,
-      "repository": repository,
-    }
-    and node = {
-      .
-      "__typename": string,
-      "id": string,
-    }
+    and repositoryNode = {. "repository": repository}
+    and node = {. "id": string}
     and projectOwner = {
       .
-      "__typename": string,
       "id": string,
       "project": Js.Nullable.t(project),
       "projects": projectConnection,
@@ -918,7 +886,6 @@ module MakeSchema:
     }
     and repositoryOwner = {
       .
-      "__typename": string,
       "avatarUrl": uRI,
       "id": string,
       "login": string,
@@ -930,14 +897,12 @@ module MakeSchema:
     }
     and starrable = {
       .
-      "__typename": string,
       "id": string,
       "stargazers": stargazerConnection,
       "viewerHasStarred": bool,
     }
     and gitSignature = {
       .
-      "__typename": string,
       "email": string,
       "isValid": bool,
       "payload": string,
@@ -948,12 +913,10 @@ module MakeSchema:
     }
     and updatableComment = {
       .
-      "__typename": string,
       "viewerCannotUpdateReasons": array(commentCannotUpdateReason),
     }
     and comment = {
       .
-      "__typename": string,
       "author": Js.Nullable.t(actor),
       "authorAssociation": commentAuthorAssociation,
       "body": string,
@@ -970,14 +933,9 @@ module MakeSchema:
       "userContentEdits": Js.Nullable.t(userContentEditConnection),
       "viewerDidAuthor": bool,
     }
-    and labelable = {
-      .
-      "__typename": string,
-      "labels": Js.Nullable.t(labelConnection),
-    }
+    and labelable = {. "labels": Js.Nullable.t(labelConnection)}
     and repositoryInfo = {
       .
-      "__typename": string,
       "createdAt": dateTime,
       "description": Js.Nullable.t(string),
       "descriptionHTML": hTML,
@@ -1002,14 +960,9 @@ module MakeSchema:
       "updatedAt": dateTime,
       "url": uRI,
     }
-    and updatable = {
-      .
-      "__typename": string,
-      "viewerCanUpdate": bool,
-    }
+    and updatable = {. "viewerCanUpdate": bool}
     and reactingUserConnection = {
       .
-      "__typename": string,
       "edges": Js.Nullable.t(array(Js.Nullable.t(reactingUserEdge))),
       "nodes": Js.Nullable.t(array(Js.Nullable.t(user))),
       "pageInfo": pageInfo,
@@ -1017,7 +970,6 @@ module MakeSchema:
     }
     and gitActor = {
       .
-      "__typename": string,
       "avatarUrl": uRI,
       "date": Js.Nullable.t(gitTimestamp),
       "email": Js.Nullable.t(string),
@@ -1026,7 +978,6 @@ module MakeSchema:
     }
     and pushAllowance = {
       .
-      "__typename": string,
       "actor": Js.Nullable.t(pushAllowanceActor),
       "branchProtectionRule": Js.Nullable.t(branchProtectionRule),
       "id": string,
@@ -1034,13 +985,11 @@ module MakeSchema:
     }
     and projectEdge = {
       .
-      "__typename": string,
       "cursor": string,
       "node": Js.Nullable.t(project),
     }
     and reviewDismissalAllowance = {
       .
-      "__typename": string,
       "actor": Js.Nullable.t(reviewDismissalAllowanceActor),
       "branchProtectionRule": Js.Nullable.t(branchProtectionRule),
       "id": string,
@@ -1048,7 +997,6 @@ module MakeSchema:
     }
     and convertedNoteToIssueEvent = {
       .
-      "__typename": string,
       "actor": Js.Nullable.t(actor),
       "createdAt": dateTime,
       "databaseId": Js.Nullable.t(int),
@@ -1056,7 +1004,6 @@ module MakeSchema:
     }
     and labeledEvent = {
       .
-      "__typename": string,
       "actor": Js.Nullable.t(actor),
       "createdAt": dateTime,
       "id": string,
@@ -1065,7 +1012,6 @@ module MakeSchema:
     }
     and app = {
       .
-      "__typename": string,
       "createdAt": dateTime,
       "databaseId": Js.Nullable.t(int),
       "description": Js.Nullable.t(string),
@@ -1079,7 +1025,6 @@ module MakeSchema:
     }
     and status = {
       .
-      "__typename": string,
       "commit": Js.Nullable.t(commit),
       "context": Js.Nullable.t(statusContext),
       "contexts": array(statusContext),
@@ -1088,7 +1033,6 @@ module MakeSchema:
     }
     and pageInfo = {
       .
-      "__typename": string,
       "endCursor": Js.Nullable.t(string),
       "hasNextPage": bool,
       "hasPreviousPage": bool,
@@ -1096,19 +1040,16 @@ module MakeSchema:
     }
     and issueCommentEdge = {
       .
-      "__typename": string,
       "cursor": string,
       "node": Js.Nullable.t(issueComment),
     }
     and userContentEditEdge = {
       .
-      "__typename": string,
       "cursor": string,
       "node": Js.Nullable.t(userContentEdit),
     }
     and organizationConnection = {
       .
-      "__typename": string,
       "edges": Js.Nullable.t(array(Js.Nullable.t(organizationEdge))),
       "nodes": Js.Nullable.t(array(Js.Nullable.t(organization))),
       "pageInfo": pageInfo,
@@ -1116,7 +1057,6 @@ module MakeSchema:
     }
     and releaseConnection = {
       .
-      "__typename": string,
       "edges": Js.Nullable.t(array(Js.Nullable.t(releaseEdge))),
       "nodes": Js.Nullable.t(array(Js.Nullable.t(release))),
       "pageInfo": pageInfo,
@@ -1124,7 +1064,6 @@ module MakeSchema:
     }
     and reviewRequestConnection = {
       .
-      "__typename": string,
       "edges": Js.Nullable.t(array(Js.Nullable.t(reviewRequestEdge))),
       "nodes": Js.Nullable.t(array(Js.Nullable.t(reviewRequest))),
       "pageInfo": pageInfo,
@@ -1132,7 +1071,6 @@ module MakeSchema:
     }
     and pullRequestCommit = {
       .
-      "__typename": string,
       "commit": commit,
       "id": string,
       "pullRequest": pullRequest,
@@ -1141,14 +1079,12 @@ module MakeSchema:
     }
     and addPullRequestReviewCommentPayload = {
       .
-      "__typename": string,
       "clientMutationId": Js.Nullable.t(string),
       "comment": pullRequestReviewComment,
       "commentEdge": pullRequestReviewCommentEdge,
     }
     and pullRequestReviewConnection = {
       .
-      "__typename": string,
       "edges": Js.Nullable.t(array(Js.Nullable.t(pullRequestReviewEdge))),
       "nodes": Js.Nullable.t(array(Js.Nullable.t(pullRequestReview))),
       "pageInfo": pageInfo,
@@ -1156,7 +1092,6 @@ module MakeSchema:
     }
     and externalIdentityConnection = {
       .
-      "__typename": string,
       "edges": Js.Nullable.t(array(Js.Nullable.t(externalIdentityEdge))),
       "nodes": Js.Nullable.t(array(Js.Nullable.t(externalIdentity))),
       "pageInfo": pageInfo,
@@ -1164,13 +1099,11 @@ module MakeSchema:
     }
     and commitCommentEdge = {
       .
-      "__typename": string,
       "cursor": string,
       "node": Js.Nullable.t(commitComment),
     }
     and assignedEvent = {
       .
-      "__typename": string,
       "actor": Js.Nullable.t(actor),
       "assignable": assignable,
       "createdAt": dateTime,
@@ -1179,7 +1112,6 @@ module MakeSchema:
     }
     and projectColumnConnection = {
       .
-      "__typename": string,
       "edges": Js.Nullable.t(array(Js.Nullable.t(projectColumnEdge))),
       "nodes": Js.Nullable.t(array(Js.Nullable.t(projectColumn))),
       "pageInfo": pageInfo,
@@ -1187,7 +1119,6 @@ module MakeSchema:
     }
     and statusContext = {
       .
-      "__typename": string,
       "commit": Js.Nullable.t(commit),
       "context": string,
       "createdAt": dateTime,
@@ -1199,7 +1130,6 @@ module MakeSchema:
     }
     and gpgSignature = {
       .
-      "__typename": string,
       "email": string,
       "isValid": bool,
       "keyId": Js.Nullable.t(string),
@@ -1211,7 +1141,6 @@ module MakeSchema:
     }
     and commitConnection = {
       .
-      "__typename": string,
       "edges": Js.Nullable.t(array(Js.Nullable.t(commitEdge))),
       "nodes": Js.Nullable.t(array(Js.Nullable.t(commit))),
       "pageInfo": pageInfo,
@@ -1219,7 +1148,6 @@ module MakeSchema:
     }
     and bot = {
       .
-      "__typename": string,
       "avatarUrl": uRI,
       "createdAt": dateTime,
       "databaseId": Js.Nullable.t(int),
@@ -1231,13 +1159,11 @@ module MakeSchema:
     }
     and externalIdentityEdge = {
       .
-      "__typename": string,
       "cursor": string,
       "node": Js.Nullable.t(externalIdentity),
     }
     and protectedBranchConnection = {
       .
-      "__typename": string,
       "edges": Js.Nullable.t(array(Js.Nullable.t(protectedBranchEdge))),
       "nodes": Js.Nullable.t(array(Js.Nullable.t(protectedBranch))),
       "pageInfo": pageInfo,
@@ -1245,25 +1171,21 @@ module MakeSchema:
     }
     and pullRequestTimelineItemEdge = {
       .
-      "__typename": string,
       "cursor": string,
       "node": Js.Nullable.t(pullRequestTimelineItem),
     }
     and projectColumnEdge = {
       .
-      "__typename": string,
       "cursor": string,
       "node": Js.Nullable.t(projectColumn),
     }
     and publicKey = {
       .
-      "__typename": string,
       "id": string,
       "key": string,
     }
     and pullRequestReview = {
       .
-      "__typename": string,
       "author": Js.Nullable.t(actor),
       "authorAssociation": commentAuthorAssociation,
       "body": string,
@@ -1295,7 +1217,6 @@ module MakeSchema:
     }
     and releaseAssetConnection = {
       .
-      "__typename": string,
       "edges": Js.Nullable.t(array(Js.Nullable.t(releaseAssetEdge))),
       "nodes": Js.Nullable.t(array(Js.Nullable.t(releaseAsset))),
       "pageInfo": pageInfo,
@@ -1303,7 +1224,6 @@ module MakeSchema:
     }
     and branchProtectionRuleConnection = {
       .
-      "__typename": string,
       "edges":
         Js.Nullable.t(array(Js.Nullable.t(branchProtectionRuleEdge))),
       "nodes": Js.Nullable.t(array(Js.Nullable.t(branchProtectionRule))),
@@ -1312,7 +1232,6 @@ module MakeSchema:
     }
     and releaseAsset = {
       .
-      "__typename": string,
       "contentType": string,
       "createdAt": dateTime,
       "downloadCount": int,
@@ -1327,7 +1246,6 @@ module MakeSchema:
     }
     and deployKeyConnection = {
       .
-      "__typename": string,
       "edges": Js.Nullable.t(array(Js.Nullable.t(deployKeyEdge))),
       "nodes": Js.Nullable.t(array(Js.Nullable.t(deployKey))),
       "pageInfo": pageInfo,
@@ -1335,26 +1253,22 @@ module MakeSchema:
     }
     and pullRequestCommitEdge = {
       .
-      "__typename": string,
       "cursor": string,
       "node": Js.Nullable.t(pullRequestCommit),
     }
     and removeStarPayload = {
       .
-      "__typename": string,
       "clientMutationId": Js.Nullable.t(string),
       "starrable": starrable,
     }
     and suggestedReviewer = {
       .
-      "__typename": string,
       "isAuthor": bool,
       "isCommenter": bool,
       "reviewer": user,
     }
     and reviewRequest = {
       .
-      "__typename": string,
       "databaseId": Js.Nullable.t(int),
       "id": string,
       "pullRequest": pullRequest,
@@ -1362,7 +1276,6 @@ module MakeSchema:
     }
     and tree = {
       .
-      "__typename": string,
       "abbreviatedOid": string,
       "commitResourcePath": uRI,
       "commitUrl": uRI,
@@ -1373,7 +1286,6 @@ module MakeSchema:
     }
     and searchResultItemConnection = {
       .
-      "__typename": string,
       "codeCount": int,
       "edges": Js.Nullable.t(array(Js.Nullable.t(searchResultItemEdge))),
       "issueCount": int,
@@ -1385,7 +1297,6 @@ module MakeSchema:
     }
     and stargazerConnection = {
       .
-      "__typename": string,
       "edges": Js.Nullable.t(array(Js.Nullable.t(stargazerEdge))),
       "nodes": Js.Nullable.t(array(Js.Nullable.t(user))),
       "pageInfo": pageInfo,
@@ -1393,14 +1304,12 @@ module MakeSchema:
     }
     and languageEdge = {
       .
-      "__typename": string,
       "cursor": string,
       "node": language,
       "size": int,
     }
     and issueCommentConnection = {
       .
-      "__typename": string,
       "edges": Js.Nullable.t(array(Js.Nullable.t(issueCommentEdge))),
       "nodes": Js.Nullable.t(array(Js.Nullable.t(issueComment))),
       "pageInfo": pageInfo,
@@ -1408,7 +1317,6 @@ module MakeSchema:
     }
     and tag = {
       .
-      "__typename": string,
       "abbreviatedOid": string,
       "commitResourcePath": uRI,
       "commitUrl": uRI,
@@ -1422,20 +1330,17 @@ module MakeSchema:
     }
     and addPullRequestReviewPayload = {
       .
-      "__typename": string,
       "clientMutationId": Js.Nullable.t(string),
       "pullRequestReview": pullRequestReview,
       "reviewEdge": pullRequestReviewEdge,
     }
     and updateProjectColumnPayload = {
       .
-      "__typename": string,
       "clientMutationId": Js.Nullable.t(string),
       "projectColumn": projectColumn,
     }
     and refConnection = {
       .
-      "__typename": string,
       "edges": Js.Nullable.t(array(Js.Nullable.t(refEdge))),
       "nodes": Js.Nullable.t(array(Js.Nullable.t(ref))),
       "pageInfo": pageInfo,
@@ -1443,13 +1348,11 @@ module MakeSchema:
     }
     and issueTimelineItemEdge = {
       .
-      "__typename": string,
       "cursor": string,
       "node": Js.Nullable.t(issueTimelineItem),
     }
     and crossReferencedEvent = {
       .
-      "__typename": string,
       "actor": Js.Nullable.t(actor),
       "createdAt": dateTime,
       "id": string,
@@ -1463,7 +1366,6 @@ module MakeSchema:
     }
     and reaction = {
       .
-      "__typename": string,
       "content": reactionContent,
       "createdAt": dateTime,
       "databaseId": Js.Nullable.t(int),
@@ -1473,14 +1375,12 @@ module MakeSchema:
     }
     and addProjectCardPayload = {
       .
-      "__typename": string,
       "cardEdge": projectCardEdge,
       "clientMutationId": Js.Nullable.t(string),
       "projectColumn": project,
     }
     and gistComment = {
       .
-      "__typename": string,
       "author": Js.Nullable.t(actor),
       "authorAssociation": commentAuthorAssociation,
       "body": string,
@@ -1504,26 +1404,22 @@ module MakeSchema:
     }
     and organizationInvitationEdge = {
       .
-      "__typename": string,
       "cursor": string,
       "node": Js.Nullable.t(organizationInvitation),
     }
     and repositoryInvitationEdge = {
       .
-      "__typename": string,
       "cursor": string,
       "node": Js.Nullable.t(repositoryInvitation),
     }
     and textMatchHighlight = {
       .
-      "__typename": string,
       "beginIndice": int,
       "endIndice": int,
       "text": string,
     }
     and projectCard = {
       .
-      "__typename": string,
       "column": Js.Nullable.t(projectColumn),
       "content": Js.Nullable.t(projectCardItem),
       "createdAt": dateTime,
@@ -1540,7 +1436,6 @@ module MakeSchema:
     }
     and languageConnection = {
       .
-      "__typename": string,
       "edges": Js.Nullable.t(array(Js.Nullable.t(languageEdge))),
       "nodes": Js.Nullable.t(array(Js.Nullable.t(language))),
       "pageInfo": pageInfo,
@@ -1549,19 +1444,16 @@ module MakeSchema:
     }
     and topicEdge = {
       .
-      "__typename": string,
       "cursor": string,
       "node": Js.Nullable.t(topic),
     }
     and refEdge = {
       .
-      "__typename": string,
       "cursor": string,
       "node": Js.Nullable.t(ref),
     }
     and marketplaceListing = {
       .
-      "__typename": string,
       "app": Js.Nullable.t(app),
       "companyUrl": Js.Nullable.t(uRI),
       "configurationResourcePath": uRI,
@@ -1616,7 +1508,6 @@ module MakeSchema:
     }
     and commitCommentConnection = {
       .
-      "__typename": string,
       "edges": Js.Nullable.t(array(Js.Nullable.t(commitCommentEdge))),
       "nodes": Js.Nullable.t(array(Js.Nullable.t(commitComment))),
       "pageInfo": pageInfo,
@@ -1624,7 +1515,6 @@ module MakeSchema:
     }
     and pullRequestReviewCommentConnection = {
       .
-      "__typename": string,
       "edges":
         Js.Nullable.t(array(Js.Nullable.t(pullRequestReviewCommentEdge))),
       "nodes":
@@ -1634,19 +1524,16 @@ module MakeSchema:
     }
     and labelEdge = {
       .
-      "__typename": string,
       "cursor": string,
       "node": Js.Nullable.t(label),
     }
     and createProjectPayload = {
       .
-      "__typename": string,
       "clientMutationId": Js.Nullable.t(string),
       "project": project,
     }
     and treeEntry = {
       .
-      "__typename": string,
       "mode": int,
       "name": string,
       "object": Js.Nullable.t(gitObject),
@@ -1656,7 +1543,6 @@ module MakeSchema:
     }
     and blameRange = {
       .
-      "__typename": string,
       "age": int,
       "commit": commit,
       "endingLine": int,
@@ -1664,7 +1550,6 @@ module MakeSchema:
     }
     and baseRefForcePushedEvent = {
       .
-      "__typename": string,
       "actor": Js.Nullable.t(actor),
       "afterCommit": Js.Nullable.t(commit),
       "beforeCommit": Js.Nullable.t(commit),
@@ -1675,7 +1560,6 @@ module MakeSchema:
     }
     and marketplaceCategory = {
       .
-      "__typename": string,
       "description": Js.Nullable.t(string),
       "howItWorks": Js.Nullable.t(string),
       "id": string,
@@ -1688,13 +1572,11 @@ module MakeSchema:
     }
     and commitEdge = {
       .
-      "__typename": string,
       "cursor": string,
       "node": Js.Nullable.t(commit),
     }
     and teamRepositoryConnection = {
       .
-      "__typename": string,
       "edges": Js.Nullable.t(array(Js.Nullable.t(teamRepositoryEdge))),
       "nodes": Js.Nullable.t(array(Js.Nullable.t(repository))),
       "pageInfo": pageInfo,
@@ -1702,13 +1584,11 @@ module MakeSchema:
     }
     and teamEdge = {
       .
-      "__typename": string,
       "cursor": string,
       "node": Js.Nullable.t(team),
     }
     and commitHistoryConnection = {
       .
-      "__typename": string,
       "edges": Js.Nullable.t(array(Js.Nullable.t(commitEdge))),
       "nodes": Js.Nullable.t(array(Js.Nullable.t(commit))),
       "pageInfo": pageInfo,
@@ -1716,7 +1596,6 @@ module MakeSchema:
     }
     and userConnection = {
       .
-      "__typename": string,
       "edges": Js.Nullable.t(array(Js.Nullable.t(userEdge))),
       "nodes": Js.Nullable.t(array(Js.Nullable.t(user))),
       "pageInfo": pageInfo,
@@ -1724,25 +1603,18 @@ module MakeSchema:
     }
     and gistEdge = {
       .
-      "__typename": string,
       "cursor": string,
       "node": Js.Nullable.t(gist),
     }
     and teamRepositoryEdge = {
       .
-      "__typename": string,
       "cursor": string,
       "node": repository,
       "permission": repositoryPermission,
     }
-    and blame = {
-      .
-      "__typename": string,
-      "ranges": array(blameRange),
-    }
+    and blame = {. "ranges": array(blameRange)}
     and branchProtectionRule = {
       .
-      "__typename": string,
       "branchProtectionRuleConflicts": branchProtectionRuleConflictConnection,
       "creator": Js.Nullable.t(actor),
       "databaseId": Js.Nullable.t(int),
@@ -1766,7 +1638,6 @@ module MakeSchema:
     }
     and deployment = {
       .
-      "__typename": string,
       "commit": Js.Nullable.t(commit),
       "createdAt": dateTime,
       "creator": Js.Nullable.t(actor),
@@ -1785,51 +1656,43 @@ module MakeSchema:
     }
     and repositoryCollaboratorEdge = {
       .
-      "__typename": string,
       "cursor": string,
       "node": user,
       "permission": repositoryPermission,
     }
     and language = {
       .
-      "__typename": string,
       "color": Js.Nullable.t(string),
       "id": string,
       "name": string,
     }
     and deleteProjectPayload = {
       .
-      "__typename": string,
       "clientMutationId": Js.Nullable.t(string),
       "owner": projectOwner,
     }
     and addStarPayload = {
       .
-      "__typename": string,
       "clientMutationId": Js.Nullable.t(string),
       "starrable": starrable,
     }
     and publicKeyEdge = {
       .
-      "__typename": string,
       "cursor": string,
       "node": Js.Nullable.t(publicKey),
     }
     and repositoryEdge = {
       .
-      "__typename": string,
       "cursor": string,
       "node": Js.Nullable.t(repository),
     }
     and deploymentStatusEdge = {
       .
-      "__typename": string,
       "cursor": string,
       "node": Js.Nullable.t(deploymentStatus),
     }
     and headRefForcePushedEvent = {
       .
-      "__typename": string,
       "actor": Js.Nullable.t(actor),
       "afterCommit": Js.Nullable.t(commit),
       "beforeCommit": Js.Nullable.t(commit),
@@ -1840,7 +1703,6 @@ module MakeSchema:
     }
     and baseRefChangedEvent = {
       .
-      "__typename": string,
       "actor": Js.Nullable.t(actor),
       "createdAt": dateTime,
       "databaseId": Js.Nullable.t(int),
@@ -1848,7 +1710,6 @@ module MakeSchema:
     }
     and organizationIdentityProvider = {
       .
-      "__typename": string,
       "digestMethod": Js.Nullable.t(uRI),
       "externalIdentities": externalIdentityConnection,
       "id": string,
@@ -1860,7 +1721,6 @@ module MakeSchema:
     }
     and projectConnection = {
       .
-      "__typename": string,
       "edges": Js.Nullable.t(array(Js.Nullable.t(projectEdge))),
       "nodes": Js.Nullable.t(array(Js.Nullable.t(project))),
       "pageInfo": pageInfo,
@@ -1868,13 +1728,11 @@ module MakeSchema:
     }
     and pullRequestEdge = {
       .
-      "__typename": string,
       "cursor": string,
       "node": Js.Nullable.t(pullRequest),
     }
     and unassignedEvent = {
       .
-      "__typename": string,
       "actor": Js.Nullable.t(actor),
       "assignable": assignable,
       "createdAt": dateTime,
@@ -1883,14 +1741,12 @@ module MakeSchema:
     }
     and addProjectColumnPayload = {
       .
-      "__typename": string,
       "clientMutationId": Js.Nullable.t(string),
       "columnEdge": projectColumnEdge,
       "project": project,
     }
     and pullRequestTimelineConnection = {
       .
-      "__typename": string,
       "edges":
         Js.Nullable.t(array(Js.Nullable.t(pullRequestTimelineItemEdge))),
       "nodes": Js.Nullable.t(array(Js.Nullable.t(pullRequestTimelineItem))),
@@ -1899,7 +1755,6 @@ module MakeSchema:
     }
     and userContentEdit = {
       .
-      "__typename": string,
       "createdAt": dateTime,
       "deletedAt": Js.Nullable.t(dateTime),
       "deletedBy": Js.Nullable.t(actor),
@@ -1911,27 +1766,23 @@ module MakeSchema:
     }
     and deleteProjectColumnPayload = {
       .
-      "__typename": string,
       "clientMutationId": Js.Nullable.t(string),
       "deletedColumnId": string,
       "project": project,
     }
     and deploymentEdge = {
       .
-      "__typename": string,
       "cursor": string,
       "node": Js.Nullable.t(deployment),
     }
     and requestReviewsPayload = {
       .
-      "__typename": string,
       "clientMutationId": Js.Nullable.t(string),
       "pullRequest": pullRequest,
       "requestedReviewersEdge": userEdge,
     }
     and teamMemberEdge = {
       .
-      "__typename": string,
       "cursor": string,
       "memberAccessResourcePath": uRI,
       "memberAccessUrl": uRI,
@@ -1940,7 +1791,6 @@ module MakeSchema:
     }
     and headRefRestoredEvent = {
       .
-      "__typename": string,
       "actor": Js.Nullable.t(actor),
       "createdAt": dateTime,
       "id": string,
@@ -1948,7 +1798,6 @@ module MakeSchema:
     }
     and reviewDismissalAllowanceConnection = {
       .
-      "__typename": string,
       "edges":
         Js.Nullable.t(array(Js.Nullable.t(reviewDismissalAllowanceEdge))),
       "nodes":
@@ -1958,20 +1807,17 @@ module MakeSchema:
     }
     and searchResultItemEdge = {
       .
-      "__typename": string,
       "cursor": string,
       "node": Js.Nullable.t(searchResultItem),
       "textMatches": Js.Nullable.t(array(Js.Nullable.t(textMatch))),
     }
     and deletePullRequestReviewPayload = {
       .
-      "__typename": string,
       "clientMutationId": Js.Nullable.t(string),
       "pullRequestReview": pullRequestReview,
     }
     and renamedTitleEvent = {
       .
-      "__typename": string,
       "actor": Js.Nullable.t(actor),
       "createdAt": dateTime,
       "currentTitle": string,
@@ -1981,7 +1827,6 @@ module MakeSchema:
     }
     and demilestonedEvent = {
       .
-      "__typename": string,
       "actor": Js.Nullable.t(actor),
       "createdAt": dateTime,
       "id": string,
@@ -1990,7 +1835,6 @@ module MakeSchema:
     }
     and issueComment = {
       .
-      "__typename": string,
       "author": Js.Nullable.t(actor),
       "authorAssociation": commentAuthorAssociation,
       "body": string,
@@ -2021,13 +1865,11 @@ module MakeSchema:
     }
     and updateBranchProtectionRulePayload = {
       .
-      "__typename": string,
       "branchProtectionRule": Js.Nullable.t(branchProtectionRule),
       "clientMutationId": Js.Nullable.t(string),
     }
     and commitCommentThread = {
       .
-      "__typename": string,
       "comments": commitCommentConnection,
       "commit": commit,
       "id": string,
@@ -2037,14 +1879,12 @@ module MakeSchema:
     }
     and removeReactionPayload = {
       .
-      "__typename": string,
       "clientMutationId": Js.Nullable.t(string),
       "reaction": reaction,
       "subject": reactable,
     }
     and user = {
       .
-      "__typename": string,
       "avatarUrl": uRI,
       "bio": Js.Nullable.t(string),
       "bioHTML": hTML,
@@ -2091,7 +1931,6 @@ module MakeSchema:
     }
     and milestonedEvent = {
       .
-      "__typename": string,
       "actor": Js.Nullable.t(actor),
       "createdAt": dateTime,
       "id": string,
@@ -2100,13 +1939,11 @@ module MakeSchema:
     }
     and reactionEdge = {
       .
-      "__typename": string,
       "cursor": string,
       "node": Js.Nullable.t(reaction),
     }
     and publicKeyConnection = {
       .
-      "__typename": string,
       "edges": Js.Nullable.t(array(Js.Nullable.t(publicKeyEdge))),
       "nodes": Js.Nullable.t(array(Js.Nullable.t(publicKey))),
       "pageInfo": pageInfo,
@@ -2114,7 +1951,6 @@ module MakeSchema:
     }
     and ref = {
       .
-      "__typename": string,
       "associatedPullRequests": pullRequestConnection,
       "id": string,
       "name": string,
@@ -2124,7 +1960,6 @@ module MakeSchema:
     }
     and gist = {
       .
-      "__typename": string,
       "comments": gistCommentConnection,
       "createdAt": dateTime,
       "description": Js.Nullable.t(string),
@@ -2139,13 +1974,11 @@ module MakeSchema:
     }
     and declineTopicSuggestionPayload = {
       .
-      "__typename": string,
       "clientMutationId": Js.Nullable.t(string),
       "topic": topic,
     }
     and followingConnection = {
       .
-      "__typename": string,
       "edges": Js.Nullable.t(array(Js.Nullable.t(userEdge))),
       "nodes": Js.Nullable.t(array(Js.Nullable.t(user))),
       "pageInfo": pageInfo,
@@ -2153,7 +1986,6 @@ module MakeSchema:
     }
     and pullRequestConnection = {
       .
-      "__typename": string,
       "edges": Js.Nullable.t(array(Js.Nullable.t(pullRequestEdge))),
       "nodes": Js.Nullable.t(array(Js.Nullable.t(pullRequest))),
       "pageInfo": pageInfo,
@@ -2161,7 +1993,6 @@ module MakeSchema:
     }
     and topicConnection = {
       .
-      "__typename": string,
       "edges": Js.Nullable.t(array(Js.Nullable.t(topicEdge))),
       "nodes": Js.Nullable.t(array(Js.Nullable.t(topic))),
       "pageInfo": pageInfo,
@@ -2169,7 +2000,6 @@ module MakeSchema:
     }
     and codeOfConduct = {
       .
-      "__typename": string,
       "body": Js.Nullable.t(string),
       "key": string,
       "name": string,
@@ -2177,13 +2007,11 @@ module MakeSchema:
     }
     and updateProjectCardPayload = {
       .
-      "__typename": string,
       "clientMutationId": Js.Nullable.t(string),
       "projectCard": projectCard,
     }
     and branchProtectionRuleConflictConnection = {
       .
-      "__typename": string,
       "edges":
         Js.Nullable.t(
           array(Js.Nullable.t(branchProtectionRuleConflictEdge)),
@@ -2195,7 +2023,6 @@ module MakeSchema:
     }
     and pushAllowanceConnection = {
       .
-      "__typename": string,
       "edges": Js.Nullable.t(array(Js.Nullable.t(pushAllowanceEdge))),
       "nodes": Js.Nullable.t(array(Js.Nullable.t(pushAllowance))),
       "pageInfo": pageInfo,
@@ -2203,7 +2030,6 @@ module MakeSchema:
     }
     and milestoneConnection = {
       .
-      "__typename": string,
       "edges": Js.Nullable.t(array(Js.Nullable.t(milestoneEdge))),
       "nodes": Js.Nullable.t(array(Js.Nullable.t(milestone))),
       "pageInfo": pageInfo,
@@ -2211,7 +2037,6 @@ module MakeSchema:
     }
     and unsubscribedEvent = {
       .
-      "__typename": string,
       "actor": Js.Nullable.t(actor),
       "createdAt": dateTime,
       "id": string,
@@ -2219,14 +2044,12 @@ module MakeSchema:
     }
     and reactingUserEdge = {
       .
-      "__typename": string,
       "cursor": string,
       "node": user,
       "reactedAt": dateTime,
     }
     and reviewRequestRemovedEvent = {
       .
-      "__typename": string,
       "actor": Js.Nullable.t(actor),
       "createdAt": dateTime,
       "id": string,
@@ -2235,13 +2058,11 @@ module MakeSchema:
     }
     and issueEdge = {
       .
-      "__typename": string,
       "cursor": string,
       "node": Js.Nullable.t(issue),
     }
     and removedFromProjectEvent = {
       .
-      "__typename": string,
       "actor": Js.Nullable.t(actor),
       "createdAt": dateTime,
       "databaseId": Js.Nullable.t(int),
@@ -2249,7 +2070,6 @@ module MakeSchema:
     }
     and mutation = {
       .
-      "__typename": string,
       "acceptTopicSuggestion": Js.Nullable.t(acceptTopicSuggestionPayload),
       "addComment": Js.Nullable.t(addCommentPayload),
       "addProjectCard": Js.Nullable.t(addProjectCardPayload),
@@ -2297,7 +2117,6 @@ module MakeSchema:
     }
     and headRefDeletedEvent = {
       .
-      "__typename": string,
       "actor": Js.Nullable.t(actor),
       "createdAt": dateTime,
       "headRef": Js.Nullable.t(ref),
@@ -2307,7 +2126,6 @@ module MakeSchema:
     }
     and license = {
       .
-      "__typename": string,
       "body": string,
       "conditions": array(Js.Nullable.t(licenseRule)),
       "description": Js.Nullable.t(string),
@@ -2326,27 +2144,23 @@ module MakeSchema:
     }
     and branchProtectionRuleConflictEdge = {
       .
-      "__typename": string,
       "cursor": string,
       "node": Js.Nullable.t(branchProtectionRuleConflict),
     }
     and addReactionPayload = {
       .
-      "__typename": string,
       "clientMutationId": Js.Nullable.t(string),
       "reaction": reaction,
       "subject": reactable,
     }
     and branchProtectionRuleConflict = {
       .
-      "__typename": string,
       "branchProtectionRule": Js.Nullable.t(branchProtectionRule),
       "conflictingBranchProtectionRule": Js.Nullable.t(branchProtectionRule),
       "ref": Js.Nullable.t(ref),
     }
     and pullRequestReviewThread = {
       .
-      "__typename": string,
       "comments": pullRequestReviewCommentConnection,
       "id": string,
       "pullRequest": pullRequest,
@@ -2354,7 +2168,6 @@ module MakeSchema:
     }
     and repository = {
       .
-      "__typename": string,
       "assignableUsers": userConnection,
       "branchProtectionRules": branchProtectionRuleConnection,
       "codeOfConduct": Js.Nullable.t(codeOfConduct),
@@ -2430,25 +2243,21 @@ module MakeSchema:
     }
     and updateProjectPayload = {
       .
-      "__typename": string,
       "clientMutationId": Js.Nullable.t(string),
       "project": project,
     }
     and repositoryTopicEdge = {
       .
-      "__typename": string,
       "cursor": string,
       "node": Js.Nullable.t(repositoryTopic),
     }
     and milestoneEdge = {
       .
-      "__typename": string,
       "cursor": string,
       "node": Js.Nullable.t(milestone),
     }
     and labelConnection = {
       .
-      "__typename": string,
       "edges": Js.Nullable.t(array(Js.Nullable.t(labelEdge))),
       "nodes": Js.Nullable.t(array(Js.Nullable.t(label))),
       "pageInfo": pageInfo,
@@ -2456,7 +2265,6 @@ module MakeSchema:
     }
     and projectColumn = {
       .
-      "__typename": string,
       "cards": projectCardConnection,
       "createdAt": dateTime,
       "databaseId": Js.Nullable.t(int),
@@ -2470,7 +2278,6 @@ module MakeSchema:
     }
     and repositoryInvitation = {
       .
-      "__typename": string,
       "id": string,
       "invitee": user,
       "inviter": user,
@@ -2479,14 +2286,12 @@ module MakeSchema:
     }
     and deleteProjectCardPayload = {
       .
-      "__typename": string,
       "clientMutationId": Js.Nullable.t(string),
       "column": projectColumn,
       "deletedCardId": string,
     }
     and release = {
       .
-      "__typename": string,
       "author": Js.Nullable.t(user),
       "createdAt": dateTime,
       "description": Js.Nullable.t(string),
@@ -2503,7 +2308,6 @@ module MakeSchema:
     }
     and deployedEvent = {
       .
-      "__typename": string,
       "actor": Js.Nullable.t(actor),
       "createdAt": dateTime,
       "databaseId": Js.Nullable.t(int),
@@ -2514,20 +2318,17 @@ module MakeSchema:
     }
     and stargazerEdge = {
       .
-      "__typename": string,
       "cursor": string,
       "node": user,
       "starredAt": dateTime,
     }
     and pullRequestReviewEdge = {
       .
-      "__typename": string,
       "cursor": string,
       "node": Js.Nullable.t(pullRequestReview),
     }
     and projectCardConnection = {
       .
-      "__typename": string,
       "edges": Js.Nullable.t(array(Js.Nullable.t(projectCardEdge))),
       "nodes": Js.Nullable.t(array(Js.Nullable.t(projectCard))),
       "pageInfo": pageInfo,
@@ -2535,31 +2336,26 @@ module MakeSchema:
     }
     and updateTopicsPayload = {
       .
-      "__typename": string,
       "clientMutationId": Js.Nullable.t(string),
       "invalidTopicNames": Js.Nullable.t(array(string)),
       "repository": repository,
     }
     and deleteBranchProtectionRulePayload = {
       .
-      "__typename": string,
       "clientMutationId": Js.Nullable.t(string),
     }
     and unlockLockablePayload = {
       .
-      "__typename": string,
       "clientMutationId": Js.Nullable.t(string),
       "unlockedRecord": Js.Nullable.t(lockable),
     }
     and reviewDismissalAllowanceEdge = {
       .
-      "__typename": string,
       "cursor": string,
       "node": Js.Nullable.t(reviewDismissalAllowance),
     }
     and lockedEvent = {
       .
-      "__typename": string,
       "actor": Js.Nullable.t(actor),
       "createdAt": dateTime,
       "id": string,
@@ -2568,37 +2364,31 @@ module MakeSchema:
     }
     and moveProjectColumnPayload = {
       .
-      "__typename": string,
       "clientMutationId": Js.Nullable.t(string),
       "columnEdge": projectColumnEdge,
     }
     and acceptTopicSuggestionPayload = {
       .
-      "__typename": string,
       "clientMutationId": Js.Nullable.t(string),
       "topic": topic,
     }
     and pushAllowanceEdge = {
       .
-      "__typename": string,
       "cursor": string,
       "node": Js.Nullable.t(pushAllowance),
     }
     and branchProtectionRuleEdge = {
       .
-      "__typename": string,
       "cursor": string,
       "node": Js.Nullable.t(branchProtectionRule),
     }
     and marketplaceListingEdge = {
       .
-      "__typename": string,
       "cursor": string,
       "node": Js.Nullable.t(marketplaceListing),
     }
     and teamMemberConnection = {
       .
-      "__typename": string,
       "edges": Js.Nullable.t(array(Js.Nullable.t(teamMemberEdge))),
       "nodes": Js.Nullable.t(array(Js.Nullable.t(user))),
       "pageInfo": pageInfo,
@@ -2606,7 +2396,6 @@ module MakeSchema:
     }
     and movedColumnsInProjectEvent = {
       .
-      "__typename": string,
       "actor": Js.Nullable.t(actor),
       "createdAt": dateTime,
       "databaseId": Js.Nullable.t(int),
@@ -2614,7 +2403,6 @@ module MakeSchema:
     }
     and blob = {
       .
-      "__typename": string,
       "abbreviatedOid": string,
       "byteSize": int,
       "commitResourcePath": uRI,
@@ -2628,13 +2416,11 @@ module MakeSchema:
     }
     and createBranchProtectionRulePayload = {
       .
-      "__typename": string,
       "branchProtectionRule": Js.Nullable.t(branchProtectionRule),
       "clientMutationId": Js.Nullable.t(string),
     }
     and organization = {
       .
-      "__typename": string,
       "avatarUrl": uRI,
       "databaseId": Js.Nullable.t(int),
       "description": Js.Nullable.t(string),
@@ -2672,7 +2458,6 @@ module MakeSchema:
     }
     and pullRequestReviewComment = {
       .
-      "__typename": string,
       "author": Js.Nullable.t(actor),
       "authorAssociation": commentAuthorAssociation,
       "body": string,
@@ -2713,13 +2498,11 @@ module MakeSchema:
     }
     and dismissPullRequestReviewPayload = {
       .
-      "__typename": string,
       "clientMutationId": Js.Nullable.t(string),
       "pullRequestReview": pullRequestReview,
     }
     and organizationInvitation = {
       .
-      "__typename": string,
       "createdAt": dateTime,
       "email": Js.Nullable.t(string),
       "id": string,
@@ -2731,7 +2514,6 @@ module MakeSchema:
     }
     and deploymentStatus = {
       .
-      "__typename": string,
       "createdAt": dateTime,
       "creator": Js.Nullable.t(actor),
       "deployment": deployment,
@@ -2744,25 +2526,21 @@ module MakeSchema:
     }
     and submitPullRequestReviewPayload = {
       .
-      "__typename": string,
       "clientMutationId": Js.Nullable.t(string),
       "pullRequestReview": pullRequestReview,
     }
     and appEdge = {
       .
-      "__typename": string,
       "cursor": string,
       "node": Js.Nullable.t(app),
     }
     and updatePullRequestReviewPayload = {
       .
-      "__typename": string,
       "clientMutationId": Js.Nullable.t(string),
       "pullRequestReview": pullRequestReview,
     }
     and externalIdentity = {
       .
-      "__typename": string,
       "guid": string,
       "id": string,
       "organizationInvitation": Js.Nullable.t(organizationInvitation),
@@ -2772,7 +2550,6 @@ module MakeSchema:
     }
     and unlockedEvent = {
       .
-      "__typename": string,
       "actor": Js.Nullable.t(actor),
       "createdAt": dateTime,
       "id": string,
@@ -2780,7 +2557,6 @@ module MakeSchema:
     }
     and team = {
       .
-      "__typename": string,
       "ancestors": teamConnection,
       "avatarUrl": Js.Nullable.t(uRI),
       "childTeams": teamConnection,
@@ -2815,7 +2591,6 @@ module MakeSchema:
     }
     and closedEvent = {
       .
-      "__typename": string,
       "actor": Js.Nullable.t(actor),
       "closable": closable,
       "closer": Js.Nullable.t(closer),
@@ -2826,7 +2601,6 @@ module MakeSchema:
     }
     and pullRequest = {
       .
-      "__typename": string,
       "activeLockReason": Js.Nullable.t(lockReason),
       "additions": int,
       "assignees": userConnection,
@@ -2897,13 +2671,11 @@ module MakeSchema:
     }
     and removeOutsideCollaboratorPayload = {
       .
-      "__typename": string,
       "clientMutationId": Js.Nullable.t(string),
       "removedUser": user,
     }
     and rateLimit = {
       .
-      "__typename": string,
       "cost": int,
       "limit": int,
       "nodeCount": int,
@@ -2912,13 +2684,11 @@ module MakeSchema:
     }
     and protectedBranchEdge = {
       .
-      "__typename": string,
       "cursor": string,
       "node": Js.Nullable.t(protectedBranch),
     }
     and commitComment = {
       .
-      "__typename": string,
       "author": Js.Nullable.t(actor),
       "authorAssociation": commentAuthorAssociation,
       "body": string,
@@ -2950,13 +2720,11 @@ module MakeSchema:
     }
     and deployKeyEdge = {
       .
-      "__typename": string,
       "cursor": string,
       "node": Js.Nullable.t(deployKey),
     }
     and deploymentEnvironmentChangedEvent = {
       .
-      "__typename": string,
       "actor": Js.Nullable.t(actor),
       "createdAt": dateTime,
       "deploymentStatus": deploymentStatus,
@@ -2965,7 +2733,6 @@ module MakeSchema:
     }
     and protectedBranch = {
       .
-      "__typename": string,
       "creator": Js.Nullable.t(actor),
       "hasDismissableStaleReviews": bool,
       "hasRequiredReviews": bool,
@@ -2984,7 +2751,6 @@ module MakeSchema:
     }
     and mergedEvent = {
       .
-      "__typename": string,
       "actor": Js.Nullable.t(actor),
       "commit": Js.Nullable.t(commit),
       "createdAt": dateTime,
@@ -2997,7 +2763,6 @@ module MakeSchema:
     }
     and reactionGroup = {
       .
-      "__typename": string,
       "content": reactionContent,
       "createdAt": Js.Nullable.t(dateTime),
       "subject": reactable,
@@ -3006,7 +2771,6 @@ module MakeSchema:
     }
     and followerConnection = {
       .
-      "__typename": string,
       "edges": Js.Nullable.t(array(Js.Nullable.t(userEdge))),
       "nodes": Js.Nullable.t(array(Js.Nullable.t(user))),
       "pageInfo": pageInfo,
@@ -3014,7 +2778,6 @@ module MakeSchema:
     }
     and userContentEditConnection = {
       .
-      "__typename": string,
       "edges": Js.Nullable.t(array(Js.Nullable.t(userContentEditEdge))),
       "nodes": Js.Nullable.t(array(Js.Nullable.t(userContentEdit))),
       "pageInfo": pageInfo,
@@ -3022,7 +2785,6 @@ module MakeSchema:
     }
     and project = {
       .
-      "__typename": string,
       "body": Js.Nullable.t(string),
       "bodyHTML": hTML,
       "closed": bool,
@@ -3044,7 +2806,6 @@ module MakeSchema:
     }
     and commit = {
       .
-      "__typename": string,
       "abbreviatedOid": string,
       "additions": int,
       "author": Js.Nullable.t(gitActor),
@@ -3084,7 +2845,6 @@ module MakeSchema:
     }
     and marketplaceListingConnection = {
       .
-      "__typename": string,
       "edges": Js.Nullable.t(array(Js.Nullable.t(marketplaceListingEdge))),
       "nodes": Js.Nullable.t(array(Js.Nullable.t(marketplaceListing))),
       "pageInfo": pageInfo,
@@ -3092,7 +2852,6 @@ module MakeSchema:
     }
     and issueTimelineConnection = {
       .
-      "__typename": string,
       "edges": Js.Nullable.t(array(Js.Nullable.t(issueTimelineItemEdge))),
       "nodes": Js.Nullable.t(array(Js.Nullable.t(issueTimelineItem))),
       "pageInfo": pageInfo,
@@ -3100,7 +2859,6 @@ module MakeSchema:
     }
     and repositoryTopic = {
       .
-      "__typename": string,
       "id": string,
       "resourcePath": uRI,
       "topic": topic,
@@ -3108,7 +2866,6 @@ module MakeSchema:
     }
     and reactionConnection = {
       .
-      "__typename": string,
       "edges": Js.Nullable.t(array(Js.Nullable.t(reactionEdge))),
       "nodes": Js.Nullable.t(array(Js.Nullable.t(reaction))),
       "pageInfo": pageInfo,
@@ -3117,7 +2874,6 @@ module MakeSchema:
     }
     and issue = {
       .
-      "__typename": string,
       "activeLockReason": Js.Nullable.t(lockReason),
       "assignees": userConnection,
       "author": Js.Nullable.t(actor),
@@ -3161,13 +2917,11 @@ module MakeSchema:
     }
     and releaseAssetEdge = {
       .
-      "__typename": string,
       "cursor": string,
       "node": Js.Nullable.t(releaseAsset),
     }
     and addedToProjectEvent = {
       .
-      "__typename": string,
       "actor": Js.Nullable.t(actor),
       "createdAt": dateTime,
       "databaseId": Js.Nullable.t(int),
@@ -3175,13 +2929,11 @@ module MakeSchema:
     }
     and organizationEdge = {
       .
-      "__typename": string,
       "cursor": string,
       "node": Js.Nullable.t(organization),
     }
     and reviewRequestedEvent = {
       .
-      "__typename": string,
       "actor": Js.Nullable.t(actor),
       "createdAt": dateTime,
       "id": string,
@@ -3190,19 +2942,16 @@ module MakeSchema:
     }
     and projectCardEdge = {
       .
-      "__typename": string,
       "cursor": string,
       "node": Js.Nullable.t(projectCard),
     }
     and releaseEdge = {
       .
-      "__typename": string,
       "cursor": string,
       "node": Js.Nullable.t(release),
     }
     and repositoryConnection = {
       .
-      "__typename": string,
       "edges": Js.Nullable.t(array(Js.Nullable.t(repositoryEdge))),
       "nodes": Js.Nullable.t(array(Js.Nullable.t(repository))),
       "pageInfo": pageInfo,
@@ -3211,14 +2960,12 @@ module MakeSchema:
     }
     and licenseRule = {
       .
-      "__typename": string,
       "description": string,
       "key": string,
       "label": string,
     }
     and gistCommentConnection = {
       .
-      "__typename": string,
       "edges": Js.Nullable.t(array(Js.Nullable.t(gistCommentEdge))),
       "nodes": Js.Nullable.t(array(Js.Nullable.t(gistComment))),
       "pageInfo": pageInfo,
@@ -3226,13 +2973,11 @@ module MakeSchema:
     }
     and userEdge = {
       .
-      "__typename": string,
       "cursor": string,
       "node": Js.Nullable.t(user),
     }
     and query = {
       .
-      "__typename": string,
       "codeOfConduct": Js.Nullable.t(codeOfConduct),
       "codesOfConduct": Js.Nullable.t(array(Js.Nullable.t(codeOfConduct))),
       "license": Js.Nullable.t(license),
@@ -3257,7 +3002,6 @@ module MakeSchema:
     }
     and deploymentStatusConnection = {
       .
-      "__typename": string,
       "edges": Js.Nullable.t(array(Js.Nullable.t(deploymentStatusEdge))),
       "nodes": Js.Nullable.t(array(Js.Nullable.t(deploymentStatus))),
       "pageInfo": pageInfo,
@@ -3265,14 +3009,12 @@ module MakeSchema:
     }
     and starredRepositoryEdge = {
       .
-      "__typename": string,
       "cursor": string,
       "node": repository,
       "starredAt": dateTime,
     }
     and unlabeledEvent = {
       .
-      "__typename": string,
       "actor": Js.Nullable.t(actor),
       "createdAt": dateTime,
       "id": string,
@@ -3281,13 +3023,11 @@ module MakeSchema:
     }
     and reviewRequestEdge = {
       .
-      "__typename": string,
       "cursor": string,
       "node": Js.Nullable.t(reviewRequest),
     }
     and label = {
       .
-      "__typename": string,
       "color": string,
       "createdAt": Js.Nullable.t(dateTime),
       "description": Js.Nullable.t(string),
@@ -3303,7 +3043,6 @@ module MakeSchema:
     }
     and organizationInvitationConnection = {
       .
-      "__typename": string,
       "edges":
         Js.Nullable.t(array(Js.Nullable.t(organizationInvitationEdge))),
       "nodes": Js.Nullable.t(array(Js.Nullable.t(organizationInvitation))),
@@ -3312,7 +3051,6 @@ module MakeSchema:
     }
     and topic = {
       .
-      "__typename": string,
       "id": string,
       "name": string,
       "relatedTopics": array(topic),
@@ -3321,13 +3059,11 @@ module MakeSchema:
     }
     and issueTimelineItemsEdge = {
       .
-      "__typename": string,
       "cursor": string,
       "node": Js.Nullable.t(issueTimelineItems),
     }
     and commentDeletedEvent = {
       .
-      "__typename": string,
       "actor": Js.Nullable.t(actor),
       "createdAt": dateTime,
       "databaseId": Js.Nullable.t(int),
@@ -3335,7 +3071,6 @@ module MakeSchema:
     }
     and teamConnection = {
       .
-      "__typename": string,
       "edges": Js.Nullable.t(array(Js.Nullable.t(teamEdge))),
       "nodes": Js.Nullable.t(array(Js.Nullable.t(team))),
       "pageInfo": pageInfo,
@@ -3343,13 +3078,11 @@ module MakeSchema:
     }
     and updateSubscriptionPayload = {
       .
-      "__typename": string,
       "clientMutationId": Js.Nullable.t(string),
       "subscribable": subscribable,
     }
     and starredRepositoryConnection = {
       .
-      "__typename": string,
       "edges": Js.Nullable.t(array(Js.Nullable.t(starredRepositoryEdge))),
       "nodes": Js.Nullable.t(array(Js.Nullable.t(repository))),
       "pageInfo": pageInfo,
@@ -3357,7 +3090,6 @@ module MakeSchema:
     }
     and addCommentPayload = {
       .
-      "__typename": string,
       "clientMutationId": Js.Nullable.t(string),
       "commentEdge": issueCommentEdge,
       "subject": node,
@@ -3365,7 +3097,6 @@ module MakeSchema:
     }
     and gitHubMetadata = {
       .
-      "__typename": string,
       "gitHubServicesSha": gitObjectID,
       "gitIpAddresses": Js.Nullable.t(array(string)),
       "hookIpAddresses": Js.Nullable.t(array(string)),
@@ -3375,26 +3106,22 @@ module MakeSchema:
     }
     and textMatch = {
       .
-      "__typename": string,
       "fragment": string,
       "highlights": array(textMatchHighlight),
       "property": string,
     }
     and pullRequestTimelineItemsEdge = {
       .
-      "__typename": string,
       "cursor": string,
       "node": Js.Nullable.t(pullRequestTimelineItems),
     }
     and moveProjectCardPayload = {
       .
-      "__typename": string,
       "cardEdge": projectCardEdge,
       "clientMutationId": Js.Nullable.t(string),
     }
     and gistConnection = {
       .
-      "__typename": string,
       "edges": Js.Nullable.t(array(Js.Nullable.t(gistEdge))),
       "nodes": Js.Nullable.t(array(Js.Nullable.t(gist))),
       "pageInfo": pageInfo,
@@ -3402,7 +3129,6 @@ module MakeSchema:
     }
     and deploymentConnection = {
       .
-      "__typename": string,
       "edges": Js.Nullable.t(array(Js.Nullable.t(deploymentEdge))),
       "nodes": Js.Nullable.t(array(Js.Nullable.t(deployment))),
       "pageInfo": pageInfo,
@@ -3410,12 +3136,10 @@ module MakeSchema:
     }
     and externalIdentityScimAttributes = {
       .
-      "__typename": string,
       "username": Js.Nullable.t(string),
     }
     and repositoryCollaboratorConnection = {
       .
-      "__typename": string,
       "edges":
         Js.Nullable.t(array(Js.Nullable.t(repositoryCollaboratorEdge))),
       "nodes": Js.Nullable.t(array(Js.Nullable.t(user))),
@@ -3424,19 +3148,16 @@ module MakeSchema:
     }
     and lockLockablePayload = {
       .
-      "__typename": string,
       "clientMutationId": Js.Nullable.t(string),
       "lockedRecord": Js.Nullable.t(lockable),
     }
     and updatePullRequestReviewCommentPayload = {
       .
-      "__typename": string,
       "clientMutationId": Js.Nullable.t(string),
       "pullRequestReviewComment": pullRequestReviewComment,
     }
     and smimeSignature = {
       .
-      "__typename": string,
       "email": string,
       "isValid": bool,
       "payload": string,
@@ -3447,7 +3168,6 @@ module MakeSchema:
     }
     and repositoryTopicConnection = {
       .
-      "__typename": string,
       "edges": Js.Nullable.t(array(Js.Nullable.t(repositoryTopicEdge))),
       "nodes": Js.Nullable.t(array(Js.Nullable.t(repositoryTopic))),
       "pageInfo": pageInfo,
@@ -3455,7 +3175,6 @@ module MakeSchema:
     }
     and deployKey = {
       .
-      "__typename": string,
       "createdAt": dateTime,
       "id": string,
       "key": string,
@@ -3465,7 +3184,6 @@ module MakeSchema:
     }
     and milestone = {
       .
-      "__typename": string,
       "closed": bool,
       "closedAt": Js.Nullable.t(dateTime),
       "createdAt": dateTime,
@@ -3483,14 +3201,9 @@ module MakeSchema:
       "updatedAt": dateTime,
       "url": uRI,
     }
-    and externalIdentitySamlAttributes = {
-      .
-      "__typename": string,
-      "nameId": Js.Nullable.t(string),
-    }
+    and externalIdentitySamlAttributes = {. "nameId": Js.Nullable.t(string)}
     and subscribedEvent = {
       .
-      "__typename": string,
       "actor": Js.Nullable.t(actor),
       "createdAt": dateTime,
       "id": string,
@@ -3498,13 +3211,11 @@ module MakeSchema:
     }
     and gistCommentEdge = {
       .
-      "__typename": string,
       "cursor": string,
       "node": Js.Nullable.t(gistComment),
     }
     and pullRequestCommitConnection = {
       .
-      "__typename": string,
       "edges": Js.Nullable.t(array(Js.Nullable.t(pullRequestCommitEdge))),
       "nodes": Js.Nullable.t(array(Js.Nullable.t(pullRequestCommit))),
       "pageInfo": pageInfo,
@@ -3512,7 +3223,6 @@ module MakeSchema:
     }
     and issueConnection = {
       .
-      "__typename": string,
       "edges": Js.Nullable.t(array(Js.Nullable.t(issueEdge))),
       "nodes": Js.Nullable.t(array(Js.Nullable.t(issue))),
       "pageInfo": pageInfo,
@@ -3520,7 +3230,6 @@ module MakeSchema:
     }
     and unknownSignature = {
       .
-      "__typename": string,
       "email": string,
       "isValid": bool,
       "payload": string,
@@ -3531,13 +3240,11 @@ module MakeSchema:
     }
     and pullRequestReviewCommentEdge = {
       .
-      "__typename": string,
       "cursor": string,
       "node": Js.Nullable.t(pullRequestReviewComment),
     }
     and reviewDismissedEvent = {
       .
-      "__typename": string,
       "actor": Js.Nullable.t(actor),
       "createdAt": dateTime,
       "databaseId": Js.Nullable.t(int),
@@ -3553,7 +3260,6 @@ module MakeSchema:
     }
     and reopenedEvent = {
       .
-      "__typename": string,
       "actor": Js.Nullable.t(actor),
       "closable": closable,
       "createdAt": dateTime,
@@ -3561,7 +3267,6 @@ module MakeSchema:
     }
     and mentionedEvent = {
       .
-      "__typename": string,
       "actor": Js.Nullable.t(actor),
       "createdAt": dateTime,
       "databaseId": Js.Nullable.t(int),
@@ -3569,7 +3274,6 @@ module MakeSchema:
     }
     and referencedEvent = {
       .
-      "__typename": string,
       "actor": Js.Nullable.t(actor),
       "commit": Js.Nullable.t(commit),
       "commitRepository": repository,
@@ -3951,8 +3655,6 @@ module MakeSchema:
       [@bs.deriving abstract]
       type t = {
         [@bs.optional]
-        __typename: resolver(unit, string, string),
-        [@bs.optional]
         codeOfConduct:
           resolver(
             {. "key": string},
@@ -4101,8 +3803,6 @@ module MakeSchema:
     module Mutations: {
       [@bs.deriving abstract]
       type t = {
-        [@bs.optional]
-        __typename: resolver(unit, string, string),
         [@bs.optional]
         acceptTopicSuggestion:
           resolver(

@@ -10,15 +10,12 @@ module MakeSchema = (Config: SchemaConfig) => {
   type directiveResolver('payload) = Config.directiveResolver('payload);
   type query = {
     .
-    "__typename": string,
     "hello": Js.Nullable.t(string),
     "test": Js.Nullable.t(string),
   };
   module Queries = {
     [@bs.deriving abstract]
     type t = {
-      [@bs.optional]
-      __typename: resolver(unit, string, string),
       [@bs.optional]
       hello: resolver(unit, string, Js.Nullable.t(string)),
       [@bs.optional]

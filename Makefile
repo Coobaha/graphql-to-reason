@@ -11,7 +11,7 @@ ci:
 
 test:
 	esy build
-	cd test && yarn build
+	cd test && yarn clean && yarn build
 
 clean:
 	esy dune clean

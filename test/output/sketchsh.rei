@@ -405,13 +405,11 @@ module MakeSchema:
     };
     type user_identity_type_mutation_response = {
       .
-      "__typename": string,
       "affected_rows": int,
       "returning": array(user_identity_type_no_rels),
     }
     and note_no_rels = {
       .
-      "__typename": string,
       "created_at": Js.Nullable.t(timestamptz),
       "data": Js.Nullable.t(jsonb),
       "id": Js.Nullable.t(string),
@@ -421,13 +419,11 @@ module MakeSchema:
     }
     and user_identity_mutation_response = {
       .
-      "__typename": string,
       "affected_rows": int,
       "returning": array(user_identity_no_rels),
     }
     and mutation_root = {
       .
-      "__typename": string,
       "delete_note": Js.Nullable.t(note_mutation_response),
       "delete_note_revision": Js.Nullable.t(note_revision_mutation_response),
       "delete_user": Js.Nullable.t(user_mutation_response),
@@ -449,25 +445,21 @@ module MakeSchema:
     }
     and note_mutation_response = {
       .
-      "__typename": string,
       "affected_rows": int,
       "returning": array(note_no_rels),
     }
     and note_revision_mutation_response = {
       .
-      "__typename": string,
       "affected_rows": int,
       "returning": array(note_revision_no_rels),
     }
     and user_mutation_response = {
       .
-      "__typename": string,
       "affected_rows": int,
       "returning": array(user_no_rels),
     }
     and user_no_rels = {
       .
-      "__typename": string,
       "avatar": Js.Nullable.t(string),
       "created_at": Js.Nullable.t(timestamptz),
       "email": Js.Nullable.t(string),
@@ -478,21 +470,15 @@ module MakeSchema:
     }
     and user_identity = {
       .
-      "__typename": string,
       "data": Js.Nullable.t(jsonb),
       "identity_id": Js.Nullable.t(string),
       "identity_type": Js.Nullable.t(string),
       "user": Js.Nullable.t(user),
       "user_id": Js.Nullable.t(string),
     }
-    and user_identity_type = {
-      .
-      "__typename": string,
-      "user_identity_type": Js.Nullable.t(string),
-    }
+    and user_identity_type = {. "user_identity_type": Js.Nullable.t(string)}
     and query_root = {
       .
-      "__typename": string,
       "note": array(note),
       "note_revision": array(note_revision),
       "user": array(user),
@@ -501,12 +487,10 @@ module MakeSchema:
     }
     and user_identity_type_no_rels = {
       .
-      "__typename": string,
       "user_identity_type": Js.Nullable.t(string),
     }
     and note_revision_no_rels = {
       .
-      "__typename": string,
       "created_at": Js.Nullable.t(timestamptz),
       "data": Js.Nullable.t(jsonb),
       "note_id": Js.Nullable.t(string),
@@ -514,7 +498,6 @@ module MakeSchema:
     }
     and note = {
       .
-      "__typename": string,
       "created_at": Js.Nullable.t(timestamptz),
       "data": Js.Nullable.t(jsonb),
       "id": Js.Nullable.t(string),
@@ -526,7 +509,6 @@ module MakeSchema:
     }
     and user_identity_no_rels = {
       .
-      "__typename": string,
       "data": Js.Nullable.t(jsonb),
       "identity_id": Js.Nullable.t(string),
       "identity_type": Js.Nullable.t(string),
@@ -534,7 +516,6 @@ module MakeSchema:
     }
     and subscription_root = {
       .
-      "__typename": string,
       "note": array(note),
       "note_revision": array(note_revision),
       "user": array(user),
@@ -543,7 +524,6 @@ module MakeSchema:
     }
     and user = {
       .
-      "__typename": string,
       "avatar": Js.Nullable.t(string),
       "created_at": Js.Nullable.t(timestamptz),
       "email": Js.Nullable.t(string),
@@ -556,7 +536,6 @@ module MakeSchema:
     }
     and note_revision = {
       .
-      "__typename": string,
       "created_at": Js.Nullable.t(timestamptz),
       "data": Js.Nullable.t(jsonb),
       "note": Js.Nullable.t(note),

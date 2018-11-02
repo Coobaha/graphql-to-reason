@@ -49,19 +49,16 @@ module MakeSchema:
     type dogOrHuman
     and sampleError = {
       .
-      "__typename": string,
       "field": sampleField,
       "message": string,
     }
     and nestedObject = {
       .
-      "__typename": string,
       "field": string,
       "inner": Js.Nullable.t(nestedObject),
     }
     and variousScalars = {
       .
-      "__typename": string,
       "boolean": bool,
       "float": float,
       "id": string,
@@ -75,7 +72,6 @@ module MakeSchema:
     }
     and query = {
       .
-      "__typename": string,
       "argNamedQuery": int,
       "customScalarField": customScalarObject,
       "dogOrHuman": dogOrHuman,
@@ -91,63 +87,40 @@ module MakeSchema:
     }
     and mutationWithErrorResult = {
       .
-      "__typename": string,
       "errors": Js.Nullable.t(array(sampleError)),
       "value": Js.Nullable.t(sampleResult),
     }
     and dog = {
       .
-      "__typename": string,
       "barkVolume": float,
       "name": string,
     }
-    and human = {
-      .
-      "__typename": string,
-      "name": string,
-    }
-    and withArgField = {
-      .
-      "__typename": string,
-      "argField": Js.Nullable.t(nestedObject),
-    }
+    and human = {. "name": string}
+    and withArgField = {. "argField": Js.Nullable.t(nestedObject)}
     and subscription = {
       .
-      "__typename": string,
       "simpleNullableSubscription": Js.Nullable.t(dogOrHuman),
       "simpleSubscription": dogOrHuman,
     }
     and lists = {
       .
-      "__typename": string,
       "nonNullableOfNonNullable": array(string),
       "nonNullableOfNullable": array(Js.Nullable.t(string)),
       "nullableOfNonNullable": Js.Nullable.t(array(string)),
       "nullableOfNullable": Js.Nullable.t(array(Js.Nullable.t(string))),
     }
-    and sampleResult = {
-      .
-      "__typename": string,
-      "stringField": string,
-    }
+    and sampleResult = {. "stringField": string}
     and customScalarObject = {
       .
-      "__typename": string,
       "nonNullable": customScalar,
       "nullable": Js.Nullable.t(customScalar),
     }
-    and mutation = {
-      .
-      "__typename": string,
-      "mutationWithError": mutationWithErrorResult,
-    };
+    and mutation = {. "mutationWithError": mutationWithErrorResult};
     external dogToDogOrHuman : dog => dogOrHuman = "%identity";
     external humanToDogOrHuman : human => dogOrHuman = "%identity";
     module Queries: {
       [@bs.deriving abstract]
       type t = {
-        [@bs.optional]
-        __typename: resolver(unit, string, string),
         [@bs.optional]
         stringField: resolver(unit, string, string),
         [@bs.optional]
@@ -189,8 +162,6 @@ module MakeSchema:
       [@bs.deriving abstract]
       type t = {
         [@bs.optional]
-        __typename: resolver(unit, string, string),
-        [@bs.optional]
         mutationWithError:
           resolver(unit, mutationWithErrorResult, mutationWithErrorResult),
       };
@@ -198,8 +169,6 @@ module MakeSchema:
     module Subscriptions: {
       [@bs.deriving abstract]
       type t = {
-        [@bs.optional]
-        __typename: resolver(unit, string, string),
         [@bs.optional]
         simpleSubscription: resolver(unit, dogOrHuman, dogOrHuman),
         [@bs.optional]

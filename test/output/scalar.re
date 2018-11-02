@@ -13,15 +13,12 @@ module MakeSchema = (Config: SchemaConfig) => {
   type directiveResolver('payload) = Config.directiveResolver('payload);
   type query = {
     .
-    "__typename": string,
     "json": json,
     "dateTime": dateTime,
   };
   module Queries = {
     [@bs.deriving abstract]
     type t = {
-      [@bs.optional]
-      __typename: resolver(unit, string, string),
       [@bs.optional]
       json: resolver(unit, json, json),
       [@bs.optional]

@@ -28,19 +28,10 @@ module MakeSchema:
       "nullableListOfStrings": Js.Nullable.t(array(Js.Nullable.t(string))),
       "wrapper": wrapper,
     };
-    type userLike = {
-      .
-      "__typename": string,
-      "name": string,
-    }
-    and query = {
-      .
-      "__typename": string,
-      "user": Js.Nullable.t(user),
-    }
+    type userLike = {. "name": string}
+    and query = {. "user": Js.Nullable.t(user)}
     and user = {
       .
-      "__typename": string,
       "email": string,
       "gender": Js.Nullable.t(gender),
       "getGender": gender,
@@ -52,8 +43,6 @@ module MakeSchema:
     module Queries: {
       [@bs.deriving abstract]
       type t = {
-        [@bs.optional]
-        __typename: resolver(unit, string, string),
         [@bs.optional]
         user: resolver(unit, user, Js.Nullable.t(user)),
       };

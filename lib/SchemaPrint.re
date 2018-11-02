@@ -124,7 +124,9 @@ let print = schema => {
         Js.Nullable.t([%t name |> uncap_key |> gql_type])
       ]
     | NonNull(tr) => print_type_ref_nonNullable(~uncap_key, tr)
-    | List(tr) => [%type: Js.Nullable.t(array([%t print_type_ref(~uncap_key, tr)]))]
+    | List(tr) => [%type:
+        Js.Nullable.t(array([%t print_type_ref(~uncap_key, tr)]))
+      ]
     };
 
   let rec print_field_type_name = (~uncap_key=uncap_key, tm) =>
@@ -134,49 +136,45 @@ let print = schema => {
     | List(tr) => print_field_type_name(~uncap_key, tr)
     };
 
+  let filterField = f =>
+    switch (f.fm_name) {
+    | "__typename" => false
+    | _ => true
+    };
   let rec print_fields = (name, fields) =>
     Type.mk(
-      ~manifest=closed_js_t(List.map(print_field, fields)),
+      ~manifest=
+        closed_js_t(
+          List.(fields |> filter(filterField) |> map(print_field)),
+        ),
       {Location.txt: uncap_key(name), loc: Location.none},
     )
-  and print_field =
-      (
-        {
-          fm_name,
-          fm_field_type,
-          _
-        },
-      ) => (
+  and print_field = ({fm_name, fm_field_type, _}) => (
     fm_name,
     [],
     print_type_ref(fm_field_type),
   )
-  and print_resolver = (fields) =>
-    List.map(
-      (
-        {
-          fm_name,
-          fm_arguments,
-          fm_field_type,
-          _
-        },
-      ) =>
-        Type.field(
-          ~attrs=[({txt: "bs.optional", loc: Location.none}, PStr([]))],
-          {Location.txt: uncap_key(fm_name), loc: Location.none},
-          Typ.constr(
-            {txt: Longident.parse("resolver"), loc: Location.none},
-            [
-              switch (fm_arguments) {
-              | [] => [%type: unit]
-              | _ => closed_js_t(List.map(print_arg, fm_arguments))
-              },
-              print_field_type_name(fm_field_type),
-              print_type_ref(fm_field_type),
-            ],
-          ),
-        ),
-      fields,
+  and print_resolver = fields =>
+    List.(
+      fields
+      |> filter(filterField)
+      |> map(({fm_name, fm_arguments, fm_field_type, _}) =>
+           Type.field(
+             ~attrs=[({txt: "bs.optional", loc: Location.none}, PStr([]))],
+             {Location.txt: uncap_key(fm_name), loc: Location.none},
+             Typ.constr(
+               {txt: Longident.parse("resolver"), loc: Location.none},
+               [
+                 switch (fm_arguments) {
+                 | [] => [%type: unit]
+                 | _ => closed_js_t(List.map(print_arg, fm_arguments))
+                 },
+                 print_field_type_name(fm_field_type),
+                 print_type_ref(fm_field_type),
+               ],
+             ),
+           )
+         )
     )
   and print_directive_resolver = ({dm_name, dm_arguments, _}) => {
     let (key, extraAttrs) =
@@ -266,7 +264,10 @@ let print = schema => {
   }
   and print_interface = ({im_name, im_fields, _}) =>
     Type.mk(
-      ~manifest=closed_js_t(List.map(print_field, im_fields)),
+      ~manifest=
+        closed_js_t(
+          List.(im_fields |> filter(filterField) |> map(print_field)),
+        ),
       {Location.txt: uncap_key(im_name), loc: Location.none},
     )
   and print_input = ({iom_name, iom_input_fields, _}) =>
@@ -293,19 +294,13 @@ let print = schema => {
           switch (name) {
           | "mutation" =>
             state.mutations =
-              List.append(
-                state.mutations,
-                print_resolver( om_fields),
-              )
+              List.append(state.mutations, print_resolver(om_fields))
           | "query" =>
             state.queries =
               List.append(state.queries, print_resolver(om_fields))
           | "subscription" =>
             state.subscriptions =
-              List.append(
-                state.subscriptions,
-                print_resolver(om_fields),
-              )
+              List.append(state.subscriptions, print_resolver(om_fields))
           | _ => ()
           };
         }

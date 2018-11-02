@@ -31,21 +31,15 @@ module MakeSchema = (Config: SchemaConfig) => {
   type searchResult
   and character = {
     .
-    "__typename": string,
     "id": string,
     "name": string,
     "friends": Js.Nullable.t(array(Js.Nullable.t(character))),
     "friendsConnection": friendsConnection,
     "appearsIn": array(Js.Nullable.t(episode)),
   }
-  and subscription = {
-    .
-    "__typename": string,
-    "reviewAdded": Js.Nullable.t(review),
-  }
+  and subscription = {. "reviewAdded": Js.Nullable.t(review)}
   and droid = {
     .
-    "__typename": string,
     "id": string,
     "name": string,
     "friends": Js.Nullable.t(array(Js.Nullable.t(character))),
@@ -55,7 +49,6 @@ module MakeSchema = (Config: SchemaConfig) => {
   }
   and friendsConnection = {
     .
-    "__typename": string,
     "totalCount": Js.Nullable.t(int),
     "edges": Js.Nullable.t(array(Js.Nullable.t(friendsEdge))),
     "friends": Js.Nullable.t(array(Js.Nullable.t(character))),
@@ -63,7 +56,6 @@ module MakeSchema = (Config: SchemaConfig) => {
   }
   and query = {
     .
-    "__typename": string,
     "hero": Js.Nullable.t(character),
     "reviews": Js.Nullable.t(array(Js.Nullable.t(review))),
     "search": Js.Nullable.t(array(Js.Nullable.t(searchResult))),
@@ -74,18 +66,12 @@ module MakeSchema = (Config: SchemaConfig) => {
   }
   and friendsEdge = {
     .
-    "__typename": string,
     "cursor": string,
     "node": Js.Nullable.t(character),
   }
-  and mutation = {
-    .
-    "__typename": string,
-    "createReview": Js.Nullable.t(review),
-  }
+  and mutation = {. "createReview": Js.Nullable.t(review)}
   and human = {
     .
-    "__typename": string,
     "id": string,
     "name": string,
     "homePlanet": Js.Nullable.t(string),
@@ -98,14 +84,12 @@ module MakeSchema = (Config: SchemaConfig) => {
   }
   and pageInfo = {
     .
-    "__typename": string,
     "startCursor": Js.Nullable.t(string),
     "endCursor": Js.Nullable.t(string),
     "hasNextPage": bool,
   }
   and starship = {
     .
-    "__typename": string,
     "id": string,
     "name": string,
     "length": Js.Nullable.t(float),
@@ -113,7 +97,6 @@ module MakeSchema = (Config: SchemaConfig) => {
   }
   and review = {
     .
-    "__typename": string,
     "episode": Js.Nullable.t(episode),
     "stars": int,
     "commentary": Js.Nullable.t(string),
@@ -124,8 +107,6 @@ module MakeSchema = (Config: SchemaConfig) => {
   module Queries = {
     [@bs.deriving abstract]
     type t = {
-      [@bs.optional]
-      __typename: resolver(unit, string, string),
       [@bs.optional]
       hero:
         resolver(
@@ -163,8 +144,6 @@ module MakeSchema = (Config: SchemaConfig) => {
     [@bs.deriving abstract]
     type t = {
       [@bs.optional]
-      __typename: resolver(unit, string, string),
-      [@bs.optional]
       createReview:
         resolver(
           {
@@ -180,8 +159,6 @@ module MakeSchema = (Config: SchemaConfig) => {
   module Subscriptions = {
     [@bs.deriving abstract]
     type t = {
-      [@bs.optional]
-      __typename: resolver(unit, string, string),
       [@bs.optional]
       reviewAdded:
         resolver(

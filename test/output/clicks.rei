@@ -10,21 +10,11 @@ module MakeSchema:
     type resolver('payload, 'fieldType, 'result) =
       Config.resolver('payload, 'fieldType, 'result);
     type directiveResolver('payload) = Config.directiveResolver('payload);
-    type mutation = {
-      .
-      "__typename": string,
-      "click": click,
-    }
-    and query = {
-      .
-      "__typename": string,
-      "clicks": click,
-    };
+    type mutation = {. "click": click}
+    and query = {. "clicks": click};
     module Queries: {
       [@bs.deriving abstract]
       type t = {
-        [@bs.optional]
-        __typename: resolver(unit, string, string),
         [@bs.optional]
         clicks: resolver(unit, click, click),
       };
@@ -32,8 +22,6 @@ module MakeSchema:
     module Mutations: {
       [@bs.deriving abstract]
       type t = {
-        [@bs.optional]
-        __typename: resolver(unit, string, string),
         [@bs.optional]
         click: resolver({. "payload": string}, click, click),
       };

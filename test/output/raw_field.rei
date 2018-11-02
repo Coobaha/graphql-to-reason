@@ -11,20 +11,13 @@ module MakeSchema:
     type directiveResolver('payload) = Config.directiveResolver('payload);
     type mutation = {
       .
-      "__typename": string,
       "nullableArrayOfNullableInts":
         Js.Nullable.t(array(Js.Nullable.t(int))),
     }
-    and query = {
-      .
-      "__typename": string,
-      "test": string,
-    };
+    and query = {. "test": string};
     module Queries: {
       [@bs.deriving abstract]
       type t = {
-        [@bs.optional]
-        __typename: resolver(unit, string, string),
         [@bs.optional]
         test: resolver(unit, string, string),
       };
@@ -32,8 +25,6 @@ module MakeSchema:
     module Mutations: {
       [@bs.deriving abstract]
       type t = {
-        [@bs.optional]
-        __typename: resolver(unit, string, string),
         [@bs.optional]
         nullableArrayOfNullableInts:
           resolver(unit, int, Js.Nullable.t(array(Js.Nullable.t(int)))),
