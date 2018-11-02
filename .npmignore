@@ -17,6 +17,7 @@ node_modules/
 ci/
 test/
 lib/
+examples/
 graphql-to-reason.install
 graphql-to-reason.opam
 graphql_to_reason.re
