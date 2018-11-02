@@ -66,7 +66,16 @@ b) From `.graphql`
 }
 ```
 
-### Usage Example 
+### Examples
+
+<details>
+  <summary>
+    <b>Examples</b>
+  </summary>
+  <ul>
+    <li><a href="/examples/basic">Basic example</a></li>
+  </ul>
+</details>
 
 Simple `schema.graphql`
 
