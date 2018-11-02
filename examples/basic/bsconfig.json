@@ -1,0 +1,38 @@
+{
+  "name": "graphql-to-reason-basic-example",
+  "sources": [
+    {
+      "dir": "src",
+      "subdirs": true,
+      "generators": [
+        {
+          "name": "generate-schematypes",
+          "edge": [
+            "SchemaTypes_builder.re",
+            "schema.graphql.json",
+            ":",
+            "schema.graphql"
+          ]
+        }
+      ]
+    }
+  ],
+  "generators": [
+    {
+      "name": "generate-schematypes",
+      "command":
+        "npx graphql-to-reason-schema $in $in.json  && npx graphql-to-reason $in.json $out"
+    }
+  ],
+  "package-specs": [
+    {
+      "module": "commonjs",
+      "in-source": true
+    }
+  ],
+  "suffix": ".bs.js",
+  "bs-dependencies": [],
+  "refmt": 3,
+  "namespace": true,
+  "bsc-flags": ["-bs-super-errors"]
+}

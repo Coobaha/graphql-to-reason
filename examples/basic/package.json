@@ -1,0 +1,21 @@
+{
+  "name": "clicks",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "bsb:dev": "bsb -make-world -w",
+    "bsb:clean": "bsb -clean-world",
+    "bsb": "bsb -make-world",
+    "dev": "graphpack",
+    "build": "graphpack build"
+  },
+  "dependencies": {
+    "bs-platform": "^4.0.7",
+    "graphpack": "^1.0.2",
+    "graphql-to-reason": "^0.4.0",
+    "graphql-tools": "^4.0.3",
+    "graphql": "^0.13.2"
+  }
+}
