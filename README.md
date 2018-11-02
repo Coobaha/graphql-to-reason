@@ -5,6 +5,18 @@ This tool will transform existing GraphQL schema to ReasonML types to be used on
 [![Build Status](https://travis-ci.org/Coobaha/graphql-to-reason.svg?branch=master)](https://travis-ci.org/Coobaha/graphql-to-reason)
 [![npm](https://img.shields.io/npm/v/graphql-to-reason.svg)](https://www.npmjs.com/package/graphql-to-reason)
 
+
+<details>
+  <summary>
+    <b>Examples</b>
+  </summary>
+  <ul>
+    <li><a href="/examples/basic">Basic example</a></li>
+  </ul>
+</details>
+
+<p></p>
+
 ## Installation
 First, add this package as a dependency to your package.json
 ```
@@ -67,15 +79,6 @@ b) From `.graphql`
 ```
 
 ### Examples
-
-<details>
-  <summary>
-    <b>Examples</b>
-  </summary>
-  <ul>
-    <li><a href="/examples/basic">Basic example</a></li>
-  </ul>
-</details>
 
 Simple `schema.graphql`
 
