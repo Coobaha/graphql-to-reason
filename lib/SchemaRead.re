@@ -1,13 +1,5 @@
 exception Schema_file_not_found;
 
-let typename_field = {
-  Schema.fm_name: "__typename",
-  fm_description: None,
-  fm_arguments: [],
-  fm_field_type: Schema.NonNull(Schema.Named("String")),
-  fm_deprecation_reason: None,
-};
-
 let map_items = (f, t) => {
   let new_t = Hashtbl.create(Hashtbl.length(t));
   let mapper = (k, v) => {
@@ -27,14 +19,8 @@ let some_or = (o, v) =>
   | None => v
   };
 
-let add_typename_if_missing = fields =>
-  Schema.(
-    if (List.exists(({fm_name, _}) => fm_name == "__typename", fields)) {
-      fields;
-    } else {
-      [typename_field, ...fields];
-    }
-  );
+let filter_typename =
+  List.filter(({Schema.fm_name, _}) => fm_name !== "__typename");
 
 exception Unknown_type_kind(string);
 
@@ -127,7 +113,7 @@ let make_object_meta = v =>
         |> member("fields")
         |> to_list
         |> List.map(make_field_meta)
-        |> add_typename_if_missing,
+        |> filter_typename,
       om_interfaces:
         v
         |> member("interfaces")
@@ -159,7 +145,7 @@ let make_interface_meta = v =>
         |> member("fields")
         |> to_list
         |> List.map(make_field_meta)
-        |> add_typename_if_missing,
+        |> filter_typename,
     }
   );
 
