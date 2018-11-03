@@ -8,6 +8,9 @@
 > - :house:      [Internal]
 > - :nail_care:  [Polish]
 
+## 0.4.1 - 2018-11-03
+- :nail_care: Refactor where __typename is filtered
+
 ## 0.4.0 - 2018-11-03
 - :bug: Don't print __typename for fields
 

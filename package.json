@@ -1,6 +1,6 @@
 {
   "name": "graphql-to-reason",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Converts Graphql schema to ReasonML types",
   "repository": "https://github.com/Coobaha/graphql-to-reason",
   "keywords": ["graphql", "reason", "generator", "bucklescript", "reasonml"],
