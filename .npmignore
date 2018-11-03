@@ -29,7 +29,8 @@ esy.json
 esy.lock.json
 .gitignore
 dune
-
+CODE_OF_CONDUCT.md
+CONTRIBUTING.md
 yarn.lock
 dune-project
 

@@ -145,7 +145,7 @@ let mutationResolvers =
 ```
 
 
-### Development
+### Developing
 
 Install [esy](https://github.com/esy/esy):
 
