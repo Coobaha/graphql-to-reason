@@ -14,6 +14,7 @@ type state = {
   mutable directives: list(label_declaration),
   mutable queries: list(label_declaration),
   mutable mutations: list(label_declaration),
+  mutable resolvers: list(module_declaration),
   mutable subscriptions: list(label_declaration),
 };
 
@@ -98,6 +99,7 @@ let print = schema => {
     directives: [],
     queries: [],
     mutations: [],
+    resolvers: [],
     subscriptions: [],
   };
 
@@ -153,7 +155,7 @@ let print = schema => {
           ~attrs=[({txt: "bs.optional", loc: Location.none}, PStr([]))],
           {Location.txt: uncap_key(fm_name), loc: Location.none},
           Typ.constr(
-            {txt: Longident.parse("resolver"), loc: Location.none},
+            {txt: Longident.parse("rootResolver"), loc: Location.none},
             [
               switch (fm_arguments) {
               | [] => [%type: unit]
@@ -390,14 +392,14 @@ let print = schema => {
   let code = [%str
     module type SchemaConfig = {
       module Scalars: {[%%s state.scalars];};
-      type resolver('payload, 'fieldType, 'result);
+      type resolver('parent, 'payload, 'fieldType, 'result);
       type directiveResolver('payload);
     };
     module MakeSchema = (Config: SchemaConfig) => {
       include Config.Scalars;
 
-      type resolver('payload, 'fieldType, 'result) =
-        Config.resolver('payload, 'fieldType, 'result);
+      type rootResolver('payload, 'fieldType, 'result) =
+        Config.resolver(unit, 'payload, 'fieldType, 'result);
       type directiveResolver('payload) = Config.directiveResolver('payload);
 
       %s

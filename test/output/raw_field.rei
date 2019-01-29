@@ -1,13 +1,13 @@
 module type SchemaConfig = {
   module Scalars: {};
-  type resolver('payload, 'fieldType, 'result);
+  type resolver('parent, 'payload, 'fieldType, 'result);
   type directiveResolver('payload);
 };
 module MakeSchema:
   (Config: SchemaConfig) =>
   {
-    type resolver('payload, 'fieldType, 'result) =
-      Config.resolver('payload, 'fieldType, 'result);
+    type rootResolver('payload, 'fieldType, 'result) =
+      Config.resolver(unit, 'payload, 'fieldType, 'result);
     type directiveResolver('payload) = Config.directiveResolver('payload);
     type mutation = {
       .
@@ -19,7 +19,7 @@ module MakeSchema:
       [@bs.deriving abstract]
       type t = {
         [@bs.optional]
-        test: resolver(unit, string, string),
+        test: rootResolver(unit, string, string),
       };
     };
     module Mutations: {
@@ -27,7 +27,7 @@ module MakeSchema:
       type t = {
         [@bs.optional]
         nullableArrayOfNullableInts:
-          resolver(unit, int, Js.Nullable.t(array(Js.Nullable.t(int)))),
+          rootResolver(unit, int, Js.Nullable.t(array(Js.Nullable.t(int)))),
       };
     };
     module Subscriptions: {};

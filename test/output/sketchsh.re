@@ -3,13 +3,13 @@ module type SchemaConfig = {
     type jsonb;
     type timestamptz;
   };
-  type resolver('payload, 'fieldType, 'result);
+  type resolver('parent, 'payload, 'fieldType, 'result);
   type directiveResolver('payload);
 };
 module MakeSchema = (Config: SchemaConfig) => {
   include Config.Scalars;
-  type resolver('payload, 'fieldType, 'result) =
-    Config.resolver('payload, 'fieldType, 'result);
+  type rootResolver('payload, 'fieldType, 'result) =
+    Config.resolver(unit, 'payload, 'fieldType, 'result);
   type directiveResolver('payload) = Config.directiveResolver('payload);
   [@bs.deriving {jsConverter: newType}]
   type conflict_action = [

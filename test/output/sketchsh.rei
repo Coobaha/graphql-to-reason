@@ -1,6 +1,6 @@
 module type SchemaConfig = {
   module Scalars: {type jsonb; type timestamptz;};
-  type resolver('payload, 'fieldType, 'result);
+  type resolver('parent, 'payload, 'fieldType, 'result);
   type directiveResolver('payload);
 };
 module MakeSchema:
@@ -8,8 +8,8 @@ module MakeSchema:
   {
     type jsonb = Config.Scalars.jsonb;
     type timestamptz = Config.Scalars.timestamptz;
-    type resolver('payload, 'fieldType, 'result) =
-      Config.resolver('payload, 'fieldType, 'result);
+    type rootResolver('payload, 'fieldType, 'result) =
+      Config.resolver(unit, 'payload, 'fieldType, 'result);
     type directiveResolver('payload) = Config.directiveResolver('payload);
     type conflict_action = [ | `ignore | `update];
     type abs_conflict_action;

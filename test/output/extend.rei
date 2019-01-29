@@ -1,13 +1,13 @@
 module type SchemaConfig = {
   module Scalars: {};
-  type resolver('payload, 'fieldType, 'result);
+  type resolver('parent, 'payload, 'fieldType, 'result);
   type directiveResolver('payload);
 };
 module MakeSchema:
   (Config: SchemaConfig) =>
   {
-    type resolver('payload, 'fieldType, 'result) =
-      Config.resolver('payload, 'fieldType, 'result);
+    type rootResolver('payload, 'fieldType, 'result) =
+      Config.resolver(unit, 'payload, 'fieldType, 'result);
     type directiveResolver('payload) = Config.directiveResolver('payload);
     type query = {
       .
@@ -18,9 +18,9 @@ module MakeSchema:
       [@bs.deriving abstract]
       type t = {
         [@bs.optional]
-        hello: resolver(unit, string, Js.Nullable.t(string)),
+        hello: rootResolver(unit, string, Js.Nullable.t(string)),
         [@bs.optional]
-        test: resolver(unit, string, Js.Nullable.t(string)),
+        test: rootResolver(unit, string, Js.Nullable.t(string)),
       };
     };
     module Mutations: {};

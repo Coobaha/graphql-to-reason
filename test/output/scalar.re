@@ -3,13 +3,13 @@ module type SchemaConfig = {
     type json;
     type dateTime;
   };
-  type resolver('payload, 'fieldType, 'result);
+  type resolver('parent, 'payload, 'fieldType, 'result);
   type directiveResolver('payload);
 };
 module MakeSchema = (Config: SchemaConfig) => {
   include Config.Scalars;
-  type resolver('payload, 'fieldType, 'result) =
-    Config.resolver('payload, 'fieldType, 'result);
+  type rootResolver('payload, 'fieldType, 'result) =
+    Config.resolver(unit, 'payload, 'fieldType, 'result);
   type directiveResolver('payload) = Config.directiveResolver('payload);
   type query = {
     .
@@ -20,9 +20,9 @@ module MakeSchema = (Config: SchemaConfig) => {
     [@bs.deriving abstract]
     type t = {
       [@bs.optional]
-      json: resolver(unit, json, json),
+      json: rootResolver(unit, json, json),
       [@bs.optional]
-      dateTime: resolver(unit, dateTime, dateTime),
+      dateTime: rootResolver(unit, dateTime, dateTime),
     };
   };
   module Mutations = {};

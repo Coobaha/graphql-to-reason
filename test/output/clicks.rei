@@ -1,14 +1,14 @@
 module type SchemaConfig = {
   module Scalars: {type click;};
-  type resolver('payload, 'fieldType, 'result);
+  type resolver('parent, 'payload, 'fieldType, 'result);
   type directiveResolver('payload);
 };
 module MakeSchema:
   (Config: SchemaConfig) =>
   {
     type click = Config.Scalars.click;
-    type resolver('payload, 'fieldType, 'result) =
-      Config.resolver('payload, 'fieldType, 'result);
+    type rootResolver('payload, 'fieldType, 'result) =
+      Config.resolver(unit, 'payload, 'fieldType, 'result);
     type directiveResolver('payload) = Config.directiveResolver('payload);
     type mutation = {. "click": click}
     and query = {. "clicks": click};
@@ -16,14 +16,14 @@ module MakeSchema:
       [@bs.deriving abstract]
       type t = {
         [@bs.optional]
-        clicks: resolver(unit, click, click),
+        clicks: rootResolver(unit, click, click),
       };
     };
     module Mutations: {
       [@bs.deriving abstract]
       type t = {
         [@bs.optional]
-        click: resolver({. "payload": string}, click, click),
+        click: rootResolver({. "payload": string}, click, click),
       };
     };
     module Subscriptions: {};

@@ -3,13 +3,13 @@ module type SchemaConfig = {
     type id;
     type customScalar;
   };
-  type resolver('payload, 'fieldType, 'result);
+  type resolver('parent, 'payload, 'fieldType, 'result);
   type directiveResolver('payload);
 };
 module MakeSchema = (Config: SchemaConfig) => {
   include Config.Scalars;
-  type resolver('payload, 'fieldType, 'result) =
-    Config.resolver('payload, 'fieldType, 'result);
+  type rootResolver('payload, 'fieldType, 'result) =
+    Config.resolver(unit, 'payload, 'fieldType, 'result);
   type directiveResolver('payload) = Config.directiveResolver('payload);
   [@bs.deriving {jsConverter: newType}]
   type sampleField = [
@@ -124,27 +124,29 @@ module MakeSchema = (Config: SchemaConfig) => {
     [@bs.deriving abstract]
     type t = {
       [@bs.optional]
-      stringField: resolver(unit, string, string),
+      stringField: rootResolver(unit, string, string),
       [@bs.optional]
-      variousScalars: resolver(unit, variousScalars, variousScalars),
+      variousScalars: rootResolver(unit, variousScalars, variousScalars),
       [@bs.optional]
-      lists: resolver(unit, lists, lists),
+      lists: rootResolver(unit, lists, lists),
       [@bs.optional]
-      scalarsInput: resolver({. "arg": variousScalarsInput}, string, string),
+      scalarsInput:
+        rootResolver({. "arg": variousScalarsInput}, string, string),
       [@bs.optional]
-      listsInput: resolver({. "arg": listsInput}, string, string),
+      listsInput: rootResolver({. "arg": listsInput}, string, string),
       [@bs.optional]
-      recursiveInput: resolver({. "arg": recursiveInput}, string, string),
+      recursiveInput:
+        rootResolver({. "arg": recursiveInput}, string, string),
       [@bs.optional]
       nonrecursiveInput:
-        resolver({. "arg": nonrecursiveInput}, string, string),
+        rootResolver({. "arg": nonrecursiveInput}, string, string),
       [@bs.optional]
-      enumInput: resolver({. "arg": abs_sampleField}, string, string),
+      enumInput: rootResolver({. "arg": abs_sampleField}, string, string),
       [@bs.optional]
-      argNamedQuery: resolver({. "query": int}, int, int),
+      argNamedQuery: rootResolver({. "query": int}, int, int),
       [@bs.optional]
       customScalarField:
-        resolver(
+        rootResolver(
           {
             .
             "argOptional": Js.Nullable.t(customScalar),
@@ -154,9 +156,9 @@ module MakeSchema = (Config: SchemaConfig) => {
           customScalarObject,
         ),
       [@bs.optional]
-      dogOrHuman: resolver(unit, dogOrHuman, dogOrHuman),
+      dogOrHuman: rootResolver(unit, dogOrHuman, dogOrHuman),
       [@bs.optional]
-      nestedObject: resolver(unit, nestedObject, nestedObject),
+      nestedObject: rootResolver(unit, nestedObject, nestedObject),
     };
   };
   module Mutations = {
@@ -164,17 +166,17 @@ module MakeSchema = (Config: SchemaConfig) => {
     type t = {
       [@bs.optional]
       mutationWithError:
-        resolver(unit, mutationWithErrorResult, mutationWithErrorResult),
+        rootResolver(unit, mutationWithErrorResult, mutationWithErrorResult),
     };
   };
   module Subscriptions = {
     [@bs.deriving abstract]
     type t = {
       [@bs.optional]
-      simpleSubscription: resolver(unit, dogOrHuman, dogOrHuman),
+      simpleSubscription: rootResolver(unit, dogOrHuman, dogOrHuman),
       [@bs.optional]
       simpleNullableSubscription:
-        resolver(unit, dogOrHuman, Js.Nullable.t(dogOrHuman)),
+        rootResolver(unit, dogOrHuman, Js.Nullable.t(dogOrHuman)),
     };
   };
   module Directives = {

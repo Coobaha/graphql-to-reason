@@ -3,6 +3,7 @@ node_modules
 _build
 _release
 _esy
+esy.lock
 *.log
 *.byte
 *.native

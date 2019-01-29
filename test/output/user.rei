@@ -1,14 +1,14 @@
 module type SchemaConfig = {
   module Scalars: {type id;};
-  type resolver('payload, 'fieldType, 'result);
+  type resolver('parent, 'payload, 'fieldType, 'result);
   type directiveResolver('payload);
 };
 module MakeSchema:
   (Config: SchemaConfig) =>
   {
     type id = Config.Scalars.id;
-    type resolver('payload, 'fieldType, 'result) =
-      Config.resolver('payload, 'fieldType, 'result);
+    type rootResolver('payload, 'fieldType, 'result) =
+      Config.resolver(unit, 'payload, 'fieldType, 'result);
     type directiveResolver('payload) = Config.directiveResolver('payload);
     type userTypes = [ | `Administrator | `Customer | `SuperUser];
     type abs_userTypes;
@@ -44,7 +44,7 @@ module MakeSchema:
       [@bs.deriving abstract]
       type t = {
         [@bs.optional]
-        user: resolver(unit, user, Js.Nullable.t(user)),
+        user: rootResolver(unit, user, Js.Nullable.t(user)),
       };
     };
     module Mutations: {};

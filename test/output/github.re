@@ -10,13 +10,13 @@ module type SchemaConfig = {
     type dateTime;
     type uRI;
   };
-  type resolver('payload, 'fieldType, 'result);
+  type resolver('parent, 'payload, 'fieldType, 'result);
   type directiveResolver('payload);
 };
 module MakeSchema = (Config: SchemaConfig) => {
   include Config.Scalars;
-  type resolver('payload, 'fieldType, 'result) =
-    Config.resolver('payload, 'fieldType, 'result);
+  type rootResolver('payload, 'fieldType, 'result) =
+    Config.resolver(unit, 'payload, 'fieldType, 'result);
   type directiveResolver('payload) = Config.directiveResolver('payload);
   [@bs.deriving {jsConverter: newType}]
   type pullRequestTimelineItemsItemType = [
@@ -3556,25 +3556,26 @@ module MakeSchema = (Config: SchemaConfig) => {
     type t = {
       [@bs.optional]
       codeOfConduct:
-        resolver(
+        rootResolver(
           {. "key": string},
           codeOfConduct,
           Js.Nullable.t(codeOfConduct),
         ),
       [@bs.optional]
       codesOfConduct:
-        resolver(
+        rootResolver(
           unit,
           codeOfConduct,
           Js.Nullable.t(array(Js.Nullable.t(codeOfConduct))),
         ),
       [@bs.optional]
-      license: resolver({. "key": string}, license, Js.Nullable.t(license)),
+      license:
+        rootResolver({. "key": string}, license, Js.Nullable.t(license)),
       [@bs.optional]
-      licenses: resolver(unit, license, array(Js.Nullable.t(license))),
+      licenses: rootResolver(unit, license, array(Js.Nullable.t(license))),
       [@bs.optional]
       marketplaceCategories:
-        resolver(
+        rootResolver(
           {
             .
             "excludeEmpty": Js.Nullable.t(bool),
@@ -3586,7 +3587,7 @@ module MakeSchema = (Config: SchemaConfig) => {
         ),
       [@bs.optional]
       marketplaceCategory:
-        resolver(
+        rootResolver(
           {
             .
             "slug": string,
@@ -3597,14 +3598,14 @@ module MakeSchema = (Config: SchemaConfig) => {
         ),
       [@bs.optional]
       marketplaceListing:
-        resolver(
+        rootResolver(
           {. "slug": string},
           marketplaceListing,
           Js.Nullable.t(marketplaceListing),
         ),
       [@bs.optional]
       marketplaceListings:
-        resolver(
+        rootResolver(
           {
             .
             "adminId": Js.Nullable.t(string),
@@ -3625,35 +3626,35 @@ module MakeSchema = (Config: SchemaConfig) => {
           marketplaceListingConnection,
         ),
       [@bs.optional]
-      meta: resolver(unit, gitHubMetadata, gitHubMetadata),
+      meta: rootResolver(unit, gitHubMetadata, gitHubMetadata),
       [@bs.optional]
-      node: resolver({. "id": string}, node, Js.Nullable.t(node)),
+      node: rootResolver({. "id": string}, node, Js.Nullable.t(node)),
       [@bs.optional]
       nodes:
-        resolver(
+        rootResolver(
           {. "ids": array(string)},
           node,
           array(Js.Nullable.t(node)),
         ),
       [@bs.optional]
       organization:
-        resolver(
+        rootResolver(
           {. "login": string},
           organization,
           Js.Nullable.t(organization),
         ),
       [@bs.optional]
       rateLimit:
-        resolver(
+        rootResolver(
           {. "dryRun": Js.Nullable.t(bool)},
           rateLimit,
           Js.Nullable.t(rateLimit),
         ),
       [@bs.optional]
-      relay: resolver(unit, query, query),
+      relay: rootResolver(unit, query, query),
       [@bs.optional]
       repository:
-        resolver(
+        rootResolver(
           {
             .
             "name": string,
@@ -3664,21 +3665,21 @@ module MakeSchema = (Config: SchemaConfig) => {
         ),
       [@bs.optional]
       repositoryOwner:
-        resolver(
+        rootResolver(
           {. "login": string},
           repositoryOwner,
           Js.Nullable.t(repositoryOwner),
         ),
       [@bs.optional]
       resource:
-        resolver(
+        rootResolver(
           {. "url": uRI},
           uniformResourceLocatable,
           Js.Nullable.t(uniformResourceLocatable),
         ),
       [@bs.optional]
       search:
-        resolver(
+        rootResolver(
           {
             .
             "after": Js.Nullable.t(string),
@@ -3692,11 +3693,11 @@ module MakeSchema = (Config: SchemaConfig) => {
           searchResultItemConnection,
         ),
       [@bs.optional]
-      topic: resolver({. "name": string}, topic, Js.Nullable.t(topic)),
+      topic: rootResolver({. "name": string}, topic, Js.Nullable.t(topic)),
       [@bs.optional]
-      user: resolver({. "login": string}, user, Js.Nullable.t(user)),
+      user: rootResolver({. "login": string}, user, Js.Nullable.t(user)),
       [@bs.optional]
-      viewer: resolver(unit, user, user),
+      viewer: rootResolver(unit, user, user),
     };
   };
   module Mutations = {
@@ -3704,238 +3705,238 @@ module MakeSchema = (Config: SchemaConfig) => {
     type t = {
       [@bs.optional]
       acceptTopicSuggestion:
-        resolver(
+        rootResolver(
           {. "input": acceptTopicSuggestionInput},
           acceptTopicSuggestionPayload,
           Js.Nullable.t(acceptTopicSuggestionPayload),
         ),
       [@bs.optional]
       addComment:
-        resolver(
+        rootResolver(
           {. "input": addCommentInput},
           addCommentPayload,
           Js.Nullable.t(addCommentPayload),
         ),
       [@bs.optional]
       addProjectCard:
-        resolver(
+        rootResolver(
           {. "input": addProjectCardInput},
           addProjectCardPayload,
           Js.Nullable.t(addProjectCardPayload),
         ),
       [@bs.optional]
       addProjectColumn:
-        resolver(
+        rootResolver(
           {. "input": addProjectColumnInput},
           addProjectColumnPayload,
           Js.Nullable.t(addProjectColumnPayload),
         ),
       [@bs.optional]
       addPullRequestReview:
-        resolver(
+        rootResolver(
           {. "input": addPullRequestReviewInput},
           addPullRequestReviewPayload,
           Js.Nullable.t(addPullRequestReviewPayload),
         ),
       [@bs.optional]
       addPullRequestReviewComment:
-        resolver(
+        rootResolver(
           {. "input": addPullRequestReviewCommentInput},
           addPullRequestReviewCommentPayload,
           Js.Nullable.t(addPullRequestReviewCommentPayload),
         ),
       [@bs.optional]
       addReaction:
-        resolver(
+        rootResolver(
           {. "input": addReactionInput},
           addReactionPayload,
           Js.Nullable.t(addReactionPayload),
         ),
       [@bs.optional]
       addStar:
-        resolver(
+        rootResolver(
           {. "input": addStarInput},
           addStarPayload,
           Js.Nullable.t(addStarPayload),
         ),
       [@bs.optional]
       createBranchProtectionRule:
-        resolver(
+        rootResolver(
           {. "input": createBranchProtectionRuleInput},
           createBranchProtectionRulePayload,
           Js.Nullable.t(createBranchProtectionRulePayload),
         ),
       [@bs.optional]
       createProject:
-        resolver(
+        rootResolver(
           {. "input": createProjectInput},
           createProjectPayload,
           Js.Nullable.t(createProjectPayload),
         ),
       [@bs.optional]
       declineTopicSuggestion:
-        resolver(
+        rootResolver(
           {. "input": declineTopicSuggestionInput},
           declineTopicSuggestionPayload,
           Js.Nullable.t(declineTopicSuggestionPayload),
         ),
       [@bs.optional]
       deleteBranchProtectionRule:
-        resolver(
+        rootResolver(
           {. "input": deleteBranchProtectionRuleInput},
           deleteBranchProtectionRulePayload,
           Js.Nullable.t(deleteBranchProtectionRulePayload),
         ),
       [@bs.optional]
       deleteProject:
-        resolver(
+        rootResolver(
           {. "input": deleteProjectInput},
           deleteProjectPayload,
           Js.Nullable.t(deleteProjectPayload),
         ),
       [@bs.optional]
       deleteProjectCard:
-        resolver(
+        rootResolver(
           {. "input": deleteProjectCardInput},
           deleteProjectCardPayload,
           Js.Nullable.t(deleteProjectCardPayload),
         ),
       [@bs.optional]
       deleteProjectColumn:
-        resolver(
+        rootResolver(
           {. "input": deleteProjectColumnInput},
           deleteProjectColumnPayload,
           Js.Nullable.t(deleteProjectColumnPayload),
         ),
       [@bs.optional]
       deletePullRequestReview:
-        resolver(
+        rootResolver(
           {. "input": deletePullRequestReviewInput},
           deletePullRequestReviewPayload,
           Js.Nullable.t(deletePullRequestReviewPayload),
         ),
       [@bs.optional]
       dismissPullRequestReview:
-        resolver(
+        rootResolver(
           {. "input": dismissPullRequestReviewInput},
           dismissPullRequestReviewPayload,
           Js.Nullable.t(dismissPullRequestReviewPayload),
         ),
       [@bs.optional]
       lockLockable:
-        resolver(
+        rootResolver(
           {. "input": lockLockableInput},
           lockLockablePayload,
           Js.Nullable.t(lockLockablePayload),
         ),
       [@bs.optional]
       moveProjectCard:
-        resolver(
+        rootResolver(
           {. "input": moveProjectCardInput},
           moveProjectCardPayload,
           Js.Nullable.t(moveProjectCardPayload),
         ),
       [@bs.optional]
       moveProjectColumn:
-        resolver(
+        rootResolver(
           {. "input": moveProjectColumnInput},
           moveProjectColumnPayload,
           Js.Nullable.t(moveProjectColumnPayload),
         ),
       [@bs.optional]
       removeOutsideCollaborator:
-        resolver(
+        rootResolver(
           {. "input": removeOutsideCollaboratorInput},
           removeOutsideCollaboratorPayload,
           Js.Nullable.t(removeOutsideCollaboratorPayload),
         ),
       [@bs.optional]
       removeReaction:
-        resolver(
+        rootResolver(
           {. "input": removeReactionInput},
           removeReactionPayload,
           Js.Nullable.t(removeReactionPayload),
         ),
       [@bs.optional]
       removeStar:
-        resolver(
+        rootResolver(
           {. "input": removeStarInput},
           removeStarPayload,
           Js.Nullable.t(removeStarPayload),
         ),
       [@bs.optional]
       requestReviews:
-        resolver(
+        rootResolver(
           {. "input": requestReviewsInput},
           requestReviewsPayload,
           Js.Nullable.t(requestReviewsPayload),
         ),
       [@bs.optional]
       submitPullRequestReview:
-        resolver(
+        rootResolver(
           {. "input": submitPullRequestReviewInput},
           submitPullRequestReviewPayload,
           Js.Nullable.t(submitPullRequestReviewPayload),
         ),
       [@bs.optional]
       unlockLockable:
-        resolver(
+        rootResolver(
           {. "input": unlockLockableInput},
           unlockLockablePayload,
           Js.Nullable.t(unlockLockablePayload),
         ),
       [@bs.optional]
       updateBranchProtectionRule:
-        resolver(
+        rootResolver(
           {. "input": updateBranchProtectionRuleInput},
           updateBranchProtectionRulePayload,
           Js.Nullable.t(updateBranchProtectionRulePayload),
         ),
       [@bs.optional]
       updateProject:
-        resolver(
+        rootResolver(
           {. "input": updateProjectInput},
           updateProjectPayload,
           Js.Nullable.t(updateProjectPayload),
         ),
       [@bs.optional]
       updateProjectCard:
-        resolver(
+        rootResolver(
           {. "input": updateProjectCardInput},
           updateProjectCardPayload,
           Js.Nullable.t(updateProjectCardPayload),
         ),
       [@bs.optional]
       updateProjectColumn:
-        resolver(
+        rootResolver(
           {. "input": updateProjectColumnInput},
           updateProjectColumnPayload,
           Js.Nullable.t(updateProjectColumnPayload),
         ),
       [@bs.optional]
       updatePullRequestReview:
-        resolver(
+        rootResolver(
           {. "input": updatePullRequestReviewInput},
           updatePullRequestReviewPayload,
           Js.Nullable.t(updatePullRequestReviewPayload),
         ),
       [@bs.optional]
       updatePullRequestReviewComment:
-        resolver(
+        rootResolver(
           {. "input": updatePullRequestReviewCommentInput},
           updatePullRequestReviewCommentPayload,
           Js.Nullable.t(updatePullRequestReviewCommentPayload),
         ),
       [@bs.optional]
       updateSubscription:
-        resolver(
+        rootResolver(
           {. "input": updateSubscriptionInput},
           updateSubscriptionPayload,
           Js.Nullable.t(updateSubscriptionPayload),
         ),
       [@bs.optional]
       updateTopics:
-        resolver(
+        rootResolver(
           {. "input": updateTopicsInput},
           updateTopicsPayload,
           Js.Nullable.t(updateTopicsPayload),

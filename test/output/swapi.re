@@ -1,12 +1,12 @@
 module type SchemaConfig = {
   module Scalars: {type id;};
-  type resolver('payload, 'fieldType, 'result);
+  type resolver('parent, 'payload, 'fieldType, 'result);
   type directiveResolver('payload);
 };
 module MakeSchema = (Config: SchemaConfig) => {
   include Config.Scalars;
-  type resolver('payload, 'fieldType, 'result) =
-    Config.resolver('payload, 'fieldType, 'result);
+  type rootResolver('payload, 'fieldType, 'result) =
+    Config.resolver(unit, 'payload, 'fieldType, 'result);
   type directiveResolver('payload) = Config.directiveResolver('payload);
   [@bs.deriving {jsConverter: newType}]
   type episode = [
@@ -109,35 +109,35 @@ module MakeSchema = (Config: SchemaConfig) => {
     type t = {
       [@bs.optional]
       hero:
-        resolver(
+        rootResolver(
           {. "episode": Js.Nullable.t(abs_episode)},
           character,
           Js.Nullable.t(character),
         ),
       [@bs.optional]
       reviews:
-        resolver(
+        rootResolver(
           {. "episode": abs_episode},
           review,
           Js.Nullable.t(array(Js.Nullable.t(review))),
         ),
       [@bs.optional]
       search:
-        resolver(
+        rootResolver(
           {. "text": Js.Nullable.t(string)},
           searchResult,
           Js.Nullable.t(array(Js.Nullable.t(searchResult))),
         ),
       [@bs.optional]
       character:
-        resolver({. "id": string}, character, Js.Nullable.t(character)),
+        rootResolver({. "id": string}, character, Js.Nullable.t(character)),
       [@bs.optional]
-      droid: resolver({. "id": string}, droid, Js.Nullable.t(droid)),
+      droid: rootResolver({. "id": string}, droid, Js.Nullable.t(droid)),
       [@bs.optional]
-      human: resolver({. "id": string}, human, Js.Nullable.t(human)),
+      human: rootResolver({. "id": string}, human, Js.Nullable.t(human)),
       [@bs.optional]
       starship:
-        resolver({. "id": string}, starship, Js.Nullable.t(starship)),
+        rootResolver({. "id": string}, starship, Js.Nullable.t(starship)),
     };
   };
   module Mutations = {
@@ -145,7 +145,7 @@ module MakeSchema = (Config: SchemaConfig) => {
     type t = {
       [@bs.optional]
       createReview:
-        resolver(
+        rootResolver(
           {
             .
             "episode": Js.Nullable.t(abs_episode),
@@ -161,7 +161,7 @@ module MakeSchema = (Config: SchemaConfig) => {
     type t = {
       [@bs.optional]
       reviewAdded:
-        resolver(
+        rootResolver(
           {. "episode": Js.Nullable.t(abs_episode)},
           review,
           Js.Nullable.t(review),

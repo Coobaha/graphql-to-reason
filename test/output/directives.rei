@@ -1,20 +1,20 @@
 module type SchemaConfig = {
   module Scalars: {};
-  type resolver('payload, 'fieldType, 'result);
+  type resolver('parent, 'payload, 'fieldType, 'result);
   type directiveResolver('payload);
 };
 module MakeSchema:
   (Config: SchemaConfig) =>
   {
-    type resolver('payload, 'fieldType, 'result) =
-      Config.resolver('payload, 'fieldType, 'result);
+    type rootResolver('payload, 'fieldType, 'result) =
+      Config.resolver(unit, 'payload, 'fieldType, 'result);
     type directiveResolver('payload) = Config.directiveResolver('payload);
     type query = {. "foo": Js.Nullable.t(string)};
     module Queries: {
       [@bs.deriving abstract]
       type t = {
         [@bs.optional]
-        foo: resolver(unit, string, Js.Nullable.t(string)),
+        foo: rootResolver(unit, string, Js.Nullable.t(string)),
       };
     };
     module Mutations: {};
