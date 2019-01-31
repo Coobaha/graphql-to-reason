@@ -29,7 +29,7 @@ install:
 
 script:
   - esy build
-  - esy test
+  - make test
   - mv _build/default/graphql_to_reason.exe graphql-to-reason-$TARGET_NAME.exe
 
 deploy:
