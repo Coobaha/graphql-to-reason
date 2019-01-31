@@ -10,15 +10,15 @@ module MakeSchema:
       Config.resolver(unit, 'payload, 'fieldType, 'result);
     type directiveResolver('payload) = Config.directiveResolver('payload);
     type query = {. "foo": Js.Nullable.t(string)};
-    module Queries: {
+    module Query: {
       [@bs.deriving abstract]
       type t = {
         [@bs.optional]
         foo: rootResolver(unit, string, Js.Nullable.t(string)),
       };
     };
-    module Mutations: {};
-    module Subscriptions: {};
+    module Mutation: {};
+    module Subscription: {};
     module Directives: {
       [@bs.deriving abstract]
       type t = {

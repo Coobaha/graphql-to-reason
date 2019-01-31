@@ -40,15 +40,15 @@ module MakeSchema:
       "name": string,
       "self": user,
     };
-    module Queries: {
+    module Query: {
       [@bs.deriving abstract]
       type t = {
         [@bs.optional]
         user: rootResolver(unit, user, Js.Nullable.t(user)),
       };
     };
-    module Mutations: {};
-    module Subscriptions: {};
+    module Mutation: {};
+    module Subscription: {};
     module Directives: {
       [@bs.deriving abstract]
       type t = {

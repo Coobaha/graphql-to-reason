@@ -106,7 +106,7 @@ module MakeSchema:
     external humanToSearchResult : human => searchResult = "%identity";
     external droidToSearchResult : droid => searchResult = "%identity";
     external starshipToSearchResult : starship => searchResult = "%identity";
-    module Queries: {
+    module Query: {
       [@bs.deriving abstract]
       type t = {
         [@bs.optional]
@@ -142,7 +142,7 @@ module MakeSchema:
           rootResolver({. "id": string}, starship, Js.Nullable.t(starship)),
       };
     };
-    module Mutations: {
+    module Mutation: {
       [@bs.deriving abstract]
       type t = {
         [@bs.optional]
@@ -158,7 +158,7 @@ module MakeSchema:
           ),
       };
     };
-    module Subscriptions: {
+    module Subscription: {
       [@bs.deriving abstract]
       type t = {
         [@bs.optional]

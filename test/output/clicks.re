@@ -10,21 +10,21 @@ module MakeSchema = (Config: SchemaConfig) => {
   type directiveResolver('payload) = Config.directiveResolver('payload);
   type mutation = {. "click": click}
   and query = {. "clicks": click};
-  module Queries = {
+  module Query = {
     [@bs.deriving abstract]
     type t = {
       [@bs.optional]
       clicks: rootResolver(unit, click, click),
     };
   };
-  module Mutations = {
+  module Mutation = {
     [@bs.deriving abstract]
     type t = {
       [@bs.optional]
       click: rootResolver({. "payload": string}, click, click),
     };
   };
-  module Subscriptions = {};
+  module Subscription = {};
   module Directives = {
     [@bs.deriving abstract]
     type t = {
@@ -35,5 +35,12 @@ module MakeSchema = (Config: SchemaConfig) => {
       [@bs.optional]
       deprecated: directiveResolver({. "reason": Js.Nullable.t(string)}),
     };
+  };
+  [@bs.deriving abstract]
+  type t = {
+    [@bs.optional] [@bs.as "Query"]
+    query: Query.t,
+    [@bs.optional] [@bs.as "Mutation"]
+    mutation: Mutation.t,
   };
 };

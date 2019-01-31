@@ -14,8 +14,9 @@ type state = {
   mutable directives: list(label_declaration),
   mutable queries: list(label_declaration),
   mutable mutations: list(label_declaration),
-  mutable resolvers: list(module_declaration),
+  mutable resolvers: list(structure_item),
   mutable subscriptions: list(label_declaration),
+  mutable used_resolvers: list(string),
 };
 
 let uncap = String.uncapitalize_ascii;
@@ -32,6 +33,92 @@ let closed_js_t = fields =>
     [Typ.object_(fields, Closed)],
   );
 
+let prefixes: Hashtbl.t(string, int) = Hashtbl.create(5);
+
+let prefix = (key: string) =>
+  switch (Hashtbl.find(prefixes, key)) {
+  | counter =>
+    Hashtbl.add(prefixes, key, counter + 1);
+    key ++ "_" ++ (counter |> string_of_int);
+  | exception Not_found =>
+    Hashtbl.add(prefixes, key, 1);
+    key;
+  };
+
+let resetPrefixes = () => Hashtbl.clear(prefixes);
+
+let escape_id = key => {
+  let originalKey = uncap_key(key);
+  switch (originalKey) {
+  | "and"
+  | "see"
+  | "let"
+  | "type"
+  | "class"
+  | "as"
+  | "assert"
+  | "begin"
+  | "constraint"
+  | "do"
+  | "while"
+  | "for"
+  | "done"
+  | "downto"
+  | "else"
+  | "if"
+  | "end"
+  | "exception"
+  | "external"
+  | "false"
+  | "fun"
+  | "function"
+  | "functor"
+  | "in"
+  | "include"
+  | "inherit"
+  | "initializer"
+  | "lazy"
+  | "match"
+  | "method"
+  | "module"
+  | "mutable"
+  | "new"
+  | "object"
+  | "of"
+  | "open"
+  | "or"
+  | "private"
+  | "rec"
+  | "sig"
+  | "struct"
+  | "then"
+  | "to"
+  | "true"
+  | "try"
+  | "val"
+  | "virtual"
+  | "when"
+  | "with" => (
+      originalKey ++ "_",
+      [
+        (
+          {Location.txt: "bs.as", loc: Location.none},
+          PStr([%str [%e Exp.constant(Const.string(originalKey))]]),
+        ),
+      ],
+    )
+  | originalKey when originalKey != key => (
+      originalKey,
+      [
+        (
+          {Location.txt: "bs.as", loc: Location.none},
+          PStr([%str [%e Exp.constant(Const.string(key))]]),
+        ),
+      ],
+    )
+  | originalKey => (originalKey, [])
+  };
+};
 let gql_type = key =>
   switch (String.lowercase_ascii(key)) {
   | "id" => [%type: string]
@@ -100,6 +187,7 @@ let print = schema => {
     queries: [],
     mutations: [],
     resolvers: [],
+    used_resolvers: [],
     subscriptions: [],
   };
 
@@ -148,12 +236,17 @@ let print = schema => {
     [],
     print_type_ref(fm_field_type),
   )
-  and print_resolver = fields =>
+  and print_root_resolver = fields =>
     List.map(
-      ({fm_name, fm_arguments, fm_field_type, _}) =>
+      ({fm_name, fm_arguments, fm_field_type, _}) => {
+        let (key, extraAttrs) = escape_id(fm_name);
+        let key = prefix(key);
         Type.field(
-          ~attrs=[({txt: "bs.optional", loc: Location.none}, PStr([]))],
-          {Location.txt: uncap_key(fm_name), loc: Location.none},
+          ~attrs=[
+            ({txt: "bs.optional", loc: Location.none}, PStr([])),
+            ...extraAttrs,
+          ],
+          {Location.txt: key, loc: Location.none},
           Typ.constr(
             {txt: Longident.parse("rootResolver"), loc: Location.none},
             [
@@ -165,23 +258,45 @@ let print = schema => {
               print_type_ref(fm_field_type),
             ],
           ),
-        ),
+        );
+      },
+      fields,
+    )
+  and print_resolver = (parent, fields) =>
+    List.map(
+      ({fm_name, fm_arguments, fm_field_type, _}) => {
+        let (key, extraAttrs) = escape_id(fm_name);
+        let key = prefix(key);
+
+        Type.field(
+          ~attrs=[
+            ({txt: "bs.optional", loc: Location.none}, PStr([])),
+            ...extraAttrs,
+          ],
+          {Location.txt: key, loc: Location.none},
+          Typ.constr(
+            {txt: Longident.parse("Config.resolver"), loc: Location.none},
+            [
+              Typ.constr(
+                {txt: Longident.Lident(parent), loc: Location.none},
+                [],
+              ),
+              switch (fm_arguments) {
+              | [] => [%type: unit]
+              | _ => closed_js_t(List.map(print_arg, fm_arguments))
+              },
+              print_field_type_name(fm_field_type),
+              print_type_ref(fm_field_type),
+            ],
+          ),
+        );
+      },
       fields,
     )
   and print_directive_resolver = ({dm_name, dm_arguments, _}) => {
-    let (key, extraAttrs) =
-      switch (uncap_key(dm_name)) {
-      | "include" as originalKey => (
-          originalKey ++ "_",
-          [
-            (
-              {Location.txt: "bs.as", loc: Location.none},
-              PStr([%str [%e Exp.constant(Const.string(originalKey))]]),
-            ),
-          ],
-        )
-      | originalKey => (originalKey, [])
-      };
+    let (key, extraAttrs) = escape_id(dm_name);
+    let key = prefix(key);
+
     [
       Type.field(
         ~attrs=[
@@ -280,17 +395,78 @@ let print = schema => {
         | isPrivate when String.sub(isPrivate, 0, 2) == "__" => ()
         | name =>
           state.fields = [print_fields(om_name, om_fields), ...state.fields];
+          state.used_resolvers =
+            List.append(state.used_resolvers, [om_name]);
+          resetPrefixes();
+
           switch (name) {
           | "mutation" =>
             state.mutations =
-              List.append(state.mutations, print_resolver(om_fields))
+              List.append(state.mutations, print_root_resolver(om_fields))
           | "query" =>
             state.queries =
-              List.append(state.queries, print_resolver(om_fields))
+              List.append(state.queries, print_root_resolver(om_fields))
           | "subscription" =>
             state.subscriptions =
-              List.append(state.subscriptions, print_resolver(om_fields))
-          | _ => ()
+              List.append(
+                state.subscriptions,
+                print_root_resolver(om_fields),
+              )
+          | _ =>
+            state.resolvers =
+              List.append(
+                state.resolvers,
+                [
+                  {
+                    pstr_desc:
+                      Pstr_module({
+                        pmb_name: {
+                          txt: om_name |> String.capitalize_ascii,
+                          loc: Location.none,
+                        },
+                        pmb_expr:
+                          Mod.mk(
+                            Pmod_structure([
+                              {
+                                pstr_desc:
+                                  Pstr_type(
+                                    Recursive,
+                                    [
+                                      Type.mk(
+                                        ~kind=
+                                          Ptype_record(
+                                            print_resolver(
+                                              om_name |> uncap_key,
+                                              om_fields,
+                                            ),
+                                          ),
+                                        ~attrs=[
+                                          (
+                                            {
+                                              txt: "bs.deriving",
+                                              loc: Location.none,
+                                            },
+                                            PStr([%str abstract]),
+                                          ),
+                                        ],
+                                        {
+                                          Location.txt: "t",
+                                          loc: Location.none,
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                pstr_loc: Location.none,
+                              },
+                            ]),
+                          ),
+                        pmb_attributes: [],
+                        pmb_loc: Location.none,
+                      }),
+                    pstr_loc: Location.none,
+                  },
+                ],
+              )
           };
         }
 
@@ -380,6 +556,56 @@ let print = schema => {
         [Str.type_(Recursive, [abstractRecord("t", state.subscriptions)])]
       ]
     };
+
+  let resolvers =
+    switch (state.resolvers) {
+    | [] => [%str]
+    | _ => [%str
+        %s
+        state.resolvers
+      ]
+    };
+
+  let used_resolvers =
+    switch (state.used_resolvers) {
+    | [] => [%str]
+    | _ =>
+      let labels =
+        List.map(
+          name => {
+            let (key, extraAttrs) = escape_id(name);
+            let key = prefix(key);
+
+            let attrs = [
+              Location.({txt: "bs.optional", loc: Location.none}, PStr([])),
+              ...extraAttrs,
+            ];
+            Type.field(
+              ~attrs,
+              {Location.txt: key, loc: Location.none},
+              Typ.constr(
+                {
+                  txt:
+                    Ldot(
+                      Longident.parse(name |> String.capitalize_ascii),
+                      "t",
+                    ),
+                  loc: Location.none,
+                },
+                [],
+              ),
+            );
+          },
+          state.used_resolvers,
+        );
+      resetPrefixes();
+
+      [%str
+        %s
+        [Str.type_(Recursive, [abstractRecord("t", labels)])]
+      ];
+    };
+
   let directives =
     switch (state.directives) {
     | [] => [%str]
@@ -397,7 +623,6 @@ let print = schema => {
     };
     module MakeSchema = (Config: SchemaConfig) => {
       include Config.Scalars;
-
       type rootResolver('payload, 'fieldType, 'result) =
         Config.resolver(unit, 'payload, 'fieldType, 'result);
       type directiveResolver('payload) = Config.directiveResolver('payload);
@@ -411,15 +636,15 @@ let print = schema => {
       %s
       state.unions_helpers;
 
-      module Queries = {
+      module Query = {
         %s
         queries;
       };
-      module Mutations = {
+      module Mutation = {
         %s
         mutations;
       };
-      module Subscriptions = {
+      module Subscription = {
         %s
         subscriptions;
       };
@@ -427,6 +652,10 @@ let print = schema => {
         %s
         directives;
       };
+      %s
+      resolvers;
+      %s
+      used_resolvers;
     }
   ];
   let comments = [];

@@ -518,9 +518,9 @@ module MakeSchema = (Config: SchemaConfig) => {
     "note_id": Js.Nullable.t(string),
     "title": Js.Nullable.t(string),
   };
-  module Queries = {};
-  module Mutations = {};
-  module Subscriptions = {};
+  module Query = {};
+  module Mutation = {};
+  module Subscription = {};
   module Directives = {
     [@bs.deriving abstract]
     type t = {
@@ -531,5 +531,749 @@ module MakeSchema = (Config: SchemaConfig) => {
       [@bs.optional]
       deprecated: directiveResolver({. "reason": Js.Nullable.t(string)}),
     };
+  };
+  module Note_revision = {
+    [@bs.deriving abstract]
+    type t = {
+      [@bs.optional]
+      created_at:
+        Config.resolver(
+          note_revision,
+          unit,
+          timestamptz,
+          Js.Nullable.t(timestamptz),
+        ),
+      [@bs.optional]
+      data:
+        Config.resolver(note_revision, unit, jsonb, Js.Nullable.t(jsonb)),
+      [@bs.optional]
+      note: Config.resolver(note_revision, unit, note, Js.Nullable.t(note)),
+      [@bs.optional]
+      note_id:
+        Config.resolver(note_revision, unit, string, Js.Nullable.t(string)),
+      [@bs.optional]
+      title:
+        Config.resolver(note_revision, unit, string, Js.Nullable.t(string)),
+    };
+  };
+  module User = {
+    [@bs.deriving abstract]
+    type t = {
+      [@bs.optional]
+      avatar: Config.resolver(user, unit, string, Js.Nullable.t(string)),
+      [@bs.optional]
+      created_at:
+        Config.resolver(user, unit, timestamptz, Js.Nullable.t(timestamptz)),
+      [@bs.optional]
+      email: Config.resolver(user, unit, string, Js.Nullable.t(string)),
+      [@bs.optional]
+      id: Config.resolver(user, unit, string, Js.Nullable.t(string)),
+      [@bs.optional]
+      identities:
+        Config.resolver(
+          user,
+          {
+            .
+            "limit": Js.Nullable.t(int),
+            "offset": Js.Nullable.t(int),
+            "order_by": Js.Nullable.t(array(abs_user_identity_order_by)),
+            "where": Js.Nullable.t(user_identity_bool_exp),
+          },
+          user_identity,
+          array(user_identity),
+        ),
+      [@bs.optional]
+      name: Config.resolver(user, unit, string, Js.Nullable.t(string)),
+      [@bs.optional]
+      notes:
+        Config.resolver(
+          user,
+          {
+            .
+            "limit": Js.Nullable.t(int),
+            "offset": Js.Nullable.t(int),
+            "order_by": Js.Nullable.t(array(abs_note_order_by)),
+            "where": Js.Nullable.t(note_bool_exp),
+          },
+          note,
+          array(note),
+        ),
+      [@bs.optional]
+      updated_at:
+        Config.resolver(user, unit, timestamptz, Js.Nullable.t(timestamptz)),
+      [@bs.optional]
+      username: Config.resolver(user, unit, string, Js.Nullable.t(string)),
+    };
+  };
+  module Subscription_root = {
+    [@bs.deriving abstract]
+    type t = {
+      [@bs.optional]
+      note:
+        Config.resolver(
+          subscription_root,
+          {
+            .
+            "limit": Js.Nullable.t(int),
+            "offset": Js.Nullable.t(int),
+            "order_by": Js.Nullable.t(array(abs_note_order_by)),
+            "where": Js.Nullable.t(note_bool_exp),
+          },
+          note,
+          array(note),
+        ),
+      [@bs.optional]
+      note_revision:
+        Config.resolver(
+          subscription_root,
+          {
+            .
+            "limit": Js.Nullable.t(int),
+            "offset": Js.Nullable.t(int),
+            "order_by": Js.Nullable.t(array(abs_note_revision_order_by)),
+            "where": Js.Nullable.t(note_revision_bool_exp),
+          },
+          note_revision,
+          array(note_revision),
+        ),
+      [@bs.optional]
+      user:
+        Config.resolver(
+          subscription_root,
+          {
+            .
+            "limit": Js.Nullable.t(int),
+            "offset": Js.Nullable.t(int),
+            "order_by": Js.Nullable.t(array(abs_user_order_by)),
+            "where": Js.Nullable.t(user_bool_exp),
+          },
+          user,
+          array(user),
+        ),
+      [@bs.optional]
+      user_identity:
+        Config.resolver(
+          subscription_root,
+          {
+            .
+            "limit": Js.Nullable.t(int),
+            "offset": Js.Nullable.t(int),
+            "order_by": Js.Nullable.t(array(abs_user_identity_order_by)),
+            "where": Js.Nullable.t(user_identity_bool_exp),
+          },
+          user_identity,
+          array(user_identity),
+        ),
+      [@bs.optional]
+      user_identity_type:
+        Config.resolver(
+          subscription_root,
+          {
+            .
+            "limit": Js.Nullable.t(int),
+            "offset": Js.Nullable.t(int),
+            "order_by":
+              Js.Nullable.t(array(abs_user_identity_type_order_by)),
+            "where": Js.Nullable.t(user_identity_type_bool_exp),
+          },
+          user_identity_type,
+          array(user_identity_type),
+        ),
+    };
+  };
+  module User_identity_no_rels = {
+    [@bs.deriving abstract]
+    type t = {
+      [@bs.optional]
+      data:
+        Config.resolver(
+          user_identity_no_rels,
+          unit,
+          jsonb,
+          Js.Nullable.t(jsonb),
+        ),
+      [@bs.optional]
+      identity_id:
+        Config.resolver(
+          user_identity_no_rels,
+          unit,
+          string,
+          Js.Nullable.t(string),
+        ),
+      [@bs.optional]
+      identity_type:
+        Config.resolver(
+          user_identity_no_rels,
+          unit,
+          string,
+          Js.Nullable.t(string),
+        ),
+      [@bs.optional]
+      user_id:
+        Config.resolver(
+          user_identity_no_rels,
+          unit,
+          string,
+          Js.Nullable.t(string),
+        ),
+    };
+  };
+  module Note = {
+    [@bs.deriving abstract]
+    type t = {
+      [@bs.optional]
+      created_at:
+        Config.resolver(note, unit, timestamptz, Js.Nullable.t(timestamptz)),
+      [@bs.optional]
+      data: Config.resolver(note, unit, jsonb, Js.Nullable.t(jsonb)),
+      [@bs.optional]
+      id: Config.resolver(note, unit, string, Js.Nullable.t(string)),
+      [@bs.optional]
+      notes:
+        Config.resolver(
+          note,
+          {
+            .
+            "limit": Js.Nullable.t(int),
+            "offset": Js.Nullable.t(int),
+            "order_by": Js.Nullable.t(array(abs_note_revision_order_by)),
+            "where": Js.Nullable.t(note_revision_bool_exp),
+          },
+          note_revision,
+          array(note_revision),
+        ),
+      [@bs.optional]
+      title: Config.resolver(note, unit, string, Js.Nullable.t(string)),
+      [@bs.optional]
+      updated_at:
+        Config.resolver(note, unit, timestamptz, Js.Nullable.t(timestamptz)),
+      [@bs.optional]
+      user: Config.resolver(note, unit, user, Js.Nullable.t(user)),
+      [@bs.optional]
+      user_id: Config.resolver(note, unit, string, Js.Nullable.t(string)),
+    };
+  };
+  module Note_revision_no_rels = {
+    [@bs.deriving abstract]
+    type t = {
+      [@bs.optional]
+      created_at:
+        Config.resolver(
+          note_revision_no_rels,
+          unit,
+          timestamptz,
+          Js.Nullable.t(timestamptz),
+        ),
+      [@bs.optional]
+      data:
+        Config.resolver(
+          note_revision_no_rels,
+          unit,
+          jsonb,
+          Js.Nullable.t(jsonb),
+        ),
+      [@bs.optional]
+      note_id:
+        Config.resolver(
+          note_revision_no_rels,
+          unit,
+          string,
+          Js.Nullable.t(string),
+        ),
+      [@bs.optional]
+      title:
+        Config.resolver(
+          note_revision_no_rels,
+          unit,
+          string,
+          Js.Nullable.t(string),
+        ),
+    };
+  };
+  module User_identity_type_no_rels = {
+    [@bs.deriving abstract]
+    type t = {
+      [@bs.optional]
+      user_identity_type:
+        Config.resolver(
+          user_identity_type_no_rels,
+          unit,
+          string,
+          Js.Nullable.t(string),
+        ),
+    };
+  };
+  module Query_root = {
+    [@bs.deriving abstract]
+    type t = {
+      [@bs.optional]
+      note:
+        Config.resolver(
+          query_root,
+          {
+            .
+            "limit": Js.Nullable.t(int),
+            "offset": Js.Nullable.t(int),
+            "order_by": Js.Nullable.t(array(abs_note_order_by)),
+            "where": Js.Nullable.t(note_bool_exp),
+          },
+          note,
+          array(note),
+        ),
+      [@bs.optional]
+      note_revision:
+        Config.resolver(
+          query_root,
+          {
+            .
+            "limit": Js.Nullable.t(int),
+            "offset": Js.Nullable.t(int),
+            "order_by": Js.Nullable.t(array(abs_note_revision_order_by)),
+            "where": Js.Nullable.t(note_revision_bool_exp),
+          },
+          note_revision,
+          array(note_revision),
+        ),
+      [@bs.optional]
+      user:
+        Config.resolver(
+          query_root,
+          {
+            .
+            "limit": Js.Nullable.t(int),
+            "offset": Js.Nullable.t(int),
+            "order_by": Js.Nullable.t(array(abs_user_order_by)),
+            "where": Js.Nullable.t(user_bool_exp),
+          },
+          user,
+          array(user),
+        ),
+      [@bs.optional]
+      user_identity:
+        Config.resolver(
+          query_root,
+          {
+            .
+            "limit": Js.Nullable.t(int),
+            "offset": Js.Nullable.t(int),
+            "order_by": Js.Nullable.t(array(abs_user_identity_order_by)),
+            "where": Js.Nullable.t(user_identity_bool_exp),
+          },
+          user_identity,
+          array(user_identity),
+        ),
+      [@bs.optional]
+      user_identity_type:
+        Config.resolver(
+          query_root,
+          {
+            .
+            "limit": Js.Nullable.t(int),
+            "offset": Js.Nullable.t(int),
+            "order_by":
+              Js.Nullable.t(array(abs_user_identity_type_order_by)),
+            "where": Js.Nullable.t(user_identity_type_bool_exp),
+          },
+          user_identity_type,
+          array(user_identity_type),
+        ),
+    };
+  };
+  module User_identity_type = {
+    [@bs.deriving abstract]
+    type t = {
+      [@bs.optional]
+      user_identity_type:
+        Config.resolver(
+          user_identity_type,
+          unit,
+          string,
+          Js.Nullable.t(string),
+        ),
+    };
+  };
+  module User_identity = {
+    [@bs.deriving abstract]
+    type t = {
+      [@bs.optional]
+      data:
+        Config.resolver(user_identity, unit, jsonb, Js.Nullable.t(jsonb)),
+      [@bs.optional]
+      identity_id:
+        Config.resolver(user_identity, unit, string, Js.Nullable.t(string)),
+      [@bs.optional]
+      identity_type:
+        Config.resolver(user_identity, unit, string, Js.Nullable.t(string)),
+      [@bs.optional]
+      user: Config.resolver(user_identity, unit, user, Js.Nullable.t(user)),
+      [@bs.optional]
+      user_id:
+        Config.resolver(user_identity, unit, string, Js.Nullable.t(string)),
+    };
+  };
+  module User_no_rels = {
+    [@bs.deriving abstract]
+    type t = {
+      [@bs.optional]
+      avatar:
+        Config.resolver(user_no_rels, unit, string, Js.Nullable.t(string)),
+      [@bs.optional]
+      created_at:
+        Config.resolver(
+          user_no_rels,
+          unit,
+          timestamptz,
+          Js.Nullable.t(timestamptz),
+        ),
+      [@bs.optional]
+      email:
+        Config.resolver(user_no_rels, unit, string, Js.Nullable.t(string)),
+      [@bs.optional]
+      id: Config.resolver(user_no_rels, unit, string, Js.Nullable.t(string)),
+      [@bs.optional]
+      name:
+        Config.resolver(user_no_rels, unit, string, Js.Nullable.t(string)),
+      [@bs.optional]
+      updated_at:
+        Config.resolver(
+          user_no_rels,
+          unit,
+          timestamptz,
+          Js.Nullable.t(timestamptz),
+        ),
+      [@bs.optional]
+      username:
+        Config.resolver(user_no_rels, unit, string, Js.Nullable.t(string)),
+    };
+  };
+  module User_mutation_response = {
+    [@bs.deriving abstract]
+    type t = {
+      [@bs.optional]
+      affected_rows: Config.resolver(user_mutation_response, unit, int, int),
+      [@bs.optional]
+      returning:
+        Config.resolver(
+          user_mutation_response,
+          unit,
+          user_no_rels,
+          array(user_no_rels),
+        ),
+    };
+  };
+  module Note_revision_mutation_response = {
+    [@bs.deriving abstract]
+    type t = {
+      [@bs.optional]
+      affected_rows:
+        Config.resolver(note_revision_mutation_response, unit, int, int),
+      [@bs.optional]
+      returning:
+        Config.resolver(
+          note_revision_mutation_response,
+          unit,
+          note_revision_no_rels,
+          array(note_revision_no_rels),
+        ),
+    };
+  };
+  module Note_mutation_response = {
+    [@bs.deriving abstract]
+    type t = {
+      [@bs.optional]
+      affected_rows: Config.resolver(note_mutation_response, unit, int, int),
+      [@bs.optional]
+      returning:
+        Config.resolver(
+          note_mutation_response,
+          unit,
+          note_no_rels,
+          array(note_no_rels),
+        ),
+    };
+  };
+  module Mutation_root = {
+    [@bs.deriving abstract]
+    type t = {
+      [@bs.optional]
+      delete_note:
+        Config.resolver(
+          mutation_root,
+          {. "where": note_bool_exp},
+          note_mutation_response,
+          Js.Nullable.t(note_mutation_response),
+        ),
+      [@bs.optional]
+      delete_note_revision:
+        Config.resolver(
+          mutation_root,
+          {. "where": note_revision_bool_exp},
+          note_revision_mutation_response,
+          Js.Nullable.t(note_revision_mutation_response),
+        ),
+      [@bs.optional]
+      delete_user:
+        Config.resolver(
+          mutation_root,
+          {. "where": user_bool_exp},
+          user_mutation_response,
+          Js.Nullable.t(user_mutation_response),
+        ),
+      [@bs.optional]
+      delete_user_identity:
+        Config.resolver(
+          mutation_root,
+          {. "where": user_identity_bool_exp},
+          user_identity_mutation_response,
+          Js.Nullable.t(user_identity_mutation_response),
+        ),
+      [@bs.optional]
+      delete_user_identity_type:
+        Config.resolver(
+          mutation_root,
+          {. "where": user_identity_type_bool_exp},
+          user_identity_type_mutation_response,
+          Js.Nullable.t(user_identity_type_mutation_response),
+        ),
+      [@bs.optional]
+      insert_note:
+        Config.resolver(
+          mutation_root,
+          {
+            .
+            "objects": array(note_insert_input),
+            "on_conflict": Js.Nullable.t(note_on_conflict),
+          },
+          note_mutation_response,
+          Js.Nullable.t(note_mutation_response),
+        ),
+      [@bs.optional]
+      insert_note_revision:
+        Config.resolver(
+          mutation_root,
+          {
+            .
+            "objects": array(note_revision_insert_input),
+            "on_conflict": Js.Nullable.t(note_revision_on_conflict),
+          },
+          note_revision_mutation_response,
+          Js.Nullable.t(note_revision_mutation_response),
+        ),
+      [@bs.optional]
+      insert_user:
+        Config.resolver(
+          mutation_root,
+          {
+            .
+            "objects": array(user_insert_input),
+            "on_conflict": Js.Nullable.t(user_on_conflict),
+          },
+          user_mutation_response,
+          Js.Nullable.t(user_mutation_response),
+        ),
+      [@bs.optional]
+      insert_user_identity:
+        Config.resolver(
+          mutation_root,
+          {
+            .
+            "objects": array(user_identity_insert_input),
+            "on_conflict": Js.Nullable.t(user_identity_on_conflict),
+          },
+          user_identity_mutation_response,
+          Js.Nullable.t(user_identity_mutation_response),
+        ),
+      [@bs.optional]
+      insert_user_identity_type:
+        Config.resolver(
+          mutation_root,
+          {
+            .
+            "objects": array(user_identity_type_insert_input),
+            "on_conflict": Js.Nullable.t(user_identity_type_on_conflict),
+          },
+          user_identity_type_mutation_response,
+          Js.Nullable.t(user_identity_type_mutation_response),
+        ),
+      [@bs.optional]
+      update_note:
+        Config.resolver(
+          mutation_root,
+          {
+            .
+            "_append": Js.Nullable.t(note_append_input),
+            "_delete_at_path": Js.Nullable.t(note_delete_at_path_input),
+            "_delete_elem": Js.Nullable.t(note_delete_elem_input),
+            "_delete_key": Js.Nullable.t(note_delete_key_input),
+            "_prepend": Js.Nullable.t(note_prepend_input),
+            "_set": Js.Nullable.t(note_set_input),
+            "where": note_bool_exp,
+          },
+          note_mutation_response,
+          Js.Nullable.t(note_mutation_response),
+        ),
+      [@bs.optional]
+      update_note_revision:
+        Config.resolver(
+          mutation_root,
+          {
+            .
+            "_append": Js.Nullable.t(note_revision_append_input),
+            "_delete_at_path":
+              Js.Nullable.t(note_revision_delete_at_path_input),
+            "_delete_elem": Js.Nullable.t(note_revision_delete_elem_input),
+            "_delete_key": Js.Nullable.t(note_revision_delete_key_input),
+            "_prepend": Js.Nullable.t(note_revision_prepend_input),
+            "_set": Js.Nullable.t(note_revision_set_input),
+            "where": note_revision_bool_exp,
+          },
+          note_revision_mutation_response,
+          Js.Nullable.t(note_revision_mutation_response),
+        ),
+      [@bs.optional]
+      update_user:
+        Config.resolver(
+          mutation_root,
+          {
+            .
+            "_set": Js.Nullable.t(user_set_input),
+            "where": user_bool_exp,
+          },
+          user_mutation_response,
+          Js.Nullable.t(user_mutation_response),
+        ),
+      [@bs.optional]
+      update_user_identity:
+        Config.resolver(
+          mutation_root,
+          {
+            .
+            "_append": Js.Nullable.t(user_identity_append_input),
+            "_delete_at_path":
+              Js.Nullable.t(user_identity_delete_at_path_input),
+            "_delete_elem": Js.Nullable.t(user_identity_delete_elem_input),
+            "_delete_key": Js.Nullable.t(user_identity_delete_key_input),
+            "_prepend": Js.Nullable.t(user_identity_prepend_input),
+            "_set": Js.Nullable.t(user_identity_set_input),
+            "where": user_identity_bool_exp,
+          },
+          user_identity_mutation_response,
+          Js.Nullable.t(user_identity_mutation_response),
+        ),
+      [@bs.optional]
+      update_user_identity_type:
+        Config.resolver(
+          mutation_root,
+          {
+            .
+            "_set": Js.Nullable.t(user_identity_type_set_input),
+            "where": user_identity_type_bool_exp,
+          },
+          user_identity_type_mutation_response,
+          Js.Nullable.t(user_identity_type_mutation_response),
+        ),
+    };
+  };
+  module User_identity_mutation_response = {
+    [@bs.deriving abstract]
+    type t = {
+      [@bs.optional]
+      affected_rows:
+        Config.resolver(user_identity_mutation_response, unit, int, int),
+      [@bs.optional]
+      returning:
+        Config.resolver(
+          user_identity_mutation_response,
+          unit,
+          user_identity_no_rels,
+          array(user_identity_no_rels),
+        ),
+    };
+  };
+  module Note_no_rels = {
+    [@bs.deriving abstract]
+    type t = {
+      [@bs.optional]
+      created_at:
+        Config.resolver(
+          note_no_rels,
+          unit,
+          timestamptz,
+          Js.Nullable.t(timestamptz),
+        ),
+      [@bs.optional]
+      data: Config.resolver(note_no_rels, unit, jsonb, Js.Nullable.t(jsonb)),
+      [@bs.optional]
+      id: Config.resolver(note_no_rels, unit, string, Js.Nullable.t(string)),
+      [@bs.optional]
+      title:
+        Config.resolver(note_no_rels, unit, string, Js.Nullable.t(string)),
+      [@bs.optional]
+      updated_at:
+        Config.resolver(
+          note_no_rels,
+          unit,
+          timestamptz,
+          Js.Nullable.t(timestamptz),
+        ),
+      [@bs.optional]
+      user_id:
+        Config.resolver(note_no_rels, unit, string, Js.Nullable.t(string)),
+    };
+  };
+  module User_identity_type_mutation_response = {
+    [@bs.deriving abstract]
+    type t = {
+      [@bs.optional]
+      affected_rows:
+        Config.resolver(user_identity_type_mutation_response, unit, int, int),
+      [@bs.optional]
+      returning:
+        Config.resolver(
+          user_identity_type_mutation_response,
+          unit,
+          user_identity_type_no_rels,
+          array(user_identity_type_no_rels),
+        ),
+    };
+  };
+  [@bs.deriving abstract]
+  type t = {
+    [@bs.optional]
+    note_revision: Note_revision.t,
+    [@bs.optional]
+    user: User.t,
+    [@bs.optional]
+    subscription_root: Subscription_root.t,
+    [@bs.optional]
+    user_identity_no_rels: User_identity_no_rels.t,
+    [@bs.optional]
+    note: Note.t,
+    [@bs.optional]
+    note_revision_no_rels: Note_revision_no_rels.t,
+    [@bs.optional]
+    user_identity_type_no_rels: User_identity_type_no_rels.t,
+    [@bs.optional]
+    query_root: Query_root.t,
+    [@bs.optional]
+    user_identity_type: User_identity_type.t,
+    [@bs.optional]
+    user_identity: User_identity.t,
+    [@bs.optional]
+    user_no_rels: User_no_rels.t,
+    [@bs.optional]
+    user_mutation_response: User_mutation_response.t,
+    [@bs.optional]
+    note_revision_mutation_response: Note_revision_mutation_response.t,
+    [@bs.optional]
+    note_mutation_response: Note_mutation_response.t,
+    [@bs.optional]
+    mutation_root: Mutation_root.t,
+    [@bs.optional]
+    user_identity_mutation_response: User_identity_mutation_response.t,
+    [@bs.optional]
+    note_no_rels: Note_no_rels.t,
+    [@bs.optional]
+    user_identity_type_mutation_response: User_identity_type_mutation_response.t,
   };
 };

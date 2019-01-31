@@ -1,11 +1,14 @@
 module type SchemaConfig = {
-  module Scalars: {type id; type customScalar;};
+  module Scalars: {
+    type id;
+    type customScalar;
+  };
   type resolver('parent, 'payload, 'fieldType, 'result);
   type directiveResolver('payload);
 };
 module MakeSchema:
   (Config: SchemaConfig) =>
-  {
+   {
     type id = Config.Scalars.id;
     type customScalar = Config.Scalars.customScalar;
     type rootResolver('payload, 'fieldType, 'result) =
@@ -95,7 +98,11 @@ module MakeSchema:
       "barkVolume": float,
       "name": string,
     }
-    and human = {. "name": string}
+    and human = {
+      .
+      "name": string,
+      "Name": string,
+    }
     and withArgField = {. "argField": Js.Nullable.t(nestedObject)}
     and subscription = {
       .
@@ -116,9 +123,9 @@ module MakeSchema:
       "nullable": Js.Nullable.t(customScalar),
     }
     and mutation = {. "mutationWithError": mutationWithErrorResult};
-    external dogToDogOrHuman : dog => dogOrHuman = "%identity";
-    external humanToDogOrHuman : human => dogOrHuman = "%identity";
-    module Queries: {
+    external dogToDogOrHuman: dog => dogOrHuman = "%identity";
+    external humanToDogOrHuman: human => dogOrHuman = "%identity";
+    module Query: {
       [@bs.deriving abstract]
       type t = {
         [@bs.optional]
@@ -133,7 +140,8 @@ module MakeSchema:
         [@bs.optional]
         listsInput: rootResolver({. "arg": listsInput}, string, string),
         [@bs.optional]
-        recursiveInput: rootResolver({. "arg": recursiveInput}, string, string),
+        recursiveInput:
+          rootResolver({. "arg": recursiveInput}, string, string),
         [@bs.optional]
         nonrecursiveInput:
           rootResolver({. "arg": nonrecursiveInput}, string, string),
@@ -158,15 +166,19 @@ module MakeSchema:
         nestedObject: rootResolver(unit, nestedObject, nestedObject),
       };
     };
-    module Mutations: {
+    module Mutation: {
       [@bs.deriving abstract]
       type t = {
         [@bs.optional]
         mutationWithError:
-          rootResolver(unit, mutationWithErrorResult, mutationWithErrorResult),
+          rootResolver(
+            unit,
+            mutationWithErrorResult,
+            mutationWithErrorResult,
+          ),
       };
     };
-    module Subscriptions: {
+    module Subscription: {
       [@bs.deriving abstract]
       type t = {
         [@bs.optional]

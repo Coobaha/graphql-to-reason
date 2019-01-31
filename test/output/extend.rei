@@ -14,7 +14,7 @@ module MakeSchema:
       "hello": Js.Nullable.t(string),
       "test": Js.Nullable.t(string),
     };
-    module Queries: {
+    module Query: {
       [@bs.deriving abstract]
       type t = {
         [@bs.optional]
@@ -23,8 +23,8 @@ module MakeSchema:
         test: rootResolver(unit, string, Js.Nullable.t(string)),
       };
     };
-    module Mutations: {};
-    module Subscriptions: {};
+    module Mutation: {};
+    module Subscription: {};
     module Directives: {
       [@bs.deriving abstract]
       type t = {

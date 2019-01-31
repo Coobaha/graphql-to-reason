@@ -3651,7 +3651,7 @@ module MakeSchema:
     external repositoryToSearchResultItem : repository => searchResultItem =
       "%identity";
     external userToSearchResultItem : user => searchResultItem = "%identity";
-    module Queries: {
+    module Query: {
       [@bs.deriving abstract]
       type t = {
         [@bs.optional]
@@ -3800,7 +3800,7 @@ module MakeSchema:
         viewer: rootResolver(unit, user, user),
       };
     };
-    module Mutations: {
+    module Mutation: {
       [@bs.deriving abstract]
       type t = {
         [@bs.optional]
@@ -4043,7 +4043,7 @@ module MakeSchema:
           ),
       };
     };
-    module Subscriptions: {};
+    module Subscription: {};
     module Directives: {
       [@bs.deriving abstract]
       type t = {

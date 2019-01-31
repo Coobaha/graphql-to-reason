@@ -542,9 +542,9 @@ module MakeSchema:
       "note_id": Js.Nullable.t(string),
       "title": Js.Nullable.t(string),
     };
-    module Queries: {};
-    module Mutations: {};
-    module Subscriptions: {};
+    module Query: {};
+    module Mutation: {};
+    module Subscription: {};
     module Directives: {
       [@bs.deriving abstract]
       type t = {

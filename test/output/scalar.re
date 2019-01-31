@@ -16,7 +16,7 @@ module MakeSchema = (Config: SchemaConfig) => {
     "json": json,
     "dateTime": dateTime,
   };
-  module Queries = {
+  module Query = {
     [@bs.deriving abstract]
     type t = {
       [@bs.optional]
@@ -25,8 +25,8 @@ module MakeSchema = (Config: SchemaConfig) => {
       dateTime: rootResolver(unit, dateTime, dateTime),
     };
   };
-  module Mutations = {};
-  module Subscriptions = {};
+  module Mutation = {};
+  module Subscription = {};
   module Directives = {
     [@bs.deriving abstract]
     type t = {
@@ -37,5 +37,10 @@ module MakeSchema = (Config: SchemaConfig) => {
       [@bs.optional]
       deprecated: directiveResolver({. "reason": Js.Nullable.t(string)}),
     };
+  };
+  [@bs.deriving abstract]
+  type t = {
+    [@bs.optional] [@bs.as "Query"]
+    query: Query.t,
   };
 };

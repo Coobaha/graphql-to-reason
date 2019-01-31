@@ -16,7 +16,7 @@ module MakeSchema:
       "dateTime": dateTime,
       "json": json,
     };
-    module Queries: {
+    module Query: {
       [@bs.deriving abstract]
       type t = {
         [@bs.optional]
@@ -25,8 +25,8 @@ module MakeSchema:
         dateTime: rootResolver(unit, dateTime, dateTime),
       };
     };
-    module Mutations: {};
-    module Subscriptions: {};
+    module Mutation: {};
+    module Subscription: {};
     module Directives: {
       [@bs.deriving abstract]
       type t = {

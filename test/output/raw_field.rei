@@ -15,14 +15,14 @@ module MakeSchema:
         Js.Nullable.t(array(Js.Nullable.t(int))),
     }
     and query = {. "test": string};
-    module Queries: {
+    module Query: {
       [@bs.deriving abstract]
       type t = {
         [@bs.optional]
         test: rootResolver(unit, string, string),
       };
     };
-    module Mutations: {
+    module Mutation: {
       [@bs.deriving abstract]
       type t = {
         [@bs.optional]
@@ -30,7 +30,7 @@ module MakeSchema:
           rootResolver(unit, int, Js.Nullable.t(array(Js.Nullable.t(int)))),
       };
     };
-    module Subscriptions: {};
+    module Subscription: {};
     module Directives: {
       [@bs.deriving abstract]
       type t = {

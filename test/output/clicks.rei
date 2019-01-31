@@ -12,21 +12,21 @@ module MakeSchema:
     type directiveResolver('payload) = Config.directiveResolver('payload);
     type mutation = {. "click": click}
     and query = {. "clicks": click};
-    module Queries: {
+    module Query: {
       [@bs.deriving abstract]
       type t = {
         [@bs.optional]
         clicks: rootResolver(unit, click, click),
       };
     };
-    module Mutations: {
+    module Mutation: {
       [@bs.deriving abstract]
       type t = {
         [@bs.optional]
         click: rootResolver({. "payload": string}, click, click),
       };
     };
-    module Subscriptions: {};
+    module Subscription: {};
     module Directives: {
       [@bs.deriving abstract]
       type t = {
