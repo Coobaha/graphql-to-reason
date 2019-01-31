@@ -2,6 +2,11 @@ type Article {
     id: String!
     title: String!
     body: String!
+    comments: [Comment!]
+}
+
+type Comment {
+  content: String!
 }
 
 type Query {

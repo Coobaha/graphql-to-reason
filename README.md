@@ -142,6 +142,14 @@ let mutationResolvers =
     ~clicksCount=Clicks.resolver,
     (),
   );
+  
+let resolvers =
+  SchemaTypes.t(
+    ~mutation=SchemaTypes.Mutation.t(~clicksCount=Clicks.resolver, ()),
+    (),
+  );
+
+createGraphqlServer(resolvers);
 ```
 
 
