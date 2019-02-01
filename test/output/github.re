@@ -12840,7 +12840,7 @@ module MakeSchema = (Config: SchemaConfig) => {
     [@bs.optional] [@bs.as "IssueCommentEdge"]
     issueCommentEdge: IssueCommentEdge.t,
     [@bs.optional] [@bs.as "PageInfo"]
-    pageInfo_1: PageInfo.t,
+    pageInfo: PageInfo.t,
     [@bs.optional] [@bs.as "Status"]
     status: Status.t,
     [@bs.optional] [@bs.as "App"]

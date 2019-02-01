@@ -33,7 +33,7 @@ let closed_js_t = fields =>
     [Typ.object_(fields, Closed)],
   );
 
-let prefixes: Hashtbl.t(string, int) = Hashtbl.create(5);
+let prefixes: Hashtbl.t(string, int) = Hashtbl.create(10);
 
 let prefix = (key: string) =>
   switch (Hashtbl.find(prefixes, key)) {
@@ -499,6 +499,8 @@ let print = schema => {
     schema.directive_map,
   );
 
+  resetPrefixes();
+
   let enums =
     switch (state.enums) {
     | [] => [%str]
@@ -570,6 +572,7 @@ let print = schema => {
     switch (state.used_resolvers) {
     | [] => [%str]
     | _ =>
+      resetPrefixes();
       let labels =
         List.map(
           name => {

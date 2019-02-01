@@ -97,7 +97,7 @@ module MakeSchema = (Config: SchemaConfig) => {
   [@bs.deriving abstract]
   type t = {
     [@bs.optional] [@bs.as "User"]
-    user_1: User.t,
+    user: User.t,
     [@bs.optional] [@bs.as "Query"]
     query: Query.t,
   };
