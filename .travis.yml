@@ -7,21 +7,18 @@ os:
   - linux
   - osx
 
-env:
-  - NODE_ENV=production
-
 before_install:
   - npm install --global esy@latest
   - if [ "$TRAVIS_OS_NAME" = "osx" ]; then export TARGET_NAME=darwin-x64; fi
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then export TARGET_NAME=linux-x64; fi
 
-#cache:
-#  timeout: 360
-#  yarn: true
-#  directories:
-#    - "$HOME/.esy/"
-#    - node_modules/
-#    - test/node_modules/
+cache:
+  timeout: 360
+  yarn: true
+  directories:
+    - "$HOME/.esy/"
+    - node_modules/
+    - test/node_modules/
 
 install:
   - esy install
