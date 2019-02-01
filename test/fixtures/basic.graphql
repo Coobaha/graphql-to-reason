@@ -109,6 +109,7 @@ type Dog {
 
 type Human {
   name: String!
+  Name: String!
 }
 
 union DogOrHuman = Dog | Human

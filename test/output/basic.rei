@@ -1,15 +1,18 @@
 module type SchemaConfig = {
-  module Scalars: {type id; type customScalar;};
-  type resolver('payload, 'fieldType, 'result);
+  module Scalars: {
+    type id;
+    type customScalar;
+  };
+  type resolver('parent, 'payload, 'fieldType, 'result);
   type directiveResolver('payload);
 };
 module MakeSchema:
   (Config: SchemaConfig) =>
-  {
+   {
     type id = Config.Scalars.id;
     type customScalar = Config.Scalars.customScalar;
-    type resolver('payload, 'fieldType, 'result) =
-      Config.resolver('payload, 'fieldType, 'result);
+    type rootResolver('payload, 'fieldType, 'result) =
+      Config.resolver(unit, 'payload, 'fieldType, 'result);
     type directiveResolver('payload) = Config.directiveResolver('payload);
     type sampleField = [ | `FIRST | `SECOND | `THIRD];
     type abs_sampleField;
@@ -95,7 +98,11 @@ module MakeSchema:
       "barkVolume": float,
       "name": string,
     }
-    and human = {. "name": string}
+    and human = {
+      .
+      "name": string,
+      "Name": string,
+    }
     and withArgField = {. "argField": Js.Nullable.t(nestedObject)}
     and subscription = {
       .
@@ -116,34 +123,35 @@ module MakeSchema:
       "nullable": Js.Nullable.t(customScalar),
     }
     and mutation = {. "mutationWithError": mutationWithErrorResult};
-    external dogToDogOrHuman : dog => dogOrHuman = "%identity";
-    external humanToDogOrHuman : human => dogOrHuman = "%identity";
-    module Queries: {
+    external dogToDogOrHuman: dog => dogOrHuman = "%identity";
+    external humanToDogOrHuman: human => dogOrHuman = "%identity";
+    module Query: {
       [@bs.deriving abstract]
       type t = {
         [@bs.optional]
-        stringField: resolver(unit, string, string),
+        stringField: rootResolver(unit, string, string),
         [@bs.optional]
-        variousScalars: resolver(unit, variousScalars, variousScalars),
+        variousScalars: rootResolver(unit, variousScalars, variousScalars),
         [@bs.optional]
-        lists: resolver(unit, lists, lists),
+        lists: rootResolver(unit, lists, lists),
         [@bs.optional]
         scalarsInput:
-          resolver({. "arg": variousScalarsInput}, string, string),
+          rootResolver({. "arg": variousScalarsInput}, string, string),
         [@bs.optional]
-        listsInput: resolver({. "arg": listsInput}, string, string),
+        listsInput: rootResolver({. "arg": listsInput}, string, string),
         [@bs.optional]
-        recursiveInput: resolver({. "arg": recursiveInput}, string, string),
+        recursiveInput:
+          rootResolver({. "arg": recursiveInput}, string, string),
         [@bs.optional]
         nonrecursiveInput:
-          resolver({. "arg": nonrecursiveInput}, string, string),
+          rootResolver({. "arg": nonrecursiveInput}, string, string),
         [@bs.optional]
-        enumInput: resolver({. "arg": abs_sampleField}, string, string),
+        enumInput: rootResolver({. "arg": abs_sampleField}, string, string),
         [@bs.optional]
-        argNamedQuery: resolver({. "query": int}, int, int),
+        argNamedQuery: rootResolver({. "query": int}, int, int),
         [@bs.optional]
         customScalarField:
-          resolver(
+          rootResolver(
             {
               .
               "argOptional": Js.Nullable.t(customScalar),
@@ -153,27 +161,31 @@ module MakeSchema:
             customScalarObject,
           ),
         [@bs.optional]
-        dogOrHuman: resolver(unit, dogOrHuman, dogOrHuman),
+        dogOrHuman: rootResolver(unit, dogOrHuman, dogOrHuman),
         [@bs.optional]
-        nestedObject: resolver(unit, nestedObject, nestedObject),
+        nestedObject: rootResolver(unit, nestedObject, nestedObject),
       };
     };
-    module Mutations: {
+    module Mutation: {
       [@bs.deriving abstract]
       type t = {
         [@bs.optional]
         mutationWithError:
-          resolver(unit, mutationWithErrorResult, mutationWithErrorResult),
+          rootResolver(
+            unit,
+            mutationWithErrorResult,
+            mutationWithErrorResult,
+          ),
       };
     };
-    module Subscriptions: {
+    module Subscription: {
       [@bs.deriving abstract]
       type t = {
         [@bs.optional]
-        simpleSubscription: resolver(unit, dogOrHuman, dogOrHuman),
+        simpleSubscription: rootResolver(unit, dogOrHuman, dogOrHuman),
         [@bs.optional]
         simpleNullableSubscription:
-          resolver(unit, dogOrHuman, Js.Nullable.t(dogOrHuman)),
+          rootResolver(unit, dogOrHuman, Js.Nullable.t(dogOrHuman)),
       };
     };
     module Directives: {
@@ -187,4 +199,188 @@ module MakeSchema:
         deprecated: directiveResolver({. "reason": Js.Nullable.t(string)}),
       };
     };
+    module CustomScalarObject: {
+        [@bs.deriving abstract]
+        type t = {
+          [@bs.optional]
+          nullable:
+            Config.resolver(
+              customScalarObject,
+              unit,
+              customScalar,
+              Js.Nullable.t(customScalar),
+            ),
+          [@bs.optional]
+          nonNullable:
+            Config.resolver(customScalarObject, unit, customScalar, customScalar),
+        };
+      };
+      module SampleResult: {
+        [@bs.deriving abstract]
+        type t = {
+          [@bs.optional]
+          stringField: Config.resolver(sampleResult, unit, string, string),
+        };
+      };
+      module Lists: {
+        [@bs.deriving abstract]
+        type t = {
+          [@bs.optional]
+          nullableOfNullable:
+            Config.resolver(
+              lists,
+              unit,
+              string,
+              Js.Nullable.t(array(Js.Nullable.t(string))),
+            ),
+          [@bs.optional]
+          nullableOfNonNullable:
+            Config.resolver(lists, unit, string, Js.Nullable.t(array(string))),
+          [@bs.optional]
+          nonNullableOfNullable:
+            Config.resolver(lists, unit, string, array(Js.Nullable.t(string))),
+          [@bs.optional]
+          nonNullableOfNonNullable:
+            Config.resolver(lists, unit, string, array(string)),
+        };
+      };
+      module WithArgField: {
+        [@bs.deriving abstract]
+        type t = {
+          [@bs.optional]
+          argField:
+            Config.resolver(
+              withArgField,
+              {
+                .
+                "arg1": Js.Nullable.t(string),
+                "arg2": Js.Nullable.t(int),
+              },
+              nestedObject,
+              Js.Nullable.t(nestedObject),
+            ),
+        };
+      };
+      module Human: {
+        [@bs.deriving abstract]
+        type t = {
+          [@bs.optional]
+          name: Config.resolver(human, unit, string, string),
+          [@bs.optional] [@bs.as "Name"]
+          name_1: Config.resolver(human, unit, string, string),
+        };
+      };
+      module Dog: {
+        [@bs.deriving abstract]
+        type t = {
+          [@bs.optional]
+          name: Config.resolver(dog, unit, string, string),
+          [@bs.optional]
+          barkVolume: Config.resolver(dog, unit, float, float),
+        };
+      };
+      module MutationWithErrorResult: {
+        [@bs.deriving abstract]
+        type t = {
+          [@bs.optional]
+          value:
+            Config.resolver(
+              mutationWithErrorResult,
+              unit,
+              sampleResult,
+              Js.Nullable.t(sampleResult),
+            ),
+          [@bs.optional]
+          errors:
+            Config.resolver(
+              mutationWithErrorResult,
+              unit,
+              sampleError,
+              Js.Nullable.t(array(sampleError)),
+            ),
+        };
+      };
+      module VariousScalars: {
+        [@bs.deriving abstract]
+        type t = {
+          [@bs.optional]
+          nullableString:
+            Config.resolver(variousScalars, unit, string, Js.Nullable.t(string)),
+          [@bs.optional]
+          string: Config.resolver(variousScalars, unit, string, string),
+          [@bs.optional]
+          nullableInt:
+            Config.resolver(variousScalars, unit, int, Js.Nullable.t(int)),
+          [@bs.optional]
+          int: Config.resolver(variousScalars, unit, int, int),
+          [@bs.optional]
+          nullableFloat:
+            Config.resolver(variousScalars, unit, float, Js.Nullable.t(float)),
+          [@bs.optional]
+          float: Config.resolver(variousScalars, unit, float, float),
+          [@bs.optional]
+          nullableBoolean:
+            Config.resolver(variousScalars, unit, bool, Js.Nullable.t(bool)),
+          [@bs.optional]
+          boolean: Config.resolver(variousScalars, unit, bool, bool),
+          [@bs.optional]
+          nullableID:
+            Config.resolver(variousScalars, unit, string, Js.Nullable.t(string)),
+          [@bs.optional]
+          id: Config.resolver(variousScalars, unit, string, string),
+        };
+      };
+      module NestedObject: {
+        [@bs.deriving abstract]
+        type t = {
+          [@bs.optional]
+          inner:
+            Config.resolver(
+              nestedObject,
+              unit,
+              nestedObject,
+              Js.Nullable.t(nestedObject),
+            ),
+          [@bs.optional]
+          field: Config.resolver(nestedObject, unit, string, string),
+        };
+      };
+      module SampleError: {
+        [@bs.deriving abstract]
+        type t = {
+          [@bs.optional]
+          field: Config.resolver(sampleError, unit, sampleField, sampleField),
+          [@bs.optional]
+          message: Config.resolver(sampleError, unit, string, string),
+        };
+      };
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional] [@bs.as "Mutation"]
+        mutation: Mutation.t,
+        [@bs.optional] [@bs.as "CustomScalarObject"]
+        customScalarObject: CustomScalarObject.t,
+        [@bs.optional] [@bs.as "SampleResult"]
+        sampleResult: SampleResult.t,
+        [@bs.optional] [@bs.as "Lists"]
+        lists: Lists.t,
+        [@bs.optional] [@bs.as "Subscription"]
+        subscription: Subscription.t,
+        [@bs.optional] [@bs.as "WithArgField"]
+        withArgField: WithArgField.t,
+        [@bs.optional] [@bs.as "Human"]
+        human: Human.t,
+        [@bs.optional] [@bs.as "Dog"]
+        dog: Dog.t,
+        [@bs.optional] [@bs.as "MutationWithErrorResult"]
+        mutationWithErrorResult: MutationWithErrorResult.t,
+        [@bs.optional] [@bs.as "Query"]
+        query: Query.t,
+        [@bs.optional] [@bs.as "VariousScalars"]
+        variousScalars: VariousScalars.t,
+        [@bs.optional] [@bs.as "NestedObject"]
+        nestedObject: NestedObject.t,
+        [@bs.optional] [@bs.as "SampleError"]
+        sampleError: SampleError.t,
+      };
   };

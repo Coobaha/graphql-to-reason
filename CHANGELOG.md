@@ -8,6 +8,46 @@
 > - :house:      [Internal]
 > - :nail_care:  [Polish]
 
+## 1.0.0-alpha.0 - 2018-01.02
+
+- :rocket: All possible resolvers are now being printed
+- :boom: SchemaConfig.resolver type was changed, now it accepts parent type
+- :boom: Module names for Query, Mutation and Subscription are now singular instead of plural (Queries -> Query)
+
+### Breaking changes
+
+SchemaConfig.resolver type was changed, it now accepts parent type
+
+```diff
+-  type resolver('args, 'fieldType, 'result) =
+-    (unit, 'args) => Js.Promise.t('result);
++  type resolver('parent, 'args, 'fieldType, 'result) =
++    ('parent, 'args) => Js.Promise.t('result);
+```
+
+Module names for Query, Mutation and Subscription are now singular instead of plural (i.e. Queries -> Query)
+
+```diff
+-let query =
+-  SchemaTypes.Queries.t(
+-    ~article=Articles.getByIdResolver,
+-    ~articles=Articles.resolver,
++let resolvers: SchemaTypes.t =
++  SchemaTypes.t(
++    ~query=
++      SchemaTypes.Query.t(
++        ~article=Articles.getByIdResolver,
++        ~articles=Articles.resolver,
++        (),
++      ),
++    ~mutation=SchemaTypes.Mutation.t(~addArticle=Articles.addArticle, ()),
++    ~comment=SchemaTypes.Comment.t(~content=Articles.Comments.content, ()),
+     (),
+   );
+-
+-let mutation = SchemaTypes.Mutations.t(~addArticle=Articles.addArticle, ());
+```
+    
 ## 0.4.1 - 2018-11-03
 - :nail_care: Refactor where __typename is filtered
 

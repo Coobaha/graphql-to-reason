@@ -1,32 +1,32 @@
 module type SchemaConfig = {
   module Scalars: {type click;};
-  type resolver('payload, 'fieldType, 'result);
+  type resolver('parent, 'payload, 'fieldType, 'result);
   type directiveResolver('payload);
 };
 module MakeSchema:
   (Config: SchemaConfig) =>
-  {
+   {
     type click = Config.Scalars.click;
-    type resolver('payload, 'fieldType, 'result) =
-      Config.resolver('payload, 'fieldType, 'result);
+    type rootResolver('payload, 'fieldType, 'result) =
+      Config.resolver(unit, 'payload, 'fieldType, 'result);
     type directiveResolver('payload) = Config.directiveResolver('payload);
     type mutation = {. "click": click}
     and query = {. "clicks": click};
-    module Queries: {
+    module Query: {
       [@bs.deriving abstract]
       type t = {
         [@bs.optional]
-        clicks: resolver(unit, click, click),
+        clicks: rootResolver(unit, click, click),
       };
     };
-    module Mutations: {
+    module Mutation: {
       [@bs.deriving abstract]
       type t = {
         [@bs.optional]
-        click: resolver({. "payload": string}, click, click),
+        click: rootResolver({. "payload": string}, click, click),
       };
     };
-    module Subscriptions: {};
+    module Subscription: {};
     module Directives: {
       [@bs.deriving abstract]
       type t = {
@@ -37,5 +37,12 @@ module MakeSchema:
         [@bs.optional]
         deprecated: directiveResolver({. "reason": Js.Nullable.t(string)}),
       };
+    };
+    [@bs.deriving abstract]
+    type t = {
+      [@bs.optional] [@bs.as "Query"]
+      query: Query.t,
+      [@bs.optional] [@bs.as "Mutation"]
+      mutation: Mutation.t,
     };
   };

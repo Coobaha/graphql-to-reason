@@ -1,32 +1,35 @@
 module type SchemaConfig = {
-  module Scalars: {type json; type dateTime;};
-  type resolver('payload, 'fieldType, 'result);
+  module Scalars: {
+    type json;
+    type dateTime;
+  };
+  type resolver('parent, 'payload, 'fieldType, 'result);
   type directiveResolver('payload);
 };
 module MakeSchema:
   (Config: SchemaConfig) =>
-  {
+   {
     type json = Config.Scalars.json;
     type dateTime = Config.Scalars.dateTime;
-    type resolver('payload, 'fieldType, 'result) =
-      Config.resolver('payload, 'fieldType, 'result);
+    type rootResolver('payload, 'fieldType, 'result) =
+      Config.resolver(unit, 'payload, 'fieldType, 'result);
     type directiveResolver('payload) = Config.directiveResolver('payload);
     type query = {
       .
       "dateTime": dateTime,
       "json": json,
     };
-    module Queries: {
+    module Query: {
       [@bs.deriving abstract]
       type t = {
         [@bs.optional]
-        json: resolver(unit, json, json),
+        json: rootResolver(unit, json, json),
         [@bs.optional]
-        dateTime: resolver(unit, dateTime, dateTime),
+        dateTime: rootResolver(unit, dateTime, dateTime),
       };
     };
-    module Mutations: {};
-    module Subscriptions: {};
+    module Mutation: {};
+    module Subscription: {};
     module Directives: {
       [@bs.deriving abstract]
       type t = {
@@ -37,5 +40,10 @@ module MakeSchema:
         [@bs.optional]
         deprecated: directiveResolver({. "reason": Js.Nullable.t(string)}),
       };
+    };
+    [@bs.deriving abstract]
+    type t = {
+      [@bs.optional] [@bs.as "Query"]
+      query: Query.t,
     };
   };

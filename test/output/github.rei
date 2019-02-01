@@ -10,12 +10,12 @@ module type SchemaConfig = {
     type dateTime;
     type uRI;
   };
-  type resolver('payload, 'fieldType, 'result);
+  type resolver('parent, 'payload, 'fieldType, 'result);
   type directiveResolver('payload);
 };
 module MakeSchema:
   (Config: SchemaConfig) =>
-  {
+   {
     type id = Config.Scalars.id;
     type gitSSHRemote = Config.Scalars.gitSSHRemote;
     type gitTimestamp = Config.Scalars.gitTimestamp;
@@ -25,8 +25,8 @@ module MakeSchema:
     type date = Config.Scalars.date;
     type dateTime = Config.Scalars.dateTime;
     type uRI = Config.Scalars.uRI;
-    type resolver('payload, 'fieldType, 'result) =
-      Config.resolver('payload, 'fieldType, 'result);
+    type rootResolver('payload, 'fieldType, 'result) =
+      Config.resolver(unit, 'payload, 'fieldType, 'result);
     type directiveResolver('payload) = Config.directiveResolver('payload);
     type pullRequestTimelineItemsItemType = [
       | `ADDED_TO_PROJECT_EVENT
@@ -3283,399 +3283,394 @@ module MakeSchema:
       "isDirectReference": bool,
       "subject": referencedSubject,
     };
-    external issueToMilestoneItem : issue => milestoneItem = "%identity";
-    external pullRequestToMilestoneItem : pullRequest => milestoneItem =
+    external issueToMilestoneItem: issue => milestoneItem = "%identity";
+    external pullRequestToMilestoneItem: pullRequest => milestoneItem =
       "%identity";
-    external teamToReviewDismissalAllowanceActor :
+    external teamToReviewDismissalAllowanceActor:
       team => reviewDismissalAllowanceActor =
       "%identity";
-    external userToReviewDismissalAllowanceActor :
+    external userToReviewDismissalAllowanceActor:
       user => reviewDismissalAllowanceActor =
       "%identity";
-    external teamToRequestedReviewer : team => requestedReviewer = "%identity";
-    external userToRequestedReviewer : user => requestedReviewer = "%identity";
-    external issueToProjectCardItem : issue => projectCardItem = "%identity";
-    external pullRequestToProjectCardItem : pullRequest => projectCardItem =
+    external teamToRequestedReviewer: team => requestedReviewer = "%identity";
+    external userToRequestedReviewer: user => requestedReviewer = "%identity";
+    external issueToProjectCardItem: issue => projectCardItem = "%identity";
+    external pullRequestToProjectCardItem: pullRequest => projectCardItem =
       "%identity";
-    external issueToReferencedSubject : issue => referencedSubject =
+    external issueToReferencedSubject: issue => referencedSubject =
       "%identity";
-    external pullRequestToReferencedSubject : pullRequest => referencedSubject =
+    external pullRequestToReferencedSubject: pullRequest => referencedSubject =
       "%identity";
-    external addedToProjectEventToIssueTimelineItems :
+    external addedToProjectEventToIssueTimelineItems:
       addedToProjectEvent => issueTimelineItems =
       "%identity";
-    external assignedEventToIssueTimelineItems :
+    external assignedEventToIssueTimelineItems:
       assignedEvent => issueTimelineItems =
       "%identity";
-    external closedEventToIssueTimelineItems :
-      closedEvent => issueTimelineItems =
+    external closedEventToIssueTimelineItems: closedEvent => issueTimelineItems =
       "%identity";
-    external commentDeletedEventToIssueTimelineItems :
+    external commentDeletedEventToIssueTimelineItems:
       commentDeletedEvent => issueTimelineItems =
       "%identity";
-    external convertedNoteToIssueEventToIssueTimelineItems :
+    external convertedNoteToIssueEventToIssueTimelineItems:
       convertedNoteToIssueEvent => issueTimelineItems =
       "%identity";
-    external crossReferencedEventToIssueTimelineItems :
+    external crossReferencedEventToIssueTimelineItems:
       crossReferencedEvent => issueTimelineItems =
       "%identity";
-    external demilestonedEventToIssueTimelineItems :
+    external demilestonedEventToIssueTimelineItems:
       demilestonedEvent => issueTimelineItems =
       "%identity";
-    external issueCommentToIssueTimelineItems :
+    external issueCommentToIssueTimelineItems:
       issueComment => issueTimelineItems =
       "%identity";
-    external labeledEventToIssueTimelineItems :
+    external labeledEventToIssueTimelineItems:
       labeledEvent => issueTimelineItems =
       "%identity";
-    external lockedEventToIssueTimelineItems :
-      lockedEvent => issueTimelineItems =
+    external lockedEventToIssueTimelineItems: lockedEvent => issueTimelineItems =
       "%identity";
-    external mentionedEventToIssueTimelineItems :
+    external mentionedEventToIssueTimelineItems:
       mentionedEvent => issueTimelineItems =
       "%identity";
-    external milestonedEventToIssueTimelineItems :
+    external milestonedEventToIssueTimelineItems:
       milestonedEvent => issueTimelineItems =
       "%identity";
-    external movedColumnsInProjectEventToIssueTimelineItems :
+    external movedColumnsInProjectEventToIssueTimelineItems:
       movedColumnsInProjectEvent => issueTimelineItems =
       "%identity";
-    external referencedEventToIssueTimelineItems :
+    external referencedEventToIssueTimelineItems:
       referencedEvent => issueTimelineItems =
       "%identity";
-    external removedFromProjectEventToIssueTimelineItems :
+    external removedFromProjectEventToIssueTimelineItems:
       removedFromProjectEvent => issueTimelineItems =
       "%identity";
-    external renamedTitleEventToIssueTimelineItems :
+    external renamedTitleEventToIssueTimelineItems:
       renamedTitleEvent => issueTimelineItems =
       "%identity";
-    external reopenedEventToIssueTimelineItems :
+    external reopenedEventToIssueTimelineItems:
       reopenedEvent => issueTimelineItems =
       "%identity";
-    external subscribedEventToIssueTimelineItems :
+    external subscribedEventToIssueTimelineItems:
       subscribedEvent => issueTimelineItems =
       "%identity";
-    external unassignedEventToIssueTimelineItems :
+    external unassignedEventToIssueTimelineItems:
       unassignedEvent => issueTimelineItems =
       "%identity";
-    external unlabeledEventToIssueTimelineItems :
+    external unlabeledEventToIssueTimelineItems:
       unlabeledEvent => issueTimelineItems =
       "%identity";
-    external unlockedEventToIssueTimelineItems :
+    external unlockedEventToIssueTimelineItems:
       unlockedEvent => issueTimelineItems =
       "%identity";
-    external unsubscribedEventToIssueTimelineItems :
+    external unsubscribedEventToIssueTimelineItems:
       unsubscribedEvent => issueTimelineItems =
       "%identity";
-    external assignedEventToPullRequestTimelineItem :
+    external assignedEventToPullRequestTimelineItem:
       assignedEvent => pullRequestTimelineItem =
       "%identity";
-    external baseRefForcePushedEventToPullRequestTimelineItem :
+    external baseRefForcePushedEventToPullRequestTimelineItem:
       baseRefForcePushedEvent => pullRequestTimelineItem =
       "%identity";
-    external closedEventToPullRequestTimelineItem :
+    external closedEventToPullRequestTimelineItem:
       closedEvent => pullRequestTimelineItem =
       "%identity";
-    external commitToPullRequestTimelineItem :
-      commit => pullRequestTimelineItem =
+    external commitToPullRequestTimelineItem: commit => pullRequestTimelineItem =
       "%identity";
-    external commitCommentThreadToPullRequestTimelineItem :
+    external commitCommentThreadToPullRequestTimelineItem:
       commitCommentThread => pullRequestTimelineItem =
       "%identity";
-    external crossReferencedEventToPullRequestTimelineItem :
+    external crossReferencedEventToPullRequestTimelineItem:
       crossReferencedEvent => pullRequestTimelineItem =
       "%identity";
-    external demilestonedEventToPullRequestTimelineItem :
+    external demilestonedEventToPullRequestTimelineItem:
       demilestonedEvent => pullRequestTimelineItem =
       "%identity";
-    external deployedEventToPullRequestTimelineItem :
+    external deployedEventToPullRequestTimelineItem:
       deployedEvent => pullRequestTimelineItem =
       "%identity";
-    external deploymentEnvironmentChangedEventToPullRequestTimelineItem :
+    external deploymentEnvironmentChangedEventToPullRequestTimelineItem:
       deploymentEnvironmentChangedEvent => pullRequestTimelineItem =
       "%identity";
-    external headRefDeletedEventToPullRequestTimelineItem :
+    external headRefDeletedEventToPullRequestTimelineItem:
       headRefDeletedEvent => pullRequestTimelineItem =
       "%identity";
-    external headRefForcePushedEventToPullRequestTimelineItem :
+    external headRefForcePushedEventToPullRequestTimelineItem:
       headRefForcePushedEvent => pullRequestTimelineItem =
       "%identity";
-    external headRefRestoredEventToPullRequestTimelineItem :
+    external headRefRestoredEventToPullRequestTimelineItem:
       headRefRestoredEvent => pullRequestTimelineItem =
       "%identity";
-    external issueCommentToPullRequestTimelineItem :
+    external issueCommentToPullRequestTimelineItem:
       issueComment => pullRequestTimelineItem =
       "%identity";
-    external labeledEventToPullRequestTimelineItem :
+    external labeledEventToPullRequestTimelineItem:
       labeledEvent => pullRequestTimelineItem =
       "%identity";
-    external lockedEventToPullRequestTimelineItem :
+    external lockedEventToPullRequestTimelineItem:
       lockedEvent => pullRequestTimelineItem =
       "%identity";
-    external mergedEventToPullRequestTimelineItem :
+    external mergedEventToPullRequestTimelineItem:
       mergedEvent => pullRequestTimelineItem =
       "%identity";
-    external milestonedEventToPullRequestTimelineItem :
+    external milestonedEventToPullRequestTimelineItem:
       milestonedEvent => pullRequestTimelineItem =
       "%identity";
-    external pullRequestReviewToPullRequestTimelineItem :
+    external pullRequestReviewToPullRequestTimelineItem:
       pullRequestReview => pullRequestTimelineItem =
       "%identity";
-    external pullRequestReviewCommentToPullRequestTimelineItem :
+    external pullRequestReviewCommentToPullRequestTimelineItem:
       pullRequestReviewComment => pullRequestTimelineItem =
       "%identity";
-    external pullRequestReviewThreadToPullRequestTimelineItem :
+    external pullRequestReviewThreadToPullRequestTimelineItem:
       pullRequestReviewThread => pullRequestTimelineItem =
       "%identity";
-    external referencedEventToPullRequestTimelineItem :
+    external referencedEventToPullRequestTimelineItem:
       referencedEvent => pullRequestTimelineItem =
       "%identity";
-    external renamedTitleEventToPullRequestTimelineItem :
+    external renamedTitleEventToPullRequestTimelineItem:
       renamedTitleEvent => pullRequestTimelineItem =
       "%identity";
-    external reopenedEventToPullRequestTimelineItem :
+    external reopenedEventToPullRequestTimelineItem:
       reopenedEvent => pullRequestTimelineItem =
       "%identity";
-    external reviewDismissedEventToPullRequestTimelineItem :
+    external reviewDismissedEventToPullRequestTimelineItem:
       reviewDismissedEvent => pullRequestTimelineItem =
       "%identity";
-    external reviewRequestRemovedEventToPullRequestTimelineItem :
+    external reviewRequestRemovedEventToPullRequestTimelineItem:
       reviewRequestRemovedEvent => pullRequestTimelineItem =
       "%identity";
-    external reviewRequestedEventToPullRequestTimelineItem :
+    external reviewRequestedEventToPullRequestTimelineItem:
       reviewRequestedEvent => pullRequestTimelineItem =
       "%identity";
-    external subscribedEventToPullRequestTimelineItem :
+    external subscribedEventToPullRequestTimelineItem:
       subscribedEvent => pullRequestTimelineItem =
       "%identity";
-    external unassignedEventToPullRequestTimelineItem :
+    external unassignedEventToPullRequestTimelineItem:
       unassignedEvent => pullRequestTimelineItem =
       "%identity";
-    external unlabeledEventToPullRequestTimelineItem :
+    external unlabeledEventToPullRequestTimelineItem:
       unlabeledEvent => pullRequestTimelineItem =
       "%identity";
-    external unlockedEventToPullRequestTimelineItem :
+    external unlockedEventToPullRequestTimelineItem:
       unlockedEvent => pullRequestTimelineItem =
       "%identity";
-    external unsubscribedEventToPullRequestTimelineItem :
+    external unsubscribedEventToPullRequestTimelineItem:
       unsubscribedEvent => pullRequestTimelineItem =
       "%identity";
-    external assignedEventToIssueTimelineItem :
+    external assignedEventToIssueTimelineItem:
       assignedEvent => issueTimelineItem =
       "%identity";
-    external closedEventToIssueTimelineItem : closedEvent => issueTimelineItem =
+    external closedEventToIssueTimelineItem: closedEvent => issueTimelineItem =
       "%identity";
-    external commitToIssueTimelineItem : commit => issueTimelineItem =
+    external commitToIssueTimelineItem: commit => issueTimelineItem =
       "%identity";
-    external crossReferencedEventToIssueTimelineItem :
+    external crossReferencedEventToIssueTimelineItem:
       crossReferencedEvent => issueTimelineItem =
       "%identity";
-    external demilestonedEventToIssueTimelineItem :
+    external demilestonedEventToIssueTimelineItem:
       demilestonedEvent => issueTimelineItem =
       "%identity";
-    external issueCommentToIssueTimelineItem :
-      issueComment => issueTimelineItem =
+    external issueCommentToIssueTimelineItem: issueComment => issueTimelineItem =
       "%identity";
-    external labeledEventToIssueTimelineItem :
-      labeledEvent => issueTimelineItem =
+    external labeledEventToIssueTimelineItem: labeledEvent => issueTimelineItem =
       "%identity";
-    external lockedEventToIssueTimelineItem : lockedEvent => issueTimelineItem =
+    external lockedEventToIssueTimelineItem: lockedEvent => issueTimelineItem =
       "%identity";
-    external milestonedEventToIssueTimelineItem :
+    external milestonedEventToIssueTimelineItem:
       milestonedEvent => issueTimelineItem =
       "%identity";
-    external referencedEventToIssueTimelineItem :
+    external referencedEventToIssueTimelineItem:
       referencedEvent => issueTimelineItem =
       "%identity";
-    external renamedTitleEventToIssueTimelineItem :
+    external renamedTitleEventToIssueTimelineItem:
       renamedTitleEvent => issueTimelineItem =
       "%identity";
-    external reopenedEventToIssueTimelineItem :
+    external reopenedEventToIssueTimelineItem:
       reopenedEvent => issueTimelineItem =
       "%identity";
-    external subscribedEventToIssueTimelineItem :
+    external subscribedEventToIssueTimelineItem:
       subscribedEvent => issueTimelineItem =
       "%identity";
-    external unassignedEventToIssueTimelineItem :
+    external unassignedEventToIssueTimelineItem:
       unassignedEvent => issueTimelineItem =
       "%identity";
-    external unlabeledEventToIssueTimelineItem :
+    external unlabeledEventToIssueTimelineItem:
       unlabeledEvent => issueTimelineItem =
       "%identity";
-    external unlockedEventToIssueTimelineItem :
+    external unlockedEventToIssueTimelineItem:
       unlockedEvent => issueTimelineItem =
       "%identity";
-    external unsubscribedEventToIssueTimelineItem :
+    external unsubscribedEventToIssueTimelineItem:
       unsubscribedEvent => issueTimelineItem =
       "%identity";
-    external issueToRenamedTitleSubject : issue => renamedTitleSubject =
+    external issueToRenamedTitleSubject: issue => renamedTitleSubject =
       "%identity";
-    external pullRequestToRenamedTitleSubject :
+    external pullRequestToRenamedTitleSubject:
       pullRequest => renamedTitleSubject =
       "%identity";
-    external commitToCloser : commit => closer = "%identity";
-    external pullRequestToCloser : pullRequest => closer = "%identity";
-    external teamToPushAllowanceActor : team => pushAllowanceActor =
+    external commitToCloser: commit => closer = "%identity";
+    external pullRequestToCloser: pullRequest => closer = "%identity";
+    external teamToPushAllowanceActor: team => pushAllowanceActor =
       "%identity";
-    external userToPushAllowanceActor : user => pushAllowanceActor =
+    external userToPushAllowanceActor: user => pushAllowanceActor =
       "%identity";
-    external issueToIssueOrPullRequest : issue => issueOrPullRequest =
+    external issueToIssueOrPullRequest: issue => issueOrPullRequest =
       "%identity";
-    external pullRequestToIssueOrPullRequest :
-      pullRequest => issueOrPullRequest =
+    external pullRequestToIssueOrPullRequest: pullRequest => issueOrPullRequest =
       "%identity";
-    external addedToProjectEventToPullRequestTimelineItems :
+    external addedToProjectEventToPullRequestTimelineItems:
       addedToProjectEvent => pullRequestTimelineItems =
       "%identity";
-    external assignedEventToPullRequestTimelineItems :
+    external assignedEventToPullRequestTimelineItems:
       assignedEvent => pullRequestTimelineItems =
       "%identity";
-    external baseRefChangedEventToPullRequestTimelineItems :
+    external baseRefChangedEventToPullRequestTimelineItems:
       baseRefChangedEvent => pullRequestTimelineItems =
       "%identity";
-    external baseRefForcePushedEventToPullRequestTimelineItems :
+    external baseRefForcePushedEventToPullRequestTimelineItems:
       baseRefForcePushedEvent => pullRequestTimelineItems =
       "%identity";
-    external closedEventToPullRequestTimelineItems :
+    external closedEventToPullRequestTimelineItems:
       closedEvent => pullRequestTimelineItems =
       "%identity";
-    external commentDeletedEventToPullRequestTimelineItems :
+    external commentDeletedEventToPullRequestTimelineItems:
       commentDeletedEvent => pullRequestTimelineItems =
       "%identity";
-    external convertedNoteToIssueEventToPullRequestTimelineItems :
+    external convertedNoteToIssueEventToPullRequestTimelineItems:
       convertedNoteToIssueEvent => pullRequestTimelineItems =
       "%identity";
-    external crossReferencedEventToPullRequestTimelineItems :
+    external crossReferencedEventToPullRequestTimelineItems:
       crossReferencedEvent => pullRequestTimelineItems =
       "%identity";
-    external demilestonedEventToPullRequestTimelineItems :
+    external demilestonedEventToPullRequestTimelineItems:
       demilestonedEvent => pullRequestTimelineItems =
       "%identity";
-    external deployedEventToPullRequestTimelineItems :
+    external deployedEventToPullRequestTimelineItems:
       deployedEvent => pullRequestTimelineItems =
       "%identity";
-    external deploymentEnvironmentChangedEventToPullRequestTimelineItems :
+    external deploymentEnvironmentChangedEventToPullRequestTimelineItems:
       deploymentEnvironmentChangedEvent => pullRequestTimelineItems =
       "%identity";
-    external headRefDeletedEventToPullRequestTimelineItems :
+    external headRefDeletedEventToPullRequestTimelineItems:
       headRefDeletedEvent => pullRequestTimelineItems =
       "%identity";
-    external headRefForcePushedEventToPullRequestTimelineItems :
+    external headRefForcePushedEventToPullRequestTimelineItems:
       headRefForcePushedEvent => pullRequestTimelineItems =
       "%identity";
-    external headRefRestoredEventToPullRequestTimelineItems :
+    external headRefRestoredEventToPullRequestTimelineItems:
       headRefRestoredEvent => pullRequestTimelineItems =
       "%identity";
-    external issueCommentToPullRequestTimelineItems :
+    external issueCommentToPullRequestTimelineItems:
       issueComment => pullRequestTimelineItems =
       "%identity";
-    external labeledEventToPullRequestTimelineItems :
+    external labeledEventToPullRequestTimelineItems:
       labeledEvent => pullRequestTimelineItems =
       "%identity";
-    external lockedEventToPullRequestTimelineItems :
+    external lockedEventToPullRequestTimelineItems:
       lockedEvent => pullRequestTimelineItems =
       "%identity";
-    external mentionedEventToPullRequestTimelineItems :
+    external mentionedEventToPullRequestTimelineItems:
       mentionedEvent => pullRequestTimelineItems =
       "%identity";
-    external mergedEventToPullRequestTimelineItems :
+    external mergedEventToPullRequestTimelineItems:
       mergedEvent => pullRequestTimelineItems =
       "%identity";
-    external milestonedEventToPullRequestTimelineItems :
+    external milestonedEventToPullRequestTimelineItems:
       milestonedEvent => pullRequestTimelineItems =
       "%identity";
-    external movedColumnsInProjectEventToPullRequestTimelineItems :
+    external movedColumnsInProjectEventToPullRequestTimelineItems:
       movedColumnsInProjectEvent => pullRequestTimelineItems =
       "%identity";
-    external pullRequestCommitToPullRequestTimelineItems :
+    external pullRequestCommitToPullRequestTimelineItems:
       pullRequestCommit => pullRequestTimelineItems =
       "%identity";
-    external pullRequestReviewToPullRequestTimelineItems :
+    external pullRequestReviewToPullRequestTimelineItems:
       pullRequestReview => pullRequestTimelineItems =
       "%identity";
-    external pullRequestReviewThreadToPullRequestTimelineItems :
+    external pullRequestReviewThreadToPullRequestTimelineItems:
       pullRequestReviewThread => pullRequestTimelineItems =
       "%identity";
-    external referencedEventToPullRequestTimelineItems :
+    external referencedEventToPullRequestTimelineItems:
       referencedEvent => pullRequestTimelineItems =
       "%identity";
-    external removedFromProjectEventToPullRequestTimelineItems :
+    external removedFromProjectEventToPullRequestTimelineItems:
       removedFromProjectEvent => pullRequestTimelineItems =
       "%identity";
-    external renamedTitleEventToPullRequestTimelineItems :
+    external renamedTitleEventToPullRequestTimelineItems:
       renamedTitleEvent => pullRequestTimelineItems =
       "%identity";
-    external reopenedEventToPullRequestTimelineItems :
+    external reopenedEventToPullRequestTimelineItems:
       reopenedEvent => pullRequestTimelineItems =
       "%identity";
-    external reviewDismissedEventToPullRequestTimelineItems :
+    external reviewDismissedEventToPullRequestTimelineItems:
       reviewDismissedEvent => pullRequestTimelineItems =
       "%identity";
-    external reviewRequestRemovedEventToPullRequestTimelineItems :
+    external reviewRequestRemovedEventToPullRequestTimelineItems:
       reviewRequestRemovedEvent => pullRequestTimelineItems =
       "%identity";
-    external reviewRequestedEventToPullRequestTimelineItems :
+    external reviewRequestedEventToPullRequestTimelineItems:
       reviewRequestedEvent => pullRequestTimelineItems =
       "%identity";
-    external subscribedEventToPullRequestTimelineItems :
+    external subscribedEventToPullRequestTimelineItems:
       subscribedEvent => pullRequestTimelineItems =
       "%identity";
-    external unassignedEventToPullRequestTimelineItems :
+    external unassignedEventToPullRequestTimelineItems:
       unassignedEvent => pullRequestTimelineItems =
       "%identity";
-    external unlabeledEventToPullRequestTimelineItems :
+    external unlabeledEventToPullRequestTimelineItems:
       unlabeledEvent => pullRequestTimelineItems =
       "%identity";
-    external unlockedEventToPullRequestTimelineItems :
+    external unlockedEventToPullRequestTimelineItems:
       unlockedEvent => pullRequestTimelineItems =
       "%identity";
-    external unsubscribedEventToPullRequestTimelineItems :
+    external unsubscribedEventToPullRequestTimelineItems:
       unsubscribedEvent => pullRequestTimelineItems =
       "%identity";
-    external organizationToCollectionItemContent :
+    external organizationToCollectionItemContent:
       organization => collectionItemContent =
       "%identity";
-    external repositoryToCollectionItemContent :
+    external repositoryToCollectionItemContent:
       repository => collectionItemContent =
       "%identity";
-    external userToCollectionItemContent : user => collectionItemContent =
+    external userToCollectionItemContent: user => collectionItemContent =
       "%identity";
-    external issueToSearchResultItem : issue => searchResultItem = "%identity";
-    external marketplaceListingToSearchResultItem :
+    external issueToSearchResultItem: issue => searchResultItem = "%identity";
+    external marketplaceListingToSearchResultItem:
       marketplaceListing => searchResultItem =
       "%identity";
-    external organizationToSearchResultItem : organization => searchResultItem =
+    external organizationToSearchResultItem: organization => searchResultItem =
       "%identity";
-    external pullRequestToSearchResultItem : pullRequest => searchResultItem =
+    external pullRequestToSearchResultItem: pullRequest => searchResultItem =
       "%identity";
-    external repositoryToSearchResultItem : repository => searchResultItem =
+    external repositoryToSearchResultItem: repository => searchResultItem =
       "%identity";
-    external userToSearchResultItem : user => searchResultItem = "%identity";
-    module Queries: {
+    external userToSearchResultItem: user => searchResultItem = "%identity";
+    module Query: {
       [@bs.deriving abstract]
       type t = {
         [@bs.optional]
         codeOfConduct:
-          resolver(
+          rootResolver(
             {. "key": string},
             codeOfConduct,
             Js.Nullable.t(codeOfConduct),
           ),
         [@bs.optional]
         codesOfConduct:
-          resolver(
+          rootResolver(
             unit,
             codeOfConduct,
             Js.Nullable.t(array(Js.Nullable.t(codeOfConduct))),
           ),
         [@bs.optional]
         license:
-          resolver({. "key": string}, license, Js.Nullable.t(license)),
+          rootResolver({. "key": string}, license, Js.Nullable.t(license)),
         [@bs.optional]
-        licenses: resolver(unit, license, array(Js.Nullable.t(license))),
+        licenses:
+          rootResolver(unit, license, array(Js.Nullable.t(license))),
         [@bs.optional]
         marketplaceCategories:
-          resolver(
+          rootResolver(
             {
               .
               "excludeEmpty": Js.Nullable.t(bool),
@@ -3687,7 +3682,7 @@ module MakeSchema:
           ),
         [@bs.optional]
         marketplaceCategory:
-          resolver(
+          rootResolver(
             {
               .
               "slug": string,
@@ -3698,14 +3693,14 @@ module MakeSchema:
           ),
         [@bs.optional]
         marketplaceListing:
-          resolver(
+          rootResolver(
             {. "slug": string},
             marketplaceListing,
             Js.Nullable.t(marketplaceListing),
           ),
         [@bs.optional]
         marketplaceListings:
-          resolver(
+          rootResolver(
             {
               .
               "adminId": Js.Nullable.t(string),
@@ -3726,35 +3721,35 @@ module MakeSchema:
             marketplaceListingConnection,
           ),
         [@bs.optional]
-        meta: resolver(unit, gitHubMetadata, gitHubMetadata),
+        meta: rootResolver(unit, gitHubMetadata, gitHubMetadata),
         [@bs.optional]
-        node: resolver({. "id": string}, node, Js.Nullable.t(node)),
+        node: rootResolver({. "id": string}, node, Js.Nullable.t(node)),
         [@bs.optional]
         nodes:
-          resolver(
+          rootResolver(
             {. "ids": array(string)},
             node,
             array(Js.Nullable.t(node)),
           ),
         [@bs.optional]
         organization:
-          resolver(
+          rootResolver(
             {. "login": string},
             organization,
             Js.Nullable.t(organization),
           ),
         [@bs.optional]
         rateLimit:
-          resolver(
+          rootResolver(
             {. "dryRun": Js.Nullable.t(bool)},
             rateLimit,
             Js.Nullable.t(rateLimit),
           ),
         [@bs.optional]
-        relay: resolver(unit, query, query),
+        relay: rootResolver(unit, query, query),
         [@bs.optional]
         repository:
-          resolver(
+          rootResolver(
             {
               .
               "name": string,
@@ -3765,21 +3760,21 @@ module MakeSchema:
           ),
         [@bs.optional]
         repositoryOwner:
-          resolver(
+          rootResolver(
             {. "login": string},
             repositoryOwner,
             Js.Nullable.t(repositoryOwner),
           ),
         [@bs.optional]
         resource:
-          resolver(
+          rootResolver(
             {. "url": uRI},
             uniformResourceLocatable,
             Js.Nullable.t(uniformResourceLocatable),
           ),
         [@bs.optional]
         search:
-          resolver(
+          rootResolver(
             {
               .
               "after": Js.Nullable.t(string),
@@ -3793,257 +3788,258 @@ module MakeSchema:
             searchResultItemConnection,
           ),
         [@bs.optional]
-        topic: resolver({. "name": string}, topic, Js.Nullable.t(topic)),
+        topic:
+          rootResolver({. "name": string}, topic, Js.Nullable.t(topic)),
         [@bs.optional]
-        user: resolver({. "login": string}, user, Js.Nullable.t(user)),
+        user: rootResolver({. "login": string}, user, Js.Nullable.t(user)),
         [@bs.optional]
-        viewer: resolver(unit, user, user),
+        viewer: rootResolver(unit, user, user),
       };
     };
-    module Mutations: {
+    module Mutation: {
       [@bs.deriving abstract]
       type t = {
         [@bs.optional]
         acceptTopicSuggestion:
-          resolver(
+          rootResolver(
             {. "input": acceptTopicSuggestionInput},
             acceptTopicSuggestionPayload,
             Js.Nullable.t(acceptTopicSuggestionPayload),
           ),
         [@bs.optional]
         addComment:
-          resolver(
+          rootResolver(
             {. "input": addCommentInput},
             addCommentPayload,
             Js.Nullable.t(addCommentPayload),
           ),
         [@bs.optional]
         addProjectCard:
-          resolver(
+          rootResolver(
             {. "input": addProjectCardInput},
             addProjectCardPayload,
             Js.Nullable.t(addProjectCardPayload),
           ),
         [@bs.optional]
         addProjectColumn:
-          resolver(
+          rootResolver(
             {. "input": addProjectColumnInput},
             addProjectColumnPayload,
             Js.Nullable.t(addProjectColumnPayload),
           ),
         [@bs.optional]
         addPullRequestReview:
-          resolver(
+          rootResolver(
             {. "input": addPullRequestReviewInput},
             addPullRequestReviewPayload,
             Js.Nullable.t(addPullRequestReviewPayload),
           ),
         [@bs.optional]
         addPullRequestReviewComment:
-          resolver(
+          rootResolver(
             {. "input": addPullRequestReviewCommentInput},
             addPullRequestReviewCommentPayload,
             Js.Nullable.t(addPullRequestReviewCommentPayload),
           ),
         [@bs.optional]
         addReaction:
-          resolver(
+          rootResolver(
             {. "input": addReactionInput},
             addReactionPayload,
             Js.Nullable.t(addReactionPayload),
           ),
         [@bs.optional]
         addStar:
-          resolver(
+          rootResolver(
             {. "input": addStarInput},
             addStarPayload,
             Js.Nullable.t(addStarPayload),
           ),
         [@bs.optional]
         createBranchProtectionRule:
-          resolver(
+          rootResolver(
             {. "input": createBranchProtectionRuleInput},
             createBranchProtectionRulePayload,
             Js.Nullable.t(createBranchProtectionRulePayload),
           ),
         [@bs.optional]
         createProject:
-          resolver(
+          rootResolver(
             {. "input": createProjectInput},
             createProjectPayload,
             Js.Nullable.t(createProjectPayload),
           ),
         [@bs.optional]
         declineTopicSuggestion:
-          resolver(
+          rootResolver(
             {. "input": declineTopicSuggestionInput},
             declineTopicSuggestionPayload,
             Js.Nullable.t(declineTopicSuggestionPayload),
           ),
         [@bs.optional]
         deleteBranchProtectionRule:
-          resolver(
+          rootResolver(
             {. "input": deleteBranchProtectionRuleInput},
             deleteBranchProtectionRulePayload,
             Js.Nullable.t(deleteBranchProtectionRulePayload),
           ),
         [@bs.optional]
         deleteProject:
-          resolver(
+          rootResolver(
             {. "input": deleteProjectInput},
             deleteProjectPayload,
             Js.Nullable.t(deleteProjectPayload),
           ),
         [@bs.optional]
         deleteProjectCard:
-          resolver(
+          rootResolver(
             {. "input": deleteProjectCardInput},
             deleteProjectCardPayload,
             Js.Nullable.t(deleteProjectCardPayload),
           ),
         [@bs.optional]
         deleteProjectColumn:
-          resolver(
+          rootResolver(
             {. "input": deleteProjectColumnInput},
             deleteProjectColumnPayload,
             Js.Nullable.t(deleteProjectColumnPayload),
           ),
         [@bs.optional]
         deletePullRequestReview:
-          resolver(
+          rootResolver(
             {. "input": deletePullRequestReviewInput},
             deletePullRequestReviewPayload,
             Js.Nullable.t(deletePullRequestReviewPayload),
           ),
         [@bs.optional]
         dismissPullRequestReview:
-          resolver(
+          rootResolver(
             {. "input": dismissPullRequestReviewInput},
             dismissPullRequestReviewPayload,
             Js.Nullable.t(dismissPullRequestReviewPayload),
           ),
         [@bs.optional]
         lockLockable:
-          resolver(
+          rootResolver(
             {. "input": lockLockableInput},
             lockLockablePayload,
             Js.Nullable.t(lockLockablePayload),
           ),
         [@bs.optional]
         moveProjectCard:
-          resolver(
+          rootResolver(
             {. "input": moveProjectCardInput},
             moveProjectCardPayload,
             Js.Nullable.t(moveProjectCardPayload),
           ),
         [@bs.optional]
         moveProjectColumn:
-          resolver(
+          rootResolver(
             {. "input": moveProjectColumnInput},
             moveProjectColumnPayload,
             Js.Nullable.t(moveProjectColumnPayload),
           ),
         [@bs.optional]
         removeOutsideCollaborator:
-          resolver(
+          rootResolver(
             {. "input": removeOutsideCollaboratorInput},
             removeOutsideCollaboratorPayload,
             Js.Nullable.t(removeOutsideCollaboratorPayload),
           ),
         [@bs.optional]
         removeReaction:
-          resolver(
+          rootResolver(
             {. "input": removeReactionInput},
             removeReactionPayload,
             Js.Nullable.t(removeReactionPayload),
           ),
         [@bs.optional]
         removeStar:
-          resolver(
+          rootResolver(
             {. "input": removeStarInput},
             removeStarPayload,
             Js.Nullable.t(removeStarPayload),
           ),
         [@bs.optional]
         requestReviews:
-          resolver(
+          rootResolver(
             {. "input": requestReviewsInput},
             requestReviewsPayload,
             Js.Nullable.t(requestReviewsPayload),
           ),
         [@bs.optional]
         submitPullRequestReview:
-          resolver(
+          rootResolver(
             {. "input": submitPullRequestReviewInput},
             submitPullRequestReviewPayload,
             Js.Nullable.t(submitPullRequestReviewPayload),
           ),
         [@bs.optional]
         unlockLockable:
-          resolver(
+          rootResolver(
             {. "input": unlockLockableInput},
             unlockLockablePayload,
             Js.Nullable.t(unlockLockablePayload),
           ),
         [@bs.optional]
         updateBranchProtectionRule:
-          resolver(
+          rootResolver(
             {. "input": updateBranchProtectionRuleInput},
             updateBranchProtectionRulePayload,
             Js.Nullable.t(updateBranchProtectionRulePayload),
           ),
         [@bs.optional]
         updateProject:
-          resolver(
+          rootResolver(
             {. "input": updateProjectInput},
             updateProjectPayload,
             Js.Nullable.t(updateProjectPayload),
           ),
         [@bs.optional]
         updateProjectCard:
-          resolver(
+          rootResolver(
             {. "input": updateProjectCardInput},
             updateProjectCardPayload,
             Js.Nullable.t(updateProjectCardPayload),
           ),
         [@bs.optional]
         updateProjectColumn:
-          resolver(
+          rootResolver(
             {. "input": updateProjectColumnInput},
             updateProjectColumnPayload,
             Js.Nullable.t(updateProjectColumnPayload),
           ),
         [@bs.optional]
         updatePullRequestReview:
-          resolver(
+          rootResolver(
             {. "input": updatePullRequestReviewInput},
             updatePullRequestReviewPayload,
             Js.Nullable.t(updatePullRequestReviewPayload),
           ),
         [@bs.optional]
         updatePullRequestReviewComment:
-          resolver(
+          rootResolver(
             {. "input": updatePullRequestReviewCommentInput},
             updatePullRequestReviewCommentPayload,
             Js.Nullable.t(updatePullRequestReviewCommentPayload),
           ),
         [@bs.optional]
         updateSubscription:
-          resolver(
+          rootResolver(
             {. "input": updateSubscriptionInput},
             updateSubscriptionPayload,
             Js.Nullable.t(updateSubscriptionPayload),
           ),
         [@bs.optional]
         updateTopics:
-          resolver(
+          rootResolver(
             {. "input": updateTopicsInput},
             updateTopicsPayload,
             Js.Nullable.t(updateTopicsPayload),
           ),
       };
     };
-    module Subscriptions: {};
+    module Subscription: {};
     module Directives: {
       [@bs.deriving abstract]
       type t = {
@@ -4054,5 +4050,9225 @@ module MakeSchema:
         [@bs.optional]
         deprecated: directiveResolver({. "reason": Js.Nullable.t(string)}),
       };
+    };
+    module ReferencedEvent: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        actor:
+          Config.resolver(
+            referencedEvent,
+            unit,
+            actor,
+            Js.Nullable.t(actor),
+          ),
+        [@bs.optional]
+        commit:
+          Config.resolver(
+            referencedEvent,
+            unit,
+            commit,
+            Js.Nullable.t(commit),
+          ),
+        [@bs.optional]
+        commitRepository:
+          Config.resolver(referencedEvent, unit, repository, repository),
+        [@bs.optional]
+        createdAt: Config.resolver(referencedEvent, unit, dateTime, dateTime),
+        [@bs.optional]
+        id: Config.resolver(referencedEvent, unit, string, string),
+        [@bs.optional]
+        isCrossRepository: Config.resolver(referencedEvent, unit, bool, bool),
+        [@bs.optional]
+        isDirectReference: Config.resolver(referencedEvent, unit, bool, bool),
+        [@bs.optional]
+        subject:
+          Config.resolver(
+            referencedEvent,
+            unit,
+            referencedSubject,
+            referencedSubject,
+          ),
+      };
+    };
+    module MentionedEvent: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        actor:
+          Config.resolver(mentionedEvent, unit, actor, Js.Nullable.t(actor)),
+        [@bs.optional]
+        createdAt: Config.resolver(mentionedEvent, unit, dateTime, dateTime),
+        [@bs.optional]
+        databaseId:
+          Config.resolver(mentionedEvent, unit, int, Js.Nullable.t(int)),
+        [@bs.optional]
+        id: Config.resolver(mentionedEvent, unit, string, string),
+      };
+    };
+    module ReopenedEvent: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        actor:
+          Config.resolver(reopenedEvent, unit, actor, Js.Nullable.t(actor)),
+        [@bs.optional]
+        closable: Config.resolver(reopenedEvent, unit, closable, closable),
+        [@bs.optional]
+        createdAt: Config.resolver(reopenedEvent, unit, dateTime, dateTime),
+        [@bs.optional]
+        id: Config.resolver(reopenedEvent, unit, string, string),
+      };
+    };
+    module ReviewDismissedEvent: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        actor:
+          Config.resolver(
+            reviewDismissedEvent,
+            unit,
+            actor,
+            Js.Nullable.t(actor),
+          ),
+        [@bs.optional]
+        createdAt:
+          Config.resolver(reviewDismissedEvent, unit, dateTime, dateTime),
+        [@bs.optional]
+        databaseId:
+          Config.resolver(
+            reviewDismissedEvent,
+            unit,
+            int,
+            Js.Nullable.t(int),
+          ),
+        [@bs.optional]
+        id: Config.resolver(reviewDismissedEvent, unit, string, string),
+        [@bs.optional]
+        message: Config.resolver(reviewDismissedEvent, unit, string, string),
+        [@bs.optional]
+        messageHtml: Config.resolver(reviewDismissedEvent, unit, hTML, hTML),
+        [@bs.optional]
+        previousReviewState:
+          Config.resolver(
+            reviewDismissedEvent,
+            unit,
+            pullRequestReviewState,
+            pullRequestReviewState,
+          ),
+        [@bs.optional]
+        pullRequest:
+          Config.resolver(
+            reviewDismissedEvent,
+            unit,
+            pullRequest,
+            pullRequest,
+          ),
+        [@bs.optional]
+        pullRequestCommit:
+          Config.resolver(
+            reviewDismissedEvent,
+            unit,
+            pullRequestCommit,
+            Js.Nullable.t(pullRequestCommit),
+          ),
+        [@bs.optional]
+        resourcePath: Config.resolver(reviewDismissedEvent, unit, uRI, uRI),
+        [@bs.optional]
+        review:
+          Config.resolver(
+            reviewDismissedEvent,
+            unit,
+            pullRequestReview,
+            Js.Nullable.t(pullRequestReview),
+          ),
+        [@bs.optional]
+        url: Config.resolver(reviewDismissedEvent, unit, uRI, uRI),
+      };
+    };
+    module PullRequestReviewCommentEdge: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        cursor:
+          Config.resolver(pullRequestReviewCommentEdge, unit, string, string),
+        [@bs.optional]
+        node:
+          Config.resolver(
+            pullRequestReviewCommentEdge,
+            unit,
+            pullRequestReviewComment,
+            Js.Nullable.t(pullRequestReviewComment),
+          ),
+      };
+    };
+    module UnknownSignature: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        email: Config.resolver(unknownSignature, unit, string, string),
+        [@bs.optional]
+        isValid: Config.resolver(unknownSignature, unit, bool, bool),
+        [@bs.optional]
+        payload: Config.resolver(unknownSignature, unit, string, string),
+        [@bs.optional]
+        signature: Config.resolver(unknownSignature, unit, string, string),
+        [@bs.optional]
+        signer:
+          Config.resolver(unknownSignature, unit, user, Js.Nullable.t(user)),
+        [@bs.optional]
+        state:
+          Config.resolver(
+            unknownSignature,
+            unit,
+            gitSignatureState,
+            gitSignatureState,
+          ),
+        [@bs.optional]
+        wasSignedByGitHub:
+          Config.resolver(unknownSignature, unit, bool, bool),
+      };
+    };
+    module IssueConnection: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        edges:
+          Config.resolver(
+            issueConnection,
+            unit,
+            issueEdge,
+            Js.Nullable.t(array(Js.Nullable.t(issueEdge))),
+          ),
+        [@bs.optional]
+        nodes:
+          Config.resolver(
+            issueConnection,
+            unit,
+            issue,
+            Js.Nullable.t(array(Js.Nullable.t(issue))),
+          ),
+        [@bs.optional]
+        pageInfo: Config.resolver(issueConnection, unit, pageInfo, pageInfo),
+        [@bs.optional]
+        totalCount: Config.resolver(issueConnection, unit, int, int),
+      };
+    };
+    module PullRequestCommitConnection: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        edges:
+          Config.resolver(
+            pullRequestCommitConnection,
+            unit,
+            pullRequestCommitEdge,
+            Js.Nullable.t(array(Js.Nullable.t(pullRequestCommitEdge))),
+          ),
+        [@bs.optional]
+        nodes:
+          Config.resolver(
+            pullRequestCommitConnection,
+            unit,
+            pullRequestCommit,
+            Js.Nullable.t(array(Js.Nullable.t(pullRequestCommit))),
+          ),
+        [@bs.optional]
+        pageInfo:
+          Config.resolver(
+            pullRequestCommitConnection,
+            unit,
+            pageInfo,
+            pageInfo,
+          ),
+        [@bs.optional]
+        totalCount:
+          Config.resolver(pullRequestCommitConnection, unit, int, int),
+      };
+    };
+    module GistCommentEdge: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        cursor: Config.resolver(gistCommentEdge, unit, string, string),
+        [@bs.optional]
+        node:
+          Config.resolver(
+            gistCommentEdge,
+            unit,
+            gistComment,
+            Js.Nullable.t(gistComment),
+          ),
+      };
+    };
+    module SubscribedEvent: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        actor:
+          Config.resolver(
+            subscribedEvent,
+            unit,
+            actor,
+            Js.Nullable.t(actor),
+          ),
+        [@bs.optional]
+        createdAt: Config.resolver(subscribedEvent, unit, dateTime, dateTime),
+        [@bs.optional]
+        id: Config.resolver(subscribedEvent, unit, string, string),
+        [@bs.optional]
+        subscribable:
+          Config.resolver(subscribedEvent, unit, subscribable, subscribable),
+      };
+    };
+    module ExternalIdentitySamlAttributes: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        nameId:
+          Config.resolver(
+            externalIdentitySamlAttributes,
+            unit,
+            string,
+            Js.Nullable.t(string),
+          ),
+      };
+    };
+    module Milestone: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        closed: Config.resolver(milestone, unit, bool, bool),
+        [@bs.optional]
+        closedAt:
+          Config.resolver(
+            milestone,
+            unit,
+            dateTime,
+            Js.Nullable.t(dateTime),
+          ),
+        [@bs.optional]
+        createdAt: Config.resolver(milestone, unit, dateTime, dateTime),
+        [@bs.optional]
+        creator:
+          Config.resolver(milestone, unit, actor, Js.Nullable.t(actor)),
+        [@bs.optional]
+        description:
+          Config.resolver(milestone, unit, string, Js.Nullable.t(string)),
+        [@bs.optional]
+        dueOn:
+          Config.resolver(
+            milestone,
+            unit,
+            dateTime,
+            Js.Nullable.t(dateTime),
+          ),
+        [@bs.optional]
+        id: Config.resolver(milestone, unit, string, string),
+        [@bs.optional]
+        issues:
+          Config.resolver(
+            milestone,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "labels": Js.Nullable.t(array(string)),
+              "last": Js.Nullable.t(int),
+              "orderBy": Js.Nullable.t(issueOrder),
+              "states": Js.Nullable.t(array(abs_issueState)),
+            },
+            issueConnection,
+            issueConnection,
+          ),
+        [@bs.optional]
+        number: Config.resolver(milestone, unit, int, int),
+        [@bs.optional]
+        pullRequests:
+          Config.resolver(
+            milestone,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "baseRefName": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "headRefName": Js.Nullable.t(string),
+              "labels": Js.Nullable.t(array(string)),
+              "last": Js.Nullable.t(int),
+              "orderBy": Js.Nullable.t(issueOrder),
+              "states": Js.Nullable.t(array(abs_pullRequestState)),
+            },
+            pullRequestConnection,
+            pullRequestConnection,
+          ),
+        [@bs.optional]
+        repository: Config.resolver(milestone, unit, repository, repository),
+        [@bs.optional]
+        resourcePath: Config.resolver(milestone, unit, uRI, uRI),
+        [@bs.optional]
+        state:
+          Config.resolver(milestone, unit, milestoneState, milestoneState),
+        [@bs.optional]
+        title: Config.resolver(milestone, unit, string, string),
+        [@bs.optional]
+        updatedAt: Config.resolver(milestone, unit, dateTime, dateTime),
+        [@bs.optional]
+        url: Config.resolver(milestone, unit, uRI, uRI),
+      };
+    };
+    module DeployKey: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        createdAt: Config.resolver(deployKey, unit, dateTime, dateTime),
+        [@bs.optional]
+        id: Config.resolver(deployKey, unit, string, string),
+        [@bs.optional]
+        key: Config.resolver(deployKey, unit, string, string),
+        [@bs.optional]
+        readOnly: Config.resolver(deployKey, unit, bool, bool),
+        [@bs.optional]
+        title: Config.resolver(deployKey, unit, string, string),
+        [@bs.optional]
+        verified: Config.resolver(deployKey, unit, bool, bool),
+      };
+    };
+    module RepositoryTopicConnection: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        edges:
+          Config.resolver(
+            repositoryTopicConnection,
+            unit,
+            repositoryTopicEdge,
+            Js.Nullable.t(array(Js.Nullable.t(repositoryTopicEdge))),
+          ),
+        [@bs.optional]
+        nodes:
+          Config.resolver(
+            repositoryTopicConnection,
+            unit,
+            repositoryTopic,
+            Js.Nullable.t(array(Js.Nullable.t(repositoryTopic))),
+          ),
+        [@bs.optional]
+        pageInfo:
+          Config.resolver(
+            repositoryTopicConnection,
+            unit,
+            pageInfo,
+            pageInfo,
+          ),
+        [@bs.optional]
+        totalCount:
+          Config.resolver(repositoryTopicConnection, unit, int, int),
+      };
+    };
+    module SmimeSignature: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        email: Config.resolver(smimeSignature, unit, string, string),
+        [@bs.optional]
+        isValid: Config.resolver(smimeSignature, unit, bool, bool),
+        [@bs.optional]
+        payload: Config.resolver(smimeSignature, unit, string, string),
+        [@bs.optional]
+        signature: Config.resolver(smimeSignature, unit, string, string),
+        [@bs.optional]
+        signer:
+          Config.resolver(smimeSignature, unit, user, Js.Nullable.t(user)),
+        [@bs.optional]
+        state:
+          Config.resolver(
+            smimeSignature,
+            unit,
+            gitSignatureState,
+            gitSignatureState,
+          ),
+        [@bs.optional]
+        wasSignedByGitHub: Config.resolver(smimeSignature, unit, bool, bool),
+      };
+    };
+    module UpdatePullRequestReviewCommentPayload: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        clientMutationId:
+          Config.resolver(
+            updatePullRequestReviewCommentPayload,
+            unit,
+            string,
+            Js.Nullable.t(string),
+          ),
+        [@bs.optional]
+        pullRequestReviewComment:
+          Config.resolver(
+            updatePullRequestReviewCommentPayload,
+            unit,
+            pullRequestReviewComment,
+            pullRequestReviewComment,
+          ),
+      };
+    };
+    module LockLockablePayload: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        clientMutationId:
+          Config.resolver(
+            lockLockablePayload,
+            unit,
+            string,
+            Js.Nullable.t(string),
+          ),
+        [@bs.optional]
+        lockedRecord:
+          Config.resolver(
+            lockLockablePayload,
+            unit,
+            lockable,
+            Js.Nullable.t(lockable),
+          ),
+      };
+    };
+    module RepositoryCollaboratorConnection: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        edges:
+          Config.resolver(
+            repositoryCollaboratorConnection,
+            unit,
+            repositoryCollaboratorEdge,
+            Js.Nullable.t(array(Js.Nullable.t(repositoryCollaboratorEdge))),
+          ),
+        [@bs.optional]
+        nodes:
+          Config.resolver(
+            repositoryCollaboratorConnection,
+            unit,
+            user,
+            Js.Nullable.t(array(Js.Nullable.t(user))),
+          ),
+        [@bs.optional]
+        pageInfo:
+          Config.resolver(
+            repositoryCollaboratorConnection,
+            unit,
+            pageInfo,
+            pageInfo,
+          ),
+        [@bs.optional]
+        totalCount:
+          Config.resolver(repositoryCollaboratorConnection, unit, int, int),
+      };
+    };
+    module ExternalIdentityScimAttributes: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        username:
+          Config.resolver(
+            externalIdentityScimAttributes,
+            unit,
+            string,
+            Js.Nullable.t(string),
+          ),
+      };
+    };
+    module DeploymentConnection: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        edges:
+          Config.resolver(
+            deploymentConnection,
+            unit,
+            deploymentEdge,
+            Js.Nullable.t(array(Js.Nullable.t(deploymentEdge))),
+          ),
+        [@bs.optional]
+        nodes:
+          Config.resolver(
+            deploymentConnection,
+            unit,
+            deployment,
+            Js.Nullable.t(array(Js.Nullable.t(deployment))),
+          ),
+        [@bs.optional]
+        pageInfo:
+          Config.resolver(deploymentConnection, unit, pageInfo, pageInfo),
+        [@bs.optional]
+        totalCount: Config.resolver(deploymentConnection, unit, int, int),
+      };
+    };
+    module GistConnection: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        edges:
+          Config.resolver(
+            gistConnection,
+            unit,
+            gistEdge,
+            Js.Nullable.t(array(Js.Nullable.t(gistEdge))),
+          ),
+        [@bs.optional]
+        nodes:
+          Config.resolver(
+            gistConnection,
+            unit,
+            gist,
+            Js.Nullable.t(array(Js.Nullable.t(gist))),
+          ),
+        [@bs.optional]
+        pageInfo: Config.resolver(gistConnection, unit, pageInfo, pageInfo),
+        [@bs.optional]
+        totalCount: Config.resolver(gistConnection, unit, int, int),
+      };
+    };
+    module MoveProjectCardPayload: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        cardEdge:
+          Config.resolver(
+            moveProjectCardPayload,
+            unit,
+            projectCardEdge,
+            projectCardEdge,
+          ),
+        [@bs.optional]
+        clientMutationId:
+          Config.resolver(
+            moveProjectCardPayload,
+            unit,
+            string,
+            Js.Nullable.t(string),
+          ),
+      };
+    };
+    module PullRequestTimelineItemsEdge: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        cursor:
+          Config.resolver(pullRequestTimelineItemsEdge, unit, string, string),
+        [@bs.optional]
+        node:
+          Config.resolver(
+            pullRequestTimelineItemsEdge,
+            unit,
+            pullRequestTimelineItems,
+            Js.Nullable.t(pullRequestTimelineItems),
+          ),
+      };
+    };
+    module TextMatch: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        fragment: Config.resolver(textMatch, unit, string, string),
+        [@bs.optional]
+        highlights:
+          Config.resolver(
+            textMatch,
+            unit,
+            textMatchHighlight,
+            array(textMatchHighlight),
+          ),
+        [@bs.optional]
+        property: Config.resolver(textMatch, unit, string, string),
+      };
+    };
+    module GitHubMetadata: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        gitHubServicesSha:
+          Config.resolver(gitHubMetadata, unit, gitObjectID, gitObjectID),
+        [@bs.optional]
+        gitIpAddresses:
+          Config.resolver(
+            gitHubMetadata,
+            unit,
+            string,
+            Js.Nullable.t(array(string)),
+          ),
+        [@bs.optional]
+        hookIpAddresses:
+          Config.resolver(
+            gitHubMetadata,
+            unit,
+            string,
+            Js.Nullable.t(array(string)),
+          ),
+        [@bs.optional]
+        importerIpAddresses:
+          Config.resolver(
+            gitHubMetadata,
+            unit,
+            string,
+            Js.Nullable.t(array(string)),
+          ),
+        [@bs.optional]
+        isPasswordAuthenticationVerifiable:
+          Config.resolver(gitHubMetadata, unit, bool, bool),
+        [@bs.optional]
+        pagesIpAddresses:
+          Config.resolver(
+            gitHubMetadata,
+            unit,
+            string,
+            Js.Nullable.t(array(string)),
+          ),
+      };
+    };
+    module AddCommentPayload: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        clientMutationId:
+          Config.resolver(
+            addCommentPayload,
+            unit,
+            string,
+            Js.Nullable.t(string),
+          ),
+        [@bs.optional]
+        commentEdge:
+          Config.resolver(
+            addCommentPayload,
+            unit,
+            issueCommentEdge,
+            issueCommentEdge,
+          ),
+        [@bs.optional]
+        subject: Config.resolver(addCommentPayload, unit, node, node),
+        [@bs.optional]
+        timelineEdge:
+          Config.resolver(
+            addCommentPayload,
+            unit,
+            issueTimelineItemEdge,
+            issueTimelineItemEdge,
+          ),
+      };
+    };
+    module StarredRepositoryConnection: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        edges:
+          Config.resolver(
+            starredRepositoryConnection,
+            unit,
+            starredRepositoryEdge,
+            Js.Nullable.t(array(Js.Nullable.t(starredRepositoryEdge))),
+          ),
+        [@bs.optional]
+        nodes:
+          Config.resolver(
+            starredRepositoryConnection,
+            unit,
+            repository,
+            Js.Nullable.t(array(Js.Nullable.t(repository))),
+          ),
+        [@bs.optional]
+        pageInfo:
+          Config.resolver(
+            starredRepositoryConnection,
+            unit,
+            pageInfo,
+            pageInfo,
+          ),
+        [@bs.optional]
+        totalCount:
+          Config.resolver(starredRepositoryConnection, unit, int, int),
+      };
+    };
+    module UpdateSubscriptionPayload: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        clientMutationId:
+          Config.resolver(
+            updateSubscriptionPayload,
+            unit,
+            string,
+            Js.Nullable.t(string),
+          ),
+        [@bs.optional]
+        subscribable:
+          Config.resolver(
+            updateSubscriptionPayload,
+            unit,
+            subscribable,
+            subscribable,
+          ),
+      };
+    };
+    module TeamConnection: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        edges:
+          Config.resolver(
+            teamConnection,
+            unit,
+            teamEdge,
+            Js.Nullable.t(array(Js.Nullable.t(teamEdge))),
+          ),
+        [@bs.optional]
+        nodes:
+          Config.resolver(
+            teamConnection,
+            unit,
+            team,
+            Js.Nullable.t(array(Js.Nullable.t(team))),
+          ),
+        [@bs.optional]
+        pageInfo: Config.resolver(teamConnection, unit, pageInfo, pageInfo),
+        [@bs.optional]
+        totalCount: Config.resolver(teamConnection, unit, int, int),
+      };
+    };
+    module CommentDeletedEvent: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        actor:
+          Config.resolver(
+            commentDeletedEvent,
+            unit,
+            actor,
+            Js.Nullable.t(actor),
+          ),
+        [@bs.optional]
+        createdAt:
+          Config.resolver(commentDeletedEvent, unit, dateTime, dateTime),
+        [@bs.optional]
+        databaseId:
+          Config.resolver(
+            commentDeletedEvent,
+            unit,
+            int,
+            Js.Nullable.t(int),
+          ),
+        [@bs.optional]
+        id: Config.resolver(commentDeletedEvent, unit, string, string),
+      };
+    };
+    module IssueTimelineItemsEdge: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        cursor: Config.resolver(issueTimelineItemsEdge, unit, string, string),
+        [@bs.optional]
+        node:
+          Config.resolver(
+            issueTimelineItemsEdge,
+            unit,
+            issueTimelineItems,
+            Js.Nullable.t(issueTimelineItems),
+          ),
+      };
+    };
+    module Topic: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        id: Config.resolver(topic, unit, string, string),
+        [@bs.optional]
+        name: Config.resolver(topic, unit, string, string),
+        [@bs.optional]
+        relatedTopics: Config.resolver(topic, unit, topic, array(topic)),
+        [@bs.optional]
+        stargazers:
+          Config.resolver(
+            topic,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+              "orderBy": Js.Nullable.t(starOrder),
+            },
+            stargazerConnection,
+            stargazerConnection,
+          ),
+        [@bs.optional]
+        viewerHasStarred: Config.resolver(topic, unit, bool, bool),
+      };
+    };
+    module OrganizationInvitationConnection: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        edges:
+          Config.resolver(
+            organizationInvitationConnection,
+            unit,
+            organizationInvitationEdge,
+            Js.Nullable.t(array(Js.Nullable.t(organizationInvitationEdge))),
+          ),
+        [@bs.optional]
+        nodes:
+          Config.resolver(
+            organizationInvitationConnection,
+            unit,
+            organizationInvitation,
+            Js.Nullable.t(array(Js.Nullable.t(organizationInvitation))),
+          ),
+        [@bs.optional]
+        pageInfo:
+          Config.resolver(
+            organizationInvitationConnection,
+            unit,
+            pageInfo,
+            pageInfo,
+          ),
+        [@bs.optional]
+        totalCount:
+          Config.resolver(organizationInvitationConnection, unit, int, int),
+      };
+    };
+    module Label: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        color: Config.resolver(label, unit, string, string),
+        [@bs.optional]
+        createdAt:
+          Config.resolver(label, unit, dateTime, Js.Nullable.t(dateTime)),
+        [@bs.optional]
+        description:
+          Config.resolver(label, unit, string, Js.Nullable.t(string)),
+        [@bs.optional]
+        id: Config.resolver(label, unit, string, string),
+        [@bs.optional]
+        isDefault: Config.resolver(label, unit, bool, bool),
+        [@bs.optional]
+        issues:
+          Config.resolver(
+            label,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "labels": Js.Nullable.t(array(string)),
+              "last": Js.Nullable.t(int),
+              "orderBy": Js.Nullable.t(issueOrder),
+              "states": Js.Nullable.t(array(abs_issueState)),
+            },
+            issueConnection,
+            issueConnection,
+          ),
+        [@bs.optional]
+        name: Config.resolver(label, unit, string, string),
+        [@bs.optional]
+        pullRequests:
+          Config.resolver(
+            label,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "baseRefName": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "headRefName": Js.Nullable.t(string),
+              "labels": Js.Nullable.t(array(string)),
+              "last": Js.Nullable.t(int),
+              "orderBy": Js.Nullable.t(issueOrder),
+              "states": Js.Nullable.t(array(abs_pullRequestState)),
+            },
+            pullRequestConnection,
+            pullRequestConnection,
+          ),
+        [@bs.optional]
+        repository: Config.resolver(label, unit, repository, repository),
+        [@bs.optional]
+        resourcePath: Config.resolver(label, unit, uRI, uRI),
+        [@bs.optional]
+        updatedAt:
+          Config.resolver(label, unit, dateTime, Js.Nullable.t(dateTime)),
+        [@bs.optional]
+        url: Config.resolver(label, unit, uRI, uRI),
+      };
+    };
+    module ReviewRequestEdge: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        cursor: Config.resolver(reviewRequestEdge, unit, string, string),
+        [@bs.optional]
+        node:
+          Config.resolver(
+            reviewRequestEdge,
+            unit,
+            reviewRequest,
+            Js.Nullable.t(reviewRequest),
+          ),
+      };
+    };
+    module UnlabeledEvent: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        actor:
+          Config.resolver(unlabeledEvent, unit, actor, Js.Nullable.t(actor)),
+        [@bs.optional]
+        createdAt: Config.resolver(unlabeledEvent, unit, dateTime, dateTime),
+        [@bs.optional]
+        id: Config.resolver(unlabeledEvent, unit, string, string),
+        [@bs.optional]
+        label: Config.resolver(unlabeledEvent, unit, label, label),
+        [@bs.optional]
+        labelable:
+          Config.resolver(unlabeledEvent, unit, labelable, labelable),
+      };
+    };
+    module StarredRepositoryEdge: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        cursor: Config.resolver(starredRepositoryEdge, unit, string, string),
+        [@bs.optional]
+        node:
+          Config.resolver(
+            starredRepositoryEdge,
+            unit,
+            repository,
+            repository,
+          ),
+        [@bs.optional]
+        starredAt:
+          Config.resolver(starredRepositoryEdge, unit, dateTime, dateTime),
+      };
+    };
+    module DeploymentStatusConnection: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        edges:
+          Config.resolver(
+            deploymentStatusConnection,
+            unit,
+            deploymentStatusEdge,
+            Js.Nullable.t(array(Js.Nullable.t(deploymentStatusEdge))),
+          ),
+        [@bs.optional]
+        nodes:
+          Config.resolver(
+            deploymentStatusConnection,
+            unit,
+            deploymentStatus,
+            Js.Nullable.t(array(Js.Nullable.t(deploymentStatus))),
+          ),
+        [@bs.optional]
+        pageInfo:
+          Config.resolver(
+            deploymentStatusConnection,
+            unit,
+            pageInfo,
+            pageInfo,
+          ),
+        [@bs.optional]
+        totalCount:
+          Config.resolver(deploymentStatusConnection, unit, int, int),
+      };
+    };
+    module UserEdge: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        cursor: Config.resolver(userEdge, unit, string, string),
+        [@bs.optional]
+        node: Config.resolver(userEdge, unit, user, Js.Nullable.t(user)),
+      };
+    };
+    module GistCommentConnection: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        edges:
+          Config.resolver(
+            gistCommentConnection,
+            unit,
+            gistCommentEdge,
+            Js.Nullable.t(array(Js.Nullable.t(gistCommentEdge))),
+          ),
+        [@bs.optional]
+        nodes:
+          Config.resolver(
+            gistCommentConnection,
+            unit,
+            gistComment,
+            Js.Nullable.t(array(Js.Nullable.t(gistComment))),
+          ),
+        [@bs.optional]
+        pageInfo:
+          Config.resolver(gistCommentConnection, unit, pageInfo, pageInfo),
+        [@bs.optional]
+        totalCount: Config.resolver(gistCommentConnection, unit, int, int),
+      };
+    };
+    module LicenseRule: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        description: Config.resolver(licenseRule, unit, string, string),
+        [@bs.optional]
+        key: Config.resolver(licenseRule, unit, string, string),
+        [@bs.optional]
+        label: Config.resolver(licenseRule, unit, string, string),
+      };
+    };
+    module RepositoryConnection: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        edges:
+          Config.resolver(
+            repositoryConnection,
+            unit,
+            repositoryEdge,
+            Js.Nullable.t(array(Js.Nullable.t(repositoryEdge))),
+          ),
+        [@bs.optional]
+        nodes:
+          Config.resolver(
+            repositoryConnection,
+            unit,
+            repository,
+            Js.Nullable.t(array(Js.Nullable.t(repository))),
+          ),
+        [@bs.optional]
+        pageInfo:
+          Config.resolver(repositoryConnection, unit, pageInfo, pageInfo),
+        [@bs.optional]
+        totalCount: Config.resolver(repositoryConnection, unit, int, int),
+        [@bs.optional]
+        totalDiskUsage: Config.resolver(repositoryConnection, unit, int, int),
+      };
+    };
+    module ReleaseEdge: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        cursor: Config.resolver(releaseEdge, unit, string, string),
+        [@bs.optional]
+        node:
+          Config.resolver(
+            releaseEdge,
+            unit,
+            release,
+            Js.Nullable.t(release),
+          ),
+      };
+    };
+    module ProjectCardEdge: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        cursor: Config.resolver(projectCardEdge, unit, string, string),
+        [@bs.optional]
+        node:
+          Config.resolver(
+            projectCardEdge,
+            unit,
+            projectCard,
+            Js.Nullable.t(projectCard),
+          ),
+      };
+    };
+    module ReviewRequestedEvent: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        actor:
+          Config.resolver(
+            reviewRequestedEvent,
+            unit,
+            actor,
+            Js.Nullable.t(actor),
+          ),
+        [@bs.optional]
+        createdAt:
+          Config.resolver(reviewRequestedEvent, unit, dateTime, dateTime),
+        [@bs.optional]
+        id: Config.resolver(reviewRequestedEvent, unit, string, string),
+        [@bs.optional]
+        pullRequest:
+          Config.resolver(
+            reviewRequestedEvent,
+            unit,
+            pullRequest,
+            pullRequest,
+          ),
+        [@bs.optional]
+        requestedReviewer:
+          Config.resolver(
+            reviewRequestedEvent,
+            unit,
+            requestedReviewer,
+            Js.Nullable.t(requestedReviewer),
+          ),
+      };
+    };
+    module OrganizationEdge: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        cursor: Config.resolver(organizationEdge, unit, string, string),
+        [@bs.optional]
+        node:
+          Config.resolver(
+            organizationEdge,
+            unit,
+            organization,
+            Js.Nullable.t(organization),
+          ),
+      };
+    };
+    module AddedToProjectEvent: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        actor:
+          Config.resolver(
+            addedToProjectEvent,
+            unit,
+            actor,
+            Js.Nullable.t(actor),
+          ),
+        [@bs.optional]
+        createdAt:
+          Config.resolver(addedToProjectEvent, unit, dateTime, dateTime),
+        [@bs.optional]
+        databaseId:
+          Config.resolver(
+            addedToProjectEvent,
+            unit,
+            int,
+            Js.Nullable.t(int),
+          ),
+        [@bs.optional]
+        id: Config.resolver(addedToProjectEvent, unit, string, string),
+      };
+    };
+    module ReleaseAssetEdge: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        cursor: Config.resolver(releaseAssetEdge, unit, string, string),
+        [@bs.optional]
+        node:
+          Config.resolver(
+            releaseAssetEdge,
+            unit,
+            releaseAsset,
+            Js.Nullable.t(releaseAsset),
+          ),
+      };
+    };
+    module Issue: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        activeLockReason:
+          Config.resolver(
+            issue,
+            unit,
+            lockReason,
+            Js.Nullable.t(lockReason),
+          ),
+        [@bs.optional]
+        assignees:
+          Config.resolver(
+            issue,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+            },
+            userConnection,
+            userConnection,
+          ),
+        [@bs.optional]
+        author: Config.resolver(issue, unit, actor, Js.Nullable.t(actor)),
+        [@bs.optional]
+        authorAssociation:
+          Config.resolver(
+            issue,
+            unit,
+            commentAuthorAssociation,
+            commentAuthorAssociation,
+          ),
+        [@bs.optional]
+        body: Config.resolver(issue, unit, string, string),
+        [@bs.optional]
+        bodyHTML: Config.resolver(issue, unit, hTML, hTML),
+        [@bs.optional]
+        bodyText: Config.resolver(issue, unit, string, string),
+        [@bs.optional]
+        closed: Config.resolver(issue, unit, bool, bool),
+        [@bs.optional]
+        closedAt:
+          Config.resolver(issue, unit, dateTime, Js.Nullable.t(dateTime)),
+        [@bs.optional]
+        comments:
+          Config.resolver(
+            issue,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+            },
+            issueCommentConnection,
+            issueCommentConnection,
+          ),
+        [@bs.optional]
+        createdAt: Config.resolver(issue, unit, dateTime, dateTime),
+        [@bs.optional]
+        createdViaEmail: Config.resolver(issue, unit, bool, bool),
+        [@bs.optional]
+        databaseId: Config.resolver(issue, unit, int, Js.Nullable.t(int)),
+        [@bs.optional]
+        editor: Config.resolver(issue, unit, actor, Js.Nullable.t(actor)),
+        [@bs.optional]
+        id: Config.resolver(issue, unit, string, string),
+        [@bs.optional]
+        includesCreatedEdit: Config.resolver(issue, unit, bool, bool),
+        [@bs.optional]
+        labels:
+          Config.resolver(
+            issue,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+            },
+            labelConnection,
+            Js.Nullable.t(labelConnection),
+          ),
+        [@bs.optional]
+        lastEditedAt:
+          Config.resolver(issue, unit, dateTime, Js.Nullable.t(dateTime)),
+        [@bs.optional]
+        locked: Config.resolver(issue, unit, bool, bool),
+        [@bs.optional]
+        milestone:
+          Config.resolver(issue, unit, milestone, Js.Nullable.t(milestone)),
+        [@bs.optional]
+        number: Config.resolver(issue, unit, int, int),
+        [@bs.optional]
+        participants:
+          Config.resolver(
+            issue,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+            },
+            userConnection,
+            userConnection,
+          ),
+        [@bs.optional]
+        projectCards:
+          Config.resolver(
+            issue,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "archivedStates":
+                Js.Nullable.t(
+                  array(Js.Nullable.t(abs_projectCardArchivedState)),
+                ),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+            },
+            projectCardConnection,
+            projectCardConnection,
+          ),
+        [@bs.optional]
+        publishedAt:
+          Config.resolver(issue, unit, dateTime, Js.Nullable.t(dateTime)),
+        [@bs.optional]
+        reactionGroups:
+          Config.resolver(
+            issue,
+            unit,
+            reactionGroup,
+            Js.Nullable.t(array(reactionGroup)),
+          ),
+        [@bs.optional]
+        reactions:
+          Config.resolver(
+            issue,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "content": Js.Nullable.t(abs_reactionContent),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+              "orderBy": Js.Nullable.t(reactionOrder),
+            },
+            reactionConnection,
+            reactionConnection,
+          ),
+        [@bs.optional]
+        repository: Config.resolver(issue, unit, repository, repository),
+        [@bs.optional]
+        resourcePath: Config.resolver(issue, unit, uRI, uRI),
+        [@bs.optional]
+        state: Config.resolver(issue, unit, issueState, issueState),
+        [@bs.optional]
+        timeline:
+          Config.resolver(
+            issue,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+              "since": Js.Nullable.t(dateTime),
+            },
+            issueTimelineConnection,
+            issueTimelineConnection,
+          ),
+        [@bs.optional]
+        title: Config.resolver(issue, unit, string, string),
+        [@bs.optional]
+        updatedAt: Config.resolver(issue, unit, dateTime, dateTime),
+        [@bs.optional]
+        url: Config.resolver(issue, unit, uRI, uRI),
+        [@bs.optional]
+        userContentEdits:
+          Config.resolver(
+            issue,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+            },
+            userContentEditConnection,
+            Js.Nullable.t(userContentEditConnection),
+          ),
+        [@bs.optional]
+        viewerCanReact: Config.resolver(issue, unit, bool, bool),
+        [@bs.optional]
+        viewerCanSubscribe: Config.resolver(issue, unit, bool, bool),
+        [@bs.optional]
+        viewerCanUpdate: Config.resolver(issue, unit, bool, bool),
+        [@bs.optional]
+        viewerCannotUpdateReasons:
+          Config.resolver(
+            issue,
+            unit,
+            commentCannotUpdateReason,
+            array(commentCannotUpdateReason),
+          ),
+        [@bs.optional]
+        viewerDidAuthor: Config.resolver(issue, unit, bool, bool),
+        [@bs.optional]
+        viewerSubscription:
+          Config.resolver(
+            issue,
+            unit,
+            subscriptionState,
+            Js.Nullable.t(subscriptionState),
+          ),
+      };
+    };
+    module ReactionConnection: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        edges:
+          Config.resolver(
+            reactionConnection,
+            unit,
+            reactionEdge,
+            Js.Nullable.t(array(Js.Nullable.t(reactionEdge))),
+          ),
+        [@bs.optional]
+        nodes:
+          Config.resolver(
+            reactionConnection,
+            unit,
+            reaction,
+            Js.Nullable.t(array(Js.Nullable.t(reaction))),
+          ),
+        [@bs.optional]
+        pageInfo:
+          Config.resolver(reactionConnection, unit, pageInfo, pageInfo),
+        [@bs.optional]
+        totalCount: Config.resolver(reactionConnection, unit, int, int),
+        [@bs.optional]
+        viewerHasReacted:
+          Config.resolver(reactionConnection, unit, bool, bool),
+      };
+    };
+    module RepositoryTopic: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        id: Config.resolver(repositoryTopic, unit, string, string),
+        [@bs.optional]
+        resourcePath: Config.resolver(repositoryTopic, unit, uRI, uRI),
+        [@bs.optional]
+        topic: Config.resolver(repositoryTopic, unit, topic, topic),
+        [@bs.optional]
+        url: Config.resolver(repositoryTopic, unit, uRI, uRI),
+      };
+    };
+    module IssueTimelineConnection: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        edges:
+          Config.resolver(
+            issueTimelineConnection,
+            unit,
+            issueTimelineItemEdge,
+            Js.Nullable.t(array(Js.Nullable.t(issueTimelineItemEdge))),
+          ),
+        [@bs.optional]
+        nodes:
+          Config.resolver(
+            issueTimelineConnection,
+            unit,
+            issueTimelineItem,
+            Js.Nullable.t(array(Js.Nullable.t(issueTimelineItem))),
+          ),
+        [@bs.optional]
+        pageInfo:
+          Config.resolver(issueTimelineConnection, unit, pageInfo, pageInfo),
+        [@bs.optional]
+        totalCount: Config.resolver(issueTimelineConnection, unit, int, int),
+      };
+    };
+    module MarketplaceListingConnection: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        edges:
+          Config.resolver(
+            marketplaceListingConnection,
+            unit,
+            marketplaceListingEdge,
+            Js.Nullable.t(array(Js.Nullable.t(marketplaceListingEdge))),
+          ),
+        [@bs.optional]
+        nodes:
+          Config.resolver(
+            marketplaceListingConnection,
+            unit,
+            marketplaceListing,
+            Js.Nullable.t(array(Js.Nullable.t(marketplaceListing))),
+          ),
+        [@bs.optional]
+        pageInfo:
+          Config.resolver(
+            marketplaceListingConnection,
+            unit,
+            pageInfo,
+            pageInfo,
+          ),
+        [@bs.optional]
+        totalCount:
+          Config.resolver(marketplaceListingConnection, unit, int, int),
+      };
+    };
+    module Commit: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        abbreviatedOid: Config.resolver(commit, unit, string, string),
+        [@bs.optional]
+        additions: Config.resolver(commit, unit, int, int),
+        [@bs.optional]
+        author:
+          Config.resolver(commit, unit, gitActor, Js.Nullable.t(gitActor)),
+        [@bs.optional]
+        authoredByCommitter: Config.resolver(commit, unit, bool, bool),
+        [@bs.optional]
+        authoredDate: Config.resolver(commit, unit, dateTime, dateTime),
+        [@bs.optional]
+        blame: Config.resolver(commit, {. "path": string}, blame, blame),
+        [@bs.optional]
+        changedFiles: Config.resolver(commit, unit, int, int),
+        [@bs.optional]
+        comments:
+          Config.resolver(
+            commit,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+            },
+            commitCommentConnection,
+            commitCommentConnection,
+          ),
+        [@bs.optional]
+        commitResourcePath: Config.resolver(commit, unit, uRI, uRI),
+        [@bs.optional]
+        commitUrl: Config.resolver(commit, unit, uRI, uRI),
+        [@bs.optional]
+        committedDate: Config.resolver(commit, unit, dateTime, dateTime),
+        [@bs.optional]
+        committedViaWeb: Config.resolver(commit, unit, bool, bool),
+        [@bs.optional]
+        committer:
+          Config.resolver(commit, unit, gitActor, Js.Nullable.t(gitActor)),
+        [@bs.optional]
+        deletions: Config.resolver(commit, unit, int, int),
+        [@bs.optional]
+        history:
+          Config.resolver(
+            commit,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "author": Js.Nullable.t(commitAuthor),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+              "path": Js.Nullable.t(string),
+              "since": Js.Nullable.t(gitTimestamp),
+              "until": Js.Nullable.t(gitTimestamp),
+            },
+            commitHistoryConnection,
+            commitHistoryConnection,
+          ),
+        [@bs.optional]
+        id: Config.resolver(commit, unit, string, string),
+        [@bs.optional]
+        message: Config.resolver(commit, unit, string, string),
+        [@bs.optional]
+        messageBody: Config.resolver(commit, unit, string, string),
+        [@bs.optional]
+        messageBodyHTML: Config.resolver(commit, unit, hTML, hTML),
+        [@bs.optional]
+        messageHeadline: Config.resolver(commit, unit, string, string),
+        [@bs.optional]
+        messageHeadlineHTML: Config.resolver(commit, unit, hTML, hTML),
+        [@bs.optional]
+        oid: Config.resolver(commit, unit, gitObjectID, gitObjectID),
+        [@bs.optional]
+        parents:
+          Config.resolver(
+            commit,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+            },
+            commitConnection,
+            commitConnection,
+          ),
+        [@bs.optional]
+        pushedDate:
+          Config.resolver(commit, unit, dateTime, Js.Nullable.t(dateTime)),
+        [@bs.optional]
+        repository: Config.resolver(commit, unit, repository, repository),
+        [@bs.optional]
+        resourcePath: Config.resolver(commit, unit, uRI, uRI),
+        [@bs.optional]
+        signature:
+          Config.resolver(
+            commit,
+            unit,
+            gitSignature,
+            Js.Nullable.t(gitSignature),
+          ),
+        [@bs.optional]
+        status: Config.resolver(commit, unit, status, Js.Nullable.t(status)),
+        [@bs.optional]
+        tarballUrl: Config.resolver(commit, unit, uRI, uRI),
+        [@bs.optional]
+        tree: Config.resolver(commit, unit, tree, tree),
+        [@bs.optional]
+        treeResourcePath: Config.resolver(commit, unit, uRI, uRI),
+        [@bs.optional]
+        treeUrl: Config.resolver(commit, unit, uRI, uRI),
+        [@bs.optional]
+        url: Config.resolver(commit, unit, uRI, uRI),
+        [@bs.optional]
+        viewerCanSubscribe: Config.resolver(commit, unit, bool, bool),
+        [@bs.optional]
+        viewerSubscription:
+          Config.resolver(
+            commit,
+            unit,
+            subscriptionState,
+            Js.Nullable.t(subscriptionState),
+          ),
+        [@bs.optional]
+        zipballUrl: Config.resolver(commit, unit, uRI, uRI),
+      };
+    };
+    module Project: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        body: Config.resolver(project, unit, string, Js.Nullable.t(string)),
+        [@bs.optional]
+        bodyHTML: Config.resolver(project, unit, hTML, hTML),
+        [@bs.optional]
+        closed: Config.resolver(project, unit, bool, bool),
+        [@bs.optional]
+        closedAt:
+          Config.resolver(project, unit, dateTime, Js.Nullable.t(dateTime)),
+        [@bs.optional]
+        columns:
+          Config.resolver(
+            project,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+            },
+            projectColumnConnection,
+            projectColumnConnection,
+          ),
+        [@bs.optional]
+        createdAt: Config.resolver(project, unit, dateTime, dateTime),
+        [@bs.optional]
+        creator: Config.resolver(project, unit, actor, Js.Nullable.t(actor)),
+        [@bs.optional]
+        databaseId: Config.resolver(project, unit, int, Js.Nullable.t(int)),
+        [@bs.optional]
+        id: Config.resolver(project, unit, string, string),
+        [@bs.optional]
+        name: Config.resolver(project, unit, string, string),
+        [@bs.optional]
+        number: Config.resolver(project, unit, int, int),
+        [@bs.optional]
+        owner: Config.resolver(project, unit, projectOwner, projectOwner),
+        [@bs.optional]
+        pendingCards:
+          Config.resolver(
+            project,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "archivedStates":
+                Js.Nullable.t(
+                  array(Js.Nullable.t(abs_projectCardArchivedState)),
+                ),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+            },
+            projectCardConnection,
+            projectCardConnection,
+          ),
+        [@bs.optional]
+        resourcePath: Config.resolver(project, unit, uRI, uRI),
+        [@bs.optional]
+        state: Config.resolver(project, unit, projectState, projectState),
+        [@bs.optional]
+        updatedAt: Config.resolver(project, unit, dateTime, dateTime),
+        [@bs.optional]
+        url: Config.resolver(project, unit, uRI, uRI),
+        [@bs.optional]
+        viewerCanUpdate: Config.resolver(project, unit, bool, bool),
+      };
+    };
+    module UserContentEditConnection: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        edges:
+          Config.resolver(
+            userContentEditConnection,
+            unit,
+            userContentEditEdge,
+            Js.Nullable.t(array(Js.Nullable.t(userContentEditEdge))),
+          ),
+        [@bs.optional]
+        nodes:
+          Config.resolver(
+            userContentEditConnection,
+            unit,
+            userContentEdit,
+            Js.Nullable.t(array(Js.Nullable.t(userContentEdit))),
+          ),
+        [@bs.optional]
+        pageInfo:
+          Config.resolver(
+            userContentEditConnection,
+            unit,
+            pageInfo,
+            pageInfo,
+          ),
+        [@bs.optional]
+        totalCount:
+          Config.resolver(userContentEditConnection, unit, int, int),
+      };
+    };
+    module FollowerConnection: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        edges:
+          Config.resolver(
+            followerConnection,
+            unit,
+            userEdge,
+            Js.Nullable.t(array(Js.Nullable.t(userEdge))),
+          ),
+        [@bs.optional]
+        nodes:
+          Config.resolver(
+            followerConnection,
+            unit,
+            user,
+            Js.Nullable.t(array(Js.Nullable.t(user))),
+          ),
+        [@bs.optional]
+        pageInfo:
+          Config.resolver(followerConnection, unit, pageInfo, pageInfo),
+        [@bs.optional]
+        totalCount: Config.resolver(followerConnection, unit, int, int),
+      };
+    };
+    module ReactionGroup: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        content:
+          Config.resolver(
+            reactionGroup,
+            unit,
+            reactionContent,
+            reactionContent,
+          ),
+        [@bs.optional]
+        createdAt:
+          Config.resolver(
+            reactionGroup,
+            unit,
+            dateTime,
+            Js.Nullable.t(dateTime),
+          ),
+        [@bs.optional]
+        subject: Config.resolver(reactionGroup, unit, reactable, reactable),
+        [@bs.optional]
+        users:
+          Config.resolver(
+            reactionGroup,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+            },
+            reactingUserConnection,
+            reactingUserConnection,
+          ),
+        [@bs.optional]
+        viewerHasReacted: Config.resolver(reactionGroup, unit, bool, bool),
+      };
+    };
+    module MergedEvent: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        actor:
+          Config.resolver(mergedEvent, unit, actor, Js.Nullable.t(actor)),
+        [@bs.optional]
+        commit:
+          Config.resolver(mergedEvent, unit, commit, Js.Nullable.t(commit)),
+        [@bs.optional]
+        createdAt: Config.resolver(mergedEvent, unit, dateTime, dateTime),
+        [@bs.optional]
+        id: Config.resolver(mergedEvent, unit, string, string),
+        [@bs.optional]
+        mergeRef:
+          Config.resolver(mergedEvent, unit, ref, Js.Nullable.t(ref)),
+        [@bs.optional]
+        mergeRefName: Config.resolver(mergedEvent, unit, string, string),
+        [@bs.optional]
+        pullRequest:
+          Config.resolver(mergedEvent, unit, pullRequest, pullRequest),
+        [@bs.optional]
+        resourcePath: Config.resolver(mergedEvent, unit, uRI, uRI),
+        [@bs.optional]
+        url: Config.resolver(mergedEvent, unit, uRI, uRI),
+      };
+    };
+    module ProtectedBranch: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        creator:
+          Config.resolver(
+            protectedBranch,
+            unit,
+            actor,
+            Js.Nullable.t(actor),
+          ),
+        [@bs.optional]
+        hasDismissableStaleReviews:
+          Config.resolver(protectedBranch, unit, bool, bool),
+        [@bs.optional]
+        hasRequiredReviews:
+          Config.resolver(protectedBranch, unit, bool, bool),
+        [@bs.optional]
+        hasRequiredStatusChecks:
+          Config.resolver(protectedBranch, unit, bool, bool),
+        [@bs.optional]
+        hasRestrictedPushes:
+          Config.resolver(protectedBranch, unit, bool, bool),
+        [@bs.optional]
+        hasRestrictedReviewDismissals:
+          Config.resolver(protectedBranch, unit, bool, bool),
+        [@bs.optional]
+        hasStrictRequiredStatusChecks:
+          Config.resolver(protectedBranch, unit, bool, bool),
+        [@bs.optional]
+        id: Config.resolver(protectedBranch, unit, string, string),
+        [@bs.optional]
+        isAdminEnforced: Config.resolver(protectedBranch, unit, bool, bool),
+        [@bs.optional]
+        name: Config.resolver(protectedBranch, unit, string, string),
+        [@bs.optional]
+        pushAllowances:
+          Config.resolver(
+            protectedBranch,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+            },
+            pushAllowanceConnection,
+            pushAllowanceConnection,
+          ),
+        [@bs.optional]
+        repository:
+          Config.resolver(protectedBranch, unit, repository, repository),
+        [@bs.optional]
+        requiredStatusCheckContexts:
+          Config.resolver(
+            protectedBranch,
+            unit,
+            string,
+            Js.Nullable.t(array(Js.Nullable.t(string))),
+          ),
+        [@bs.optional]
+        reviewDismissalAllowances:
+          Config.resolver(
+            protectedBranch,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+            },
+            reviewDismissalAllowanceConnection,
+            reviewDismissalAllowanceConnection,
+          ),
+      };
+    };
+    module DeploymentEnvironmentChangedEvent: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        actor:
+          Config.resolver(
+            deploymentEnvironmentChangedEvent,
+            unit,
+            actor,
+            Js.Nullable.t(actor),
+          ),
+        [@bs.optional]
+        createdAt:
+          Config.resolver(
+            deploymentEnvironmentChangedEvent,
+            unit,
+            dateTime,
+            dateTime,
+          ),
+        [@bs.optional]
+        deploymentStatus:
+          Config.resolver(
+            deploymentEnvironmentChangedEvent,
+            unit,
+            deploymentStatus,
+            deploymentStatus,
+          ),
+        [@bs.optional]
+        id:
+          Config.resolver(
+            deploymentEnvironmentChangedEvent,
+            unit,
+            string,
+            string,
+          ),
+        [@bs.optional]
+        pullRequest:
+          Config.resolver(
+            deploymentEnvironmentChangedEvent,
+            unit,
+            pullRequest,
+            pullRequest,
+          ),
+      };
+    };
+    module DeployKeyEdge: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        cursor: Config.resolver(deployKeyEdge, unit, string, string),
+        [@bs.optional]
+        node:
+          Config.resolver(
+            deployKeyEdge,
+            unit,
+            deployKey,
+            Js.Nullable.t(deployKey),
+          ),
+      };
+    };
+    module CommitComment: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        author:
+          Config.resolver(commitComment, unit, actor, Js.Nullable.t(actor)),
+        [@bs.optional]
+        authorAssociation:
+          Config.resolver(
+            commitComment,
+            unit,
+            commentAuthorAssociation,
+            commentAuthorAssociation,
+          ),
+        [@bs.optional]
+        body: Config.resolver(commitComment, unit, string, string),
+        [@bs.optional]
+        bodyHTML: Config.resolver(commitComment, unit, hTML, hTML),
+        [@bs.optional]
+        bodyText: Config.resolver(commitComment, unit, string, string),
+        [@bs.optional]
+        commit:
+          Config.resolver(
+            commitComment,
+            unit,
+            commit,
+            Js.Nullable.t(commit),
+          ),
+        [@bs.optional]
+        createdAt: Config.resolver(commitComment, unit, dateTime, dateTime),
+        [@bs.optional]
+        createdViaEmail: Config.resolver(commitComment, unit, bool, bool),
+        [@bs.optional]
+        databaseId:
+          Config.resolver(commitComment, unit, int, Js.Nullable.t(int)),
+        [@bs.optional]
+        editor:
+          Config.resolver(commitComment, unit, actor, Js.Nullable.t(actor)),
+        [@bs.optional]
+        id: Config.resolver(commitComment, unit, string, string),
+        [@bs.optional]
+        includesCreatedEdit: Config.resolver(commitComment, unit, bool, bool),
+        [@bs.optional]
+        lastEditedAt:
+          Config.resolver(
+            commitComment,
+            unit,
+            dateTime,
+            Js.Nullable.t(dateTime),
+          ),
+        [@bs.optional]
+        path:
+          Config.resolver(
+            commitComment,
+            unit,
+            string,
+            Js.Nullable.t(string),
+          ),
+        [@bs.optional]
+        position:
+          Config.resolver(commitComment, unit, int, Js.Nullable.t(int)),
+        [@bs.optional]
+        publishedAt:
+          Config.resolver(
+            commitComment,
+            unit,
+            dateTime,
+            Js.Nullable.t(dateTime),
+          ),
+        [@bs.optional]
+        reactionGroups:
+          Config.resolver(
+            commitComment,
+            unit,
+            reactionGroup,
+            Js.Nullable.t(array(reactionGroup)),
+          ),
+        [@bs.optional]
+        reactions:
+          Config.resolver(
+            commitComment,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "content": Js.Nullable.t(abs_reactionContent),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+              "orderBy": Js.Nullable.t(reactionOrder),
+            },
+            reactionConnection,
+            reactionConnection,
+          ),
+        [@bs.optional]
+        repository:
+          Config.resolver(commitComment, unit, repository, repository),
+        [@bs.optional]
+        resourcePath: Config.resolver(commitComment, unit, uRI, uRI),
+        [@bs.optional]
+        updatedAt: Config.resolver(commitComment, unit, dateTime, dateTime),
+        [@bs.optional]
+        url: Config.resolver(commitComment, unit, uRI, uRI),
+        [@bs.optional]
+        userContentEdits:
+          Config.resolver(
+            commitComment,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+            },
+            userContentEditConnection,
+            Js.Nullable.t(userContentEditConnection),
+          ),
+        [@bs.optional]
+        viewerCanDelete: Config.resolver(commitComment, unit, bool, bool),
+        [@bs.optional]
+        viewerCanReact: Config.resolver(commitComment, unit, bool, bool),
+        [@bs.optional]
+        viewerCanUpdate: Config.resolver(commitComment, unit, bool, bool),
+        [@bs.optional]
+        viewerCannotUpdateReasons:
+          Config.resolver(
+            commitComment,
+            unit,
+            commentCannotUpdateReason,
+            array(commentCannotUpdateReason),
+          ),
+        [@bs.optional]
+        viewerDidAuthor: Config.resolver(commitComment, unit, bool, bool),
+      };
+    };
+    module ProtectedBranchEdge: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        cursor: Config.resolver(protectedBranchEdge, unit, string, string),
+        [@bs.optional]
+        node:
+          Config.resolver(
+            protectedBranchEdge,
+            unit,
+            protectedBranch,
+            Js.Nullable.t(protectedBranch),
+          ),
+      };
+    };
+    module RateLimit: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        cost: Config.resolver(rateLimit, unit, int, int),
+        [@bs.optional]
+        limit: Config.resolver(rateLimit, unit, int, int),
+        [@bs.optional]
+        nodeCount: Config.resolver(rateLimit, unit, int, int),
+        [@bs.optional]
+        remaining: Config.resolver(rateLimit, unit, int, int),
+        [@bs.optional]
+        resetAt: Config.resolver(rateLimit, unit, dateTime, dateTime),
+      };
+    };
+    module RemoveOutsideCollaboratorPayload: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        clientMutationId:
+          Config.resolver(
+            removeOutsideCollaboratorPayload,
+            unit,
+            string,
+            Js.Nullable.t(string),
+          ),
+        [@bs.optional]
+        removedUser:
+          Config.resolver(removeOutsideCollaboratorPayload, unit, user, user),
+      };
+    };
+    module PullRequest: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        activeLockReason:
+          Config.resolver(
+            pullRequest,
+            unit,
+            lockReason,
+            Js.Nullable.t(lockReason),
+          ),
+        [@bs.optional]
+        additions: Config.resolver(pullRequest, unit, int, int),
+        [@bs.optional]
+        assignees:
+          Config.resolver(
+            pullRequest,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+            },
+            userConnection,
+            userConnection,
+          ),
+        [@bs.optional]
+        author:
+          Config.resolver(pullRequest, unit, actor, Js.Nullable.t(actor)),
+        [@bs.optional]
+        authorAssociation:
+          Config.resolver(
+            pullRequest,
+            unit,
+            commentAuthorAssociation,
+            commentAuthorAssociation,
+          ),
+        [@bs.optional]
+        baseRef: Config.resolver(pullRequest, unit, ref, Js.Nullable.t(ref)),
+        [@bs.optional]
+        baseRefName: Config.resolver(pullRequest, unit, string, string),
+        [@bs.optional]
+        baseRefOid:
+          Config.resolver(pullRequest, unit, gitObjectID, gitObjectID),
+        [@bs.optional]
+        body: Config.resolver(pullRequest, unit, string, string),
+        [@bs.optional]
+        bodyHTML: Config.resolver(pullRequest, unit, hTML, hTML),
+        [@bs.optional]
+        bodyText: Config.resolver(pullRequest, unit, string, string),
+        [@bs.optional]
+        changedFiles: Config.resolver(pullRequest, unit, int, int),
+        [@bs.optional]
+        closed: Config.resolver(pullRequest, unit, bool, bool),
+        [@bs.optional]
+        closedAt:
+          Config.resolver(
+            pullRequest,
+            unit,
+            dateTime,
+            Js.Nullable.t(dateTime),
+          ),
+        [@bs.optional]
+        comments:
+          Config.resolver(
+            pullRequest,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+            },
+            issueCommentConnection,
+            issueCommentConnection,
+          ),
+        [@bs.optional]
+        commits:
+          Config.resolver(
+            pullRequest,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+            },
+            pullRequestCommitConnection,
+            pullRequestCommitConnection,
+          ),
+        [@bs.optional]
+        createdAt: Config.resolver(pullRequest, unit, dateTime, dateTime),
+        [@bs.optional]
+        createdViaEmail: Config.resolver(pullRequest, unit, bool, bool),
+        [@bs.optional]
+        databaseId:
+          Config.resolver(pullRequest, unit, int, Js.Nullable.t(int)),
+        [@bs.optional]
+        deletions: Config.resolver(pullRequest, unit, int, int),
+        [@bs.optional]
+        editor:
+          Config.resolver(pullRequest, unit, actor, Js.Nullable.t(actor)),
+        [@bs.optional]
+        headRef: Config.resolver(pullRequest, unit, ref, Js.Nullable.t(ref)),
+        [@bs.optional]
+        headRefName: Config.resolver(pullRequest, unit, string, string),
+        [@bs.optional]
+        headRefOid:
+          Config.resolver(pullRequest, unit, gitObjectID, gitObjectID),
+        [@bs.optional]
+        headRepository:
+          Config.resolver(
+            pullRequest,
+            unit,
+            repository,
+            Js.Nullable.t(repository),
+          ),
+        [@bs.optional]
+        headRepositoryOwner:
+          Config.resolver(
+            pullRequest,
+            unit,
+            repositoryOwner,
+            Js.Nullable.t(repositoryOwner),
+          ),
+        [@bs.optional]
+        id: Config.resolver(pullRequest, unit, string, string),
+        [@bs.optional]
+        includesCreatedEdit: Config.resolver(pullRequest, unit, bool, bool),
+        [@bs.optional]
+        isCrossRepository: Config.resolver(pullRequest, unit, bool, bool),
+        [@bs.optional]
+        labels:
+          Config.resolver(
+            pullRequest,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+            },
+            labelConnection,
+            Js.Nullable.t(labelConnection),
+          ),
+        [@bs.optional]
+        lastEditedAt:
+          Config.resolver(
+            pullRequest,
+            unit,
+            dateTime,
+            Js.Nullable.t(dateTime),
+          ),
+        [@bs.optional]
+        locked: Config.resolver(pullRequest, unit, bool, bool),
+        [@bs.optional]
+        maintainerCanModify: Config.resolver(pullRequest, unit, bool, bool),
+        [@bs.optional]
+        mergeCommit:
+          Config.resolver(pullRequest, unit, commit, Js.Nullable.t(commit)),
+        [@bs.optional]
+        mergeable:
+          Config.resolver(pullRequest, unit, mergeableState, mergeableState),
+        [@bs.optional]
+        merged: Config.resolver(pullRequest, unit, bool, bool),
+        [@bs.optional]
+        mergedAt:
+          Config.resolver(
+            pullRequest,
+            unit,
+            dateTime,
+            Js.Nullable.t(dateTime),
+          ),
+        [@bs.optional]
+        mergedBy:
+          Config.resolver(pullRequest, unit, actor, Js.Nullable.t(actor)),
+        [@bs.optional]
+        milestone:
+          Config.resolver(
+            pullRequest,
+            unit,
+            milestone,
+            Js.Nullable.t(milestone),
+          ),
+        [@bs.optional]
+        number: Config.resolver(pullRequest, unit, int, int),
+        [@bs.optional]
+        participants:
+          Config.resolver(
+            pullRequest,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+            },
+            userConnection,
+            userConnection,
+          ),
+        [@bs.optional]
+        permalink: Config.resolver(pullRequest, unit, uRI, uRI),
+        [@bs.optional]
+        potentialMergeCommit:
+          Config.resolver(pullRequest, unit, commit, Js.Nullable.t(commit)),
+        [@bs.optional]
+        projectCards:
+          Config.resolver(
+            pullRequest,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "archivedStates":
+                Js.Nullable.t(
+                  array(Js.Nullable.t(abs_projectCardArchivedState)),
+                ),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+            },
+            projectCardConnection,
+            projectCardConnection,
+          ),
+        [@bs.optional]
+        publishedAt:
+          Config.resolver(
+            pullRequest,
+            unit,
+            dateTime,
+            Js.Nullable.t(dateTime),
+          ),
+        [@bs.optional]
+        reactionGroups:
+          Config.resolver(
+            pullRequest,
+            unit,
+            reactionGroup,
+            Js.Nullable.t(array(reactionGroup)),
+          ),
+        [@bs.optional]
+        reactions:
+          Config.resolver(
+            pullRequest,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "content": Js.Nullable.t(abs_reactionContent),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+              "orderBy": Js.Nullable.t(reactionOrder),
+            },
+            reactionConnection,
+            reactionConnection,
+          ),
+        [@bs.optional]
+        repository:
+          Config.resolver(pullRequest, unit, repository, repository),
+        [@bs.optional]
+        resourcePath: Config.resolver(pullRequest, unit, uRI, uRI),
+        [@bs.optional]
+        revertResourcePath: Config.resolver(pullRequest, unit, uRI, uRI),
+        [@bs.optional]
+        revertUrl: Config.resolver(pullRequest, unit, uRI, uRI),
+        [@bs.optional]
+        reviewRequests:
+          Config.resolver(
+            pullRequest,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+            },
+            reviewRequestConnection,
+            Js.Nullable.t(reviewRequestConnection),
+          ),
+        [@bs.optional]
+        reviews:
+          Config.resolver(
+            pullRequest,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "author": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+              "states": Js.Nullable.t(array(abs_pullRequestReviewState)),
+            },
+            pullRequestReviewConnection,
+            Js.Nullable.t(pullRequestReviewConnection),
+          ),
+        [@bs.optional]
+        state:
+          Config.resolver(
+            pullRequest,
+            unit,
+            pullRequestState,
+            pullRequestState,
+          ),
+        [@bs.optional]
+        suggestedReviewers:
+          Config.resolver(
+            pullRequest,
+            unit,
+            suggestedReviewer,
+            array(Js.Nullable.t(suggestedReviewer)),
+          ),
+        [@bs.optional]
+        timeline:
+          Config.resolver(
+            pullRequest,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+              "since": Js.Nullable.t(dateTime),
+            },
+            pullRequestTimelineConnection,
+            pullRequestTimelineConnection,
+          ),
+        [@bs.optional]
+        title: Config.resolver(pullRequest, unit, string, string),
+        [@bs.optional]
+        updatedAt: Config.resolver(pullRequest, unit, dateTime, dateTime),
+        [@bs.optional]
+        url: Config.resolver(pullRequest, unit, uRI, uRI),
+        [@bs.optional]
+        userContentEdits:
+          Config.resolver(
+            pullRequest,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+            },
+            userContentEditConnection,
+            Js.Nullable.t(userContentEditConnection),
+          ),
+        [@bs.optional]
+        viewerCanApplySuggestion:
+          Config.resolver(pullRequest, unit, bool, bool),
+        [@bs.optional]
+        viewerCanReact: Config.resolver(pullRequest, unit, bool, bool),
+        [@bs.optional]
+        viewerCanSubscribe: Config.resolver(pullRequest, unit, bool, bool),
+        [@bs.optional]
+        viewerCanUpdate: Config.resolver(pullRequest, unit, bool, bool),
+        [@bs.optional]
+        viewerCannotUpdateReasons:
+          Config.resolver(
+            pullRequest,
+            unit,
+            commentCannotUpdateReason,
+            array(commentCannotUpdateReason),
+          ),
+        [@bs.optional]
+        viewerDidAuthor: Config.resolver(pullRequest, unit, bool, bool),
+        [@bs.optional]
+        viewerSubscription:
+          Config.resolver(
+            pullRequest,
+            unit,
+            subscriptionState,
+            Js.Nullable.t(subscriptionState),
+          ),
+      };
+    };
+    module ClosedEvent: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        actor:
+          Config.resolver(closedEvent, unit, actor, Js.Nullable.t(actor)),
+        [@bs.optional]
+        closable: Config.resolver(closedEvent, unit, closable, closable),
+        [@bs.optional]
+        closer:
+          Config.resolver(closedEvent, unit, closer, Js.Nullable.t(closer)),
+        [@bs.optional]
+        createdAt: Config.resolver(closedEvent, unit, dateTime, dateTime),
+        [@bs.optional]
+        id: Config.resolver(closedEvent, unit, string, string),
+        [@bs.optional]
+        resourcePath: Config.resolver(closedEvent, unit, uRI, uRI),
+        [@bs.optional]
+        url: Config.resolver(closedEvent, unit, uRI, uRI),
+      };
+    };
+    module Team: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        ancestors:
+          Config.resolver(
+            team,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+            },
+            teamConnection,
+            teamConnection,
+          ),
+        [@bs.optional]
+        avatarUrl:
+          Config.resolver(
+            team,
+            {. "size": Js.Nullable.t(int)},
+            uRI,
+            Js.Nullable.t(uRI),
+          ),
+        [@bs.optional]
+        childTeams:
+          Config.resolver(
+            team,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "immediateOnly": Js.Nullable.t(bool),
+              "last": Js.Nullable.t(int),
+              "orderBy": Js.Nullable.t(teamOrder),
+              "userLogins": Js.Nullable.t(array(string)),
+            },
+            teamConnection,
+            teamConnection,
+          ),
+        [@bs.optional]
+        combinedSlug: Config.resolver(team, unit, string, string),
+        [@bs.optional]
+        createdAt: Config.resolver(team, unit, dateTime, dateTime),
+        [@bs.optional]
+        description:
+          Config.resolver(team, unit, string, Js.Nullable.t(string)),
+        [@bs.optional]
+        editTeamResourcePath: Config.resolver(team, unit, uRI, uRI),
+        [@bs.optional]
+        editTeamUrl: Config.resolver(team, unit, uRI, uRI),
+        [@bs.optional]
+        id: Config.resolver(team, unit, string, string),
+        [@bs.optional]
+        invitations:
+          Config.resolver(
+            team,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+            },
+            organizationInvitationConnection,
+            Js.Nullable.t(organizationInvitationConnection),
+          ),
+        [@bs.optional]
+        members:
+          Config.resolver(
+            team,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+              "membership": Js.Nullable.t(abs_teamMembershipType),
+              "orderBy": Js.Nullable.t(teamMemberOrder),
+              "query": Js.Nullable.t(string),
+              "role": Js.Nullable.t(abs_teamMemberRole),
+            },
+            teamMemberConnection,
+            teamMemberConnection,
+          ),
+        [@bs.optional]
+        membersResourcePath: Config.resolver(team, unit, uRI, uRI),
+        [@bs.optional]
+        membersUrl: Config.resolver(team, unit, uRI, uRI),
+        [@bs.optional]
+        name: Config.resolver(team, unit, string, string),
+        [@bs.optional]
+        newTeamResourcePath: Config.resolver(team, unit, uRI, uRI),
+        [@bs.optional]
+        newTeamUrl: Config.resolver(team, unit, uRI, uRI),
+        [@bs.optional]
+        organization: Config.resolver(team, unit, organization, organization),
+        [@bs.optional]
+        parentTeam: Config.resolver(team, unit, team, Js.Nullable.t(team)),
+        [@bs.optional]
+        privacy: Config.resolver(team, unit, teamPrivacy, teamPrivacy),
+        [@bs.optional]
+        repositories:
+          Config.resolver(
+            team,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+              "orderBy": Js.Nullable.t(teamRepositoryOrder),
+              "query": Js.Nullable.t(string),
+            },
+            teamRepositoryConnection,
+            teamRepositoryConnection,
+          ),
+        [@bs.optional]
+        repositoriesResourcePath: Config.resolver(team, unit, uRI, uRI),
+        [@bs.optional]
+        repositoriesUrl: Config.resolver(team, unit, uRI, uRI),
+        [@bs.optional]
+        resourcePath: Config.resolver(team, unit, uRI, uRI),
+        [@bs.optional]
+        slug: Config.resolver(team, unit, string, string),
+        [@bs.optional]
+        teamsResourcePath: Config.resolver(team, unit, uRI, uRI),
+        [@bs.optional]
+        teamsUrl: Config.resolver(team, unit, uRI, uRI),
+        [@bs.optional]
+        updatedAt: Config.resolver(team, unit, dateTime, dateTime),
+        [@bs.optional]
+        url: Config.resolver(team, unit, uRI, uRI),
+        [@bs.optional]
+        viewerCanAdminister: Config.resolver(team, unit, bool, bool),
+        [@bs.optional]
+        viewerCanSubscribe: Config.resolver(team, unit, bool, bool),
+        [@bs.optional]
+        viewerSubscription:
+          Config.resolver(
+            team,
+            unit,
+            subscriptionState,
+            Js.Nullable.t(subscriptionState),
+          ),
+      };
+    };
+    module UnlockedEvent: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        actor:
+          Config.resolver(unlockedEvent, unit, actor, Js.Nullable.t(actor)),
+        [@bs.optional]
+        createdAt: Config.resolver(unlockedEvent, unit, dateTime, dateTime),
+        [@bs.optional]
+        id: Config.resolver(unlockedEvent, unit, string, string),
+        [@bs.optional]
+        lockable: Config.resolver(unlockedEvent, unit, lockable, lockable),
+      };
+    };
+    module ExternalIdentity: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        guid: Config.resolver(externalIdentity, unit, string, string),
+        [@bs.optional]
+        id: Config.resolver(externalIdentity, unit, string, string),
+        [@bs.optional]
+        organizationInvitation:
+          Config.resolver(
+            externalIdentity,
+            unit,
+            organizationInvitation,
+            Js.Nullable.t(organizationInvitation),
+          ),
+        [@bs.optional]
+        samlIdentity:
+          Config.resolver(
+            externalIdentity,
+            unit,
+            externalIdentitySamlAttributes,
+            Js.Nullable.t(externalIdentitySamlAttributes),
+          ),
+        [@bs.optional]
+        scimIdentity:
+          Config.resolver(
+            externalIdentity,
+            unit,
+            externalIdentityScimAttributes,
+            Js.Nullable.t(externalIdentityScimAttributes),
+          ),
+        [@bs.optional]
+        user:
+          Config.resolver(externalIdentity, unit, user, Js.Nullable.t(user)),
+      };
+    };
+    module UpdatePullRequestReviewPayload: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        clientMutationId:
+          Config.resolver(
+            updatePullRequestReviewPayload,
+            unit,
+            string,
+            Js.Nullable.t(string),
+          ),
+        [@bs.optional]
+        pullRequestReview:
+          Config.resolver(
+            updatePullRequestReviewPayload,
+            unit,
+            pullRequestReview,
+            pullRequestReview,
+          ),
+      };
+    };
+    module AppEdge: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        cursor: Config.resolver(appEdge, unit, string, string),
+        [@bs.optional]
+        node: Config.resolver(appEdge, unit, app, Js.Nullable.t(app)),
+      };
+    };
+    module SubmitPullRequestReviewPayload: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        clientMutationId:
+          Config.resolver(
+            submitPullRequestReviewPayload,
+            unit,
+            string,
+            Js.Nullable.t(string),
+          ),
+        [@bs.optional]
+        pullRequestReview:
+          Config.resolver(
+            submitPullRequestReviewPayload,
+            unit,
+            pullRequestReview,
+            pullRequestReview,
+          ),
+      };
+    };
+    module DeploymentStatus: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        createdAt:
+          Config.resolver(deploymentStatus, unit, dateTime, dateTime),
+        [@bs.optional]
+        creator:
+          Config.resolver(
+            deploymentStatus,
+            unit,
+            actor,
+            Js.Nullable.t(actor),
+          ),
+        [@bs.optional]
+        deployment:
+          Config.resolver(deploymentStatus, unit, deployment, deployment),
+        [@bs.optional]
+        description:
+          Config.resolver(
+            deploymentStatus,
+            unit,
+            string,
+            Js.Nullable.t(string),
+          ),
+        [@bs.optional]
+        environmentUrl:
+          Config.resolver(deploymentStatus, unit, uRI, Js.Nullable.t(uRI)),
+        [@bs.optional]
+        id: Config.resolver(deploymentStatus, unit, string, string),
+        [@bs.optional]
+        logUrl:
+          Config.resolver(deploymentStatus, unit, uRI, Js.Nullable.t(uRI)),
+        [@bs.optional]
+        state:
+          Config.resolver(
+            deploymentStatus,
+            unit,
+            deploymentStatusState,
+            deploymentStatusState,
+          ),
+        [@bs.optional]
+        updatedAt:
+          Config.resolver(deploymentStatus, unit, dateTime, dateTime),
+      };
+    };
+    module OrganizationInvitation: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        createdAt:
+          Config.resolver(organizationInvitation, unit, dateTime, dateTime),
+        [@bs.optional]
+        email:
+          Config.resolver(
+            organizationInvitation,
+            unit,
+            string,
+            Js.Nullable.t(string),
+          ),
+        [@bs.optional]
+        id: Config.resolver(organizationInvitation, unit, string, string),
+        [@bs.optional]
+        invitationType:
+          Config.resolver(
+            organizationInvitation,
+            unit,
+            organizationInvitationType,
+            organizationInvitationType,
+          ),
+        [@bs.optional]
+        invitee:
+          Config.resolver(
+            organizationInvitation,
+            unit,
+            user,
+            Js.Nullable.t(user),
+          ),
+        [@bs.optional]
+        inviter: Config.resolver(organizationInvitation, unit, user, user),
+        [@bs.optional]
+        organization:
+          Config.resolver(
+            organizationInvitation,
+            unit,
+            organization,
+            organization,
+          ),
+        [@bs.optional]
+        role:
+          Config.resolver(
+            organizationInvitation,
+            unit,
+            organizationInvitationRole,
+            organizationInvitationRole,
+          ),
+      };
+    };
+    module DismissPullRequestReviewPayload: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        clientMutationId:
+          Config.resolver(
+            dismissPullRequestReviewPayload,
+            unit,
+            string,
+            Js.Nullable.t(string),
+          ),
+        [@bs.optional]
+        pullRequestReview:
+          Config.resolver(
+            dismissPullRequestReviewPayload,
+            unit,
+            pullRequestReview,
+            pullRequestReview,
+          ),
+      };
+    };
+    module PullRequestReviewComment: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        author:
+          Config.resolver(
+            pullRequestReviewComment,
+            unit,
+            actor,
+            Js.Nullable.t(actor),
+          ),
+        [@bs.optional]
+        authorAssociation:
+          Config.resolver(
+            pullRequestReviewComment,
+            unit,
+            commentAuthorAssociation,
+            commentAuthorAssociation,
+          ),
+        [@bs.optional]
+        body: Config.resolver(pullRequestReviewComment, unit, string, string),
+        [@bs.optional]
+        bodyHTML: Config.resolver(pullRequestReviewComment, unit, hTML, hTML),
+        [@bs.optional]
+        bodyText:
+          Config.resolver(pullRequestReviewComment, unit, string, string),
+        [@bs.optional]
+        commit:
+          Config.resolver(pullRequestReviewComment, unit, commit, commit),
+        [@bs.optional]
+        createdAt:
+          Config.resolver(pullRequestReviewComment, unit, dateTime, dateTime),
+        [@bs.optional]
+        createdViaEmail:
+          Config.resolver(pullRequestReviewComment, unit, bool, bool),
+        [@bs.optional]
+        databaseId:
+          Config.resolver(
+            pullRequestReviewComment,
+            unit,
+            int,
+            Js.Nullable.t(int),
+          ),
+        [@bs.optional]
+        diffHunk:
+          Config.resolver(pullRequestReviewComment, unit, string, string),
+        [@bs.optional]
+        draftedAt:
+          Config.resolver(pullRequestReviewComment, unit, dateTime, dateTime),
+        [@bs.optional]
+        editor:
+          Config.resolver(
+            pullRequestReviewComment,
+            unit,
+            actor,
+            Js.Nullable.t(actor),
+          ),
+        [@bs.optional]
+        id: Config.resolver(pullRequestReviewComment, unit, string, string),
+        [@bs.optional]
+        includesCreatedEdit:
+          Config.resolver(pullRequestReviewComment, unit, bool, bool),
+        [@bs.optional]
+        lastEditedAt:
+          Config.resolver(
+            pullRequestReviewComment,
+            unit,
+            dateTime,
+            Js.Nullable.t(dateTime),
+          ),
+        [@bs.optional]
+        originalCommit:
+          Config.resolver(
+            pullRequestReviewComment,
+            unit,
+            commit,
+            Js.Nullable.t(commit),
+          ),
+        [@bs.optional]
+        originalPosition:
+          Config.resolver(pullRequestReviewComment, unit, int, int),
+        [@bs.optional]
+        outdated: Config.resolver(pullRequestReviewComment, unit, bool, bool),
+        [@bs.optional]
+        path: Config.resolver(pullRequestReviewComment, unit, string, string),
+        [@bs.optional]
+        position:
+          Config.resolver(
+            pullRequestReviewComment,
+            unit,
+            int,
+            Js.Nullable.t(int),
+          ),
+        [@bs.optional]
+        publishedAt:
+          Config.resolver(
+            pullRequestReviewComment,
+            unit,
+            dateTime,
+            Js.Nullable.t(dateTime),
+          ),
+        [@bs.optional]
+        pullRequest:
+          Config.resolver(
+            pullRequestReviewComment,
+            unit,
+            pullRequest,
+            pullRequest,
+          ),
+        [@bs.optional]
+        pullRequestReview:
+          Config.resolver(
+            pullRequestReviewComment,
+            unit,
+            pullRequestReview,
+            Js.Nullable.t(pullRequestReview),
+          ),
+        [@bs.optional]
+        reactionGroups:
+          Config.resolver(
+            pullRequestReviewComment,
+            unit,
+            reactionGroup,
+            Js.Nullable.t(array(reactionGroup)),
+          ),
+        [@bs.optional]
+        reactions:
+          Config.resolver(
+            pullRequestReviewComment,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "content": Js.Nullable.t(abs_reactionContent),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+              "orderBy": Js.Nullable.t(reactionOrder),
+            },
+            reactionConnection,
+            reactionConnection,
+          ),
+        [@bs.optional]
+        replyTo:
+          Config.resolver(
+            pullRequestReviewComment,
+            unit,
+            pullRequestReviewComment,
+            Js.Nullable.t(pullRequestReviewComment),
+          ),
+        [@bs.optional]
+        repository:
+          Config.resolver(
+            pullRequestReviewComment,
+            unit,
+            repository,
+            repository,
+          ),
+        [@bs.optional]
+        resourcePath:
+          Config.resolver(pullRequestReviewComment, unit, uRI, uRI),
+        [@bs.optional]
+        state:
+          Config.resolver(
+            pullRequestReviewComment,
+            unit,
+            pullRequestReviewCommentState,
+            pullRequestReviewCommentState,
+          ),
+        [@bs.optional]
+        updatedAt:
+          Config.resolver(pullRequestReviewComment, unit, dateTime, dateTime),
+        [@bs.optional]
+        url: Config.resolver(pullRequestReviewComment, unit, uRI, uRI),
+        [@bs.optional]
+        userContentEdits:
+          Config.resolver(
+            pullRequestReviewComment,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+            },
+            userContentEditConnection,
+            Js.Nullable.t(userContentEditConnection),
+          ),
+        [@bs.optional]
+        viewerCanDelete:
+          Config.resolver(pullRequestReviewComment, unit, bool, bool),
+        [@bs.optional]
+        viewerCanReact:
+          Config.resolver(pullRequestReviewComment, unit, bool, bool),
+        [@bs.optional]
+        viewerCanUpdate:
+          Config.resolver(pullRequestReviewComment, unit, bool, bool),
+        [@bs.optional]
+        viewerCannotUpdateReasons:
+          Config.resolver(
+            pullRequestReviewComment,
+            unit,
+            commentCannotUpdateReason,
+            array(commentCannotUpdateReason),
+          ),
+        [@bs.optional]
+        viewerDidAuthor:
+          Config.resolver(pullRequestReviewComment, unit, bool, bool),
+      };
+    };
+    module Organization: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        avatarUrl:
+          Config.resolver(
+            organization,
+            {. "size": Js.Nullable.t(int)},
+            uRI,
+            uRI,
+          ),
+        [@bs.optional]
+        databaseId:
+          Config.resolver(organization, unit, int, Js.Nullable.t(int)),
+        [@bs.optional]
+        description:
+          Config.resolver(organization, unit, string, Js.Nullable.t(string)),
+        [@bs.optional]
+        email:
+          Config.resolver(organization, unit, string, Js.Nullable.t(string)),
+        [@bs.optional]
+        id: Config.resolver(organization, unit, string, string),
+        [@bs.optional]
+        isVerified: Config.resolver(organization, unit, bool, bool),
+        [@bs.optional]
+        location:
+          Config.resolver(organization, unit, string, Js.Nullable.t(string)),
+        [@bs.optional]
+        login: Config.resolver(organization, unit, string, string),
+        [@bs.optional]
+        members:
+          Config.resolver(
+            organization,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+            },
+            userConnection,
+            userConnection,
+          ),
+        [@bs.optional]
+        name:
+          Config.resolver(organization, unit, string, Js.Nullable.t(string)),
+        [@bs.optional]
+        newTeamResourcePath: Config.resolver(organization, unit, uRI, uRI),
+        [@bs.optional]
+        newTeamUrl: Config.resolver(organization, unit, uRI, uRI),
+        [@bs.optional]
+        organizationBillingEmail:
+          Config.resolver(organization, unit, string, Js.Nullable.t(string)),
+        [@bs.optional]
+        pinnedRepositories:
+          Config.resolver(
+            organization,
+            {
+              .
+              "affiliations":
+                Js.Nullable.t(
+                  array(Js.Nullable.t(abs_repositoryAffiliation)),
+                ),
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "isLocked": Js.Nullable.t(bool),
+              "last": Js.Nullable.t(int),
+              "orderBy": Js.Nullable.t(repositoryOrder),
+              "ownerAffiliations":
+                Js.Nullable.t(
+                  array(Js.Nullable.t(abs_repositoryAffiliation)),
+                ),
+              "privacy": Js.Nullable.t(abs_repositoryPrivacy),
+            },
+            repositoryConnection,
+            repositoryConnection,
+          ),
+        [@bs.optional]
+        project:
+          Config.resolver(
+            organization,
+            {. "number": int},
+            project,
+            Js.Nullable.t(project),
+          ),
+        [@bs.optional]
+        projects:
+          Config.resolver(
+            organization,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+              "orderBy": Js.Nullable.t(projectOrder),
+              "search": Js.Nullable.t(string),
+              "states": Js.Nullable.t(array(abs_projectState)),
+            },
+            projectConnection,
+            projectConnection,
+          ),
+        [@bs.optional]
+        projectsResourcePath: Config.resolver(organization, unit, uRI, uRI),
+        [@bs.optional]
+        projectsUrl: Config.resolver(organization, unit, uRI, uRI),
+        [@bs.optional]
+        repositories:
+          Config.resolver(
+            organization,
+            {
+              .
+              "affiliations":
+                Js.Nullable.t(
+                  array(Js.Nullable.t(abs_repositoryAffiliation)),
+                ),
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "isFork": Js.Nullable.t(bool),
+              "isLocked": Js.Nullable.t(bool),
+              "last": Js.Nullable.t(int),
+              "orderBy": Js.Nullable.t(repositoryOrder),
+              "ownerAffiliations":
+                Js.Nullable.t(
+                  array(Js.Nullable.t(abs_repositoryAffiliation)),
+                ),
+              "privacy": Js.Nullable.t(abs_repositoryPrivacy),
+            },
+            repositoryConnection,
+            repositoryConnection,
+          ),
+        [@bs.optional]
+        repository:
+          Config.resolver(
+            organization,
+            {. "name": string},
+            repository,
+            Js.Nullable.t(repository),
+          ),
+        [@bs.optional]
+        requiresTwoFactorAuthentication:
+          Config.resolver(organization, unit, bool, Js.Nullable.t(bool)),
+        [@bs.optional]
+        resourcePath: Config.resolver(organization, unit, uRI, uRI),
+        [@bs.optional]
+        samlIdentityProvider:
+          Config.resolver(
+            organization,
+            unit,
+            organizationIdentityProvider,
+            Js.Nullable.t(organizationIdentityProvider),
+          ),
+        [@bs.optional]
+        team:
+          Config.resolver(
+            organization,
+            {. "slug": string},
+            team,
+            Js.Nullable.t(team),
+          ),
+        [@bs.optional]
+        teams:
+          Config.resolver(
+            organization,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+              "ldapMapped": Js.Nullable.t(bool),
+              "orderBy": Js.Nullable.t(teamOrder),
+              "privacy": Js.Nullable.t(abs_teamPrivacy),
+              "query": Js.Nullable.t(string),
+              "role": Js.Nullable.t(abs_teamRole),
+              "rootTeamsOnly": Js.Nullable.t(bool),
+              "userLogins": Js.Nullable.t(array(string)),
+            },
+            teamConnection,
+            teamConnection,
+          ),
+        [@bs.optional]
+        teamsResourcePath: Config.resolver(organization, unit, uRI, uRI),
+        [@bs.optional]
+        teamsUrl: Config.resolver(organization, unit, uRI, uRI),
+        [@bs.optional]
+        url: Config.resolver(organization, unit, uRI, uRI),
+        [@bs.optional]
+        viewerCanAdminister: Config.resolver(organization, unit, bool, bool),
+        [@bs.optional]
+        viewerCanCreateProjects:
+          Config.resolver(organization, unit, bool, bool),
+        [@bs.optional]
+        viewerCanCreateRepositories:
+          Config.resolver(organization, unit, bool, bool),
+        [@bs.optional]
+        viewerCanCreateTeams: Config.resolver(organization, unit, bool, bool),
+        [@bs.optional]
+        viewerIsAMember: Config.resolver(organization, unit, bool, bool),
+        [@bs.optional]
+        websiteUrl:
+          Config.resolver(organization, unit, uRI, Js.Nullable.t(uRI)),
+      };
+    };
+    module CreateBranchProtectionRulePayload: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        branchProtectionRule:
+          Config.resolver(
+            createBranchProtectionRulePayload,
+            unit,
+            branchProtectionRule,
+            Js.Nullable.t(branchProtectionRule),
+          ),
+        [@bs.optional]
+        clientMutationId:
+          Config.resolver(
+            createBranchProtectionRulePayload,
+            unit,
+            string,
+            Js.Nullable.t(string),
+          ),
+      };
+    };
+    module Blob: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        abbreviatedOid: Config.resolver(blob, unit, string, string),
+        [@bs.optional]
+        byteSize: Config.resolver(blob, unit, int, int),
+        [@bs.optional]
+        commitResourcePath: Config.resolver(blob, unit, uRI, uRI),
+        [@bs.optional]
+        commitUrl: Config.resolver(blob, unit, uRI, uRI),
+        [@bs.optional]
+        id: Config.resolver(blob, unit, string, string),
+        [@bs.optional]
+        isBinary: Config.resolver(blob, unit, bool, bool),
+        [@bs.optional]
+        isTruncated: Config.resolver(blob, unit, bool, bool),
+        [@bs.optional]
+        oid: Config.resolver(blob, unit, gitObjectID, gitObjectID),
+        [@bs.optional]
+        repository: Config.resolver(blob, unit, repository, repository),
+        [@bs.optional]
+        text: Config.resolver(blob, unit, string, Js.Nullable.t(string)),
+      };
+    };
+    module MovedColumnsInProjectEvent: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        actor:
+          Config.resolver(
+            movedColumnsInProjectEvent,
+            unit,
+            actor,
+            Js.Nullable.t(actor),
+          ),
+        [@bs.optional]
+        createdAt:
+          Config.resolver(
+            movedColumnsInProjectEvent,
+            unit,
+            dateTime,
+            dateTime,
+          ),
+        [@bs.optional]
+        databaseId:
+          Config.resolver(
+            movedColumnsInProjectEvent,
+            unit,
+            int,
+            Js.Nullable.t(int),
+          ),
+        [@bs.optional]
+        id: Config.resolver(movedColumnsInProjectEvent, unit, string, string),
+      };
+    };
+    module TeamMemberConnection: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        edges:
+          Config.resolver(
+            teamMemberConnection,
+            unit,
+            teamMemberEdge,
+            Js.Nullable.t(array(Js.Nullable.t(teamMemberEdge))),
+          ),
+        [@bs.optional]
+        nodes:
+          Config.resolver(
+            teamMemberConnection,
+            unit,
+            user,
+            Js.Nullable.t(array(Js.Nullable.t(user))),
+          ),
+        [@bs.optional]
+        pageInfo:
+          Config.resolver(teamMemberConnection, unit, pageInfo, pageInfo),
+        [@bs.optional]
+        totalCount: Config.resolver(teamMemberConnection, unit, int, int),
+      };
+    };
+    module MarketplaceListingEdge: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        cursor: Config.resolver(marketplaceListingEdge, unit, string, string),
+        [@bs.optional]
+        node:
+          Config.resolver(
+            marketplaceListingEdge,
+            unit,
+            marketplaceListing,
+            Js.Nullable.t(marketplaceListing),
+          ),
+      };
+    };
+    module BranchProtectionRuleEdge: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        cursor:
+          Config.resolver(branchProtectionRuleEdge, unit, string, string),
+        [@bs.optional]
+        node:
+          Config.resolver(
+            branchProtectionRuleEdge,
+            unit,
+            branchProtectionRule,
+            Js.Nullable.t(branchProtectionRule),
+          ),
+      };
+    };
+    module PushAllowanceEdge: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        cursor: Config.resolver(pushAllowanceEdge, unit, string, string),
+        [@bs.optional]
+        node:
+          Config.resolver(
+            pushAllowanceEdge,
+            unit,
+            pushAllowance,
+            Js.Nullable.t(pushAllowance),
+          ),
+      };
+    };
+    module AcceptTopicSuggestionPayload: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        clientMutationId:
+          Config.resolver(
+            acceptTopicSuggestionPayload,
+            unit,
+            string,
+            Js.Nullable.t(string),
+          ),
+        [@bs.optional]
+        topic:
+          Config.resolver(acceptTopicSuggestionPayload, unit, topic, topic),
+      };
+    };
+    module MoveProjectColumnPayload: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        clientMutationId:
+          Config.resolver(
+            moveProjectColumnPayload,
+            unit,
+            string,
+            Js.Nullable.t(string),
+          ),
+        [@bs.optional]
+        columnEdge:
+          Config.resolver(
+            moveProjectColumnPayload,
+            unit,
+            projectColumnEdge,
+            projectColumnEdge,
+          ),
+      };
+    };
+    module LockedEvent: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        actor:
+          Config.resolver(lockedEvent, unit, actor, Js.Nullable.t(actor)),
+        [@bs.optional]
+        createdAt: Config.resolver(lockedEvent, unit, dateTime, dateTime),
+        [@bs.optional]
+        id: Config.resolver(lockedEvent, unit, string, string),
+        [@bs.optional]
+        lockReason:
+          Config.resolver(
+            lockedEvent,
+            unit,
+            lockReason,
+            Js.Nullable.t(lockReason),
+          ),
+        [@bs.optional]
+        lockable: Config.resolver(lockedEvent, unit, lockable, lockable),
+      };
+    };
+    module ReviewDismissalAllowanceEdge: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        cursor:
+          Config.resolver(reviewDismissalAllowanceEdge, unit, string, string),
+        [@bs.optional]
+        node:
+          Config.resolver(
+            reviewDismissalAllowanceEdge,
+            unit,
+            reviewDismissalAllowance,
+            Js.Nullable.t(reviewDismissalAllowance),
+          ),
+      };
+    };
+    module UnlockLockablePayload: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        clientMutationId:
+          Config.resolver(
+            unlockLockablePayload,
+            unit,
+            string,
+            Js.Nullable.t(string),
+          ),
+        [@bs.optional]
+        unlockedRecord:
+          Config.resolver(
+            unlockLockablePayload,
+            unit,
+            lockable,
+            Js.Nullable.t(lockable),
+          ),
+      };
+    };
+    module DeleteBranchProtectionRulePayload: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        clientMutationId:
+          Config.resolver(
+            deleteBranchProtectionRulePayload,
+            unit,
+            string,
+            Js.Nullable.t(string),
+          ),
+      };
+    };
+    module UpdateTopicsPayload: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        clientMutationId:
+          Config.resolver(
+            updateTopicsPayload,
+            unit,
+            string,
+            Js.Nullable.t(string),
+          ),
+        [@bs.optional]
+        invalidTopicNames:
+          Config.resolver(
+            updateTopicsPayload,
+            unit,
+            string,
+            Js.Nullable.t(array(string)),
+          ),
+        [@bs.optional]
+        repository:
+          Config.resolver(updateTopicsPayload, unit, repository, repository),
+      };
+    };
+    module ProjectCardConnection: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        edges:
+          Config.resolver(
+            projectCardConnection,
+            unit,
+            projectCardEdge,
+            Js.Nullable.t(array(Js.Nullable.t(projectCardEdge))),
+          ),
+        [@bs.optional]
+        nodes:
+          Config.resolver(
+            projectCardConnection,
+            unit,
+            projectCard,
+            Js.Nullable.t(array(Js.Nullable.t(projectCard))),
+          ),
+        [@bs.optional]
+        pageInfo:
+          Config.resolver(projectCardConnection, unit, pageInfo, pageInfo),
+        [@bs.optional]
+        totalCount: Config.resolver(projectCardConnection, unit, int, int),
+      };
+    };
+    module PullRequestReviewEdge: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        cursor: Config.resolver(pullRequestReviewEdge, unit, string, string),
+        [@bs.optional]
+        node:
+          Config.resolver(
+            pullRequestReviewEdge,
+            unit,
+            pullRequestReview,
+            Js.Nullable.t(pullRequestReview),
+          ),
+      };
+    };
+    module StargazerEdge: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        cursor: Config.resolver(stargazerEdge, unit, string, string),
+        [@bs.optional]
+        node: Config.resolver(stargazerEdge, unit, user, user),
+        [@bs.optional]
+        starredAt: Config.resolver(stargazerEdge, unit, dateTime, dateTime),
+      };
+    };
+    module DeployedEvent: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        actor:
+          Config.resolver(deployedEvent, unit, actor, Js.Nullable.t(actor)),
+        [@bs.optional]
+        createdAt: Config.resolver(deployedEvent, unit, dateTime, dateTime),
+        [@bs.optional]
+        databaseId:
+          Config.resolver(deployedEvent, unit, int, Js.Nullable.t(int)),
+        [@bs.optional]
+        deployment:
+          Config.resolver(deployedEvent, unit, deployment, deployment),
+        [@bs.optional]
+        id: Config.resolver(deployedEvent, unit, string, string),
+        [@bs.optional]
+        pullRequest:
+          Config.resolver(deployedEvent, unit, pullRequest, pullRequest),
+        [@bs.optional]
+        ref: Config.resolver(deployedEvent, unit, ref, Js.Nullable.t(ref)),
+      };
+    };
+    module Release: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        author: Config.resolver(release, unit, user, Js.Nullable.t(user)),
+        [@bs.optional]
+        createdAt: Config.resolver(release, unit, dateTime, dateTime),
+        [@bs.optional]
+        description:
+          Config.resolver(release, unit, string, Js.Nullable.t(string)),
+        [@bs.optional]
+        id: Config.resolver(release, unit, string, string),
+        [@bs.optional]
+        isDraft: Config.resolver(release, unit, bool, bool),
+        [@bs.optional]
+        isPrerelease: Config.resolver(release, unit, bool, bool),
+        [@bs.optional]
+        name: Config.resolver(release, unit, string, Js.Nullable.t(string)),
+        [@bs.optional]
+        publishedAt:
+          Config.resolver(release, unit, dateTime, Js.Nullable.t(dateTime)),
+        [@bs.optional]
+        releaseAssets:
+          Config.resolver(
+            release,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+              "name": Js.Nullable.t(string),
+            },
+            releaseAssetConnection,
+            releaseAssetConnection,
+          ),
+        [@bs.optional]
+        resourcePath: Config.resolver(release, unit, uRI, uRI),
+        [@bs.optional]
+        tag: Config.resolver(release, unit, ref, Js.Nullable.t(ref)),
+        [@bs.optional]
+        updatedAt: Config.resolver(release, unit, dateTime, dateTime),
+        [@bs.optional]
+        url: Config.resolver(release, unit, uRI, uRI),
+      };
+    };
+    module DeleteProjectCardPayload: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        clientMutationId:
+          Config.resolver(
+            deleteProjectCardPayload,
+            unit,
+            string,
+            Js.Nullable.t(string),
+          ),
+        [@bs.optional]
+        column:
+          Config.resolver(
+            deleteProjectCardPayload,
+            unit,
+            projectColumn,
+            projectColumn,
+          ),
+        [@bs.optional]
+        deletedCardId:
+          Config.resolver(deleteProjectCardPayload, unit, string, string),
+      };
+    };
+    module RepositoryInvitation: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        id: Config.resolver(repositoryInvitation, unit, string, string),
+        [@bs.optional]
+        invitee: Config.resolver(repositoryInvitation, unit, user, user),
+        [@bs.optional]
+        inviter: Config.resolver(repositoryInvitation, unit, user, user),
+        [@bs.optional]
+        permission:
+          Config.resolver(
+            repositoryInvitation,
+            unit,
+            repositoryPermission,
+            repositoryPermission,
+          ),
+        [@bs.optional]
+        repository:
+          Config.resolver(
+            repositoryInvitation,
+            unit,
+            repositoryInfo,
+            Js.Nullable.t(repositoryInfo),
+          ),
+      };
+    };
+    module ProjectColumn: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        cards:
+          Config.resolver(
+            projectColumn,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "archivedStates":
+                Js.Nullable.t(
+                  array(Js.Nullable.t(abs_projectCardArchivedState)),
+                ),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+            },
+            projectCardConnection,
+            projectCardConnection,
+          ),
+        [@bs.optional]
+        createdAt: Config.resolver(projectColumn, unit, dateTime, dateTime),
+        [@bs.optional]
+        databaseId:
+          Config.resolver(projectColumn, unit, int, Js.Nullable.t(int)),
+        [@bs.optional]
+        id: Config.resolver(projectColumn, unit, string, string),
+        [@bs.optional]
+        name: Config.resolver(projectColumn, unit, string, string),
+        [@bs.optional]
+        project: Config.resolver(projectColumn, unit, project, project),
+        [@bs.optional]
+        purpose:
+          Config.resolver(
+            projectColumn,
+            unit,
+            projectColumnPurpose,
+            Js.Nullable.t(projectColumnPurpose),
+          ),
+        [@bs.optional]
+        resourcePath: Config.resolver(projectColumn, unit, uRI, uRI),
+        [@bs.optional]
+        updatedAt: Config.resolver(projectColumn, unit, dateTime, dateTime),
+        [@bs.optional]
+        url: Config.resolver(projectColumn, unit, uRI, uRI),
+      };
+    };
+    module LabelConnection: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        edges:
+          Config.resolver(
+            labelConnection,
+            unit,
+            labelEdge,
+            Js.Nullable.t(array(Js.Nullable.t(labelEdge))),
+          ),
+        [@bs.optional]
+        nodes:
+          Config.resolver(
+            labelConnection,
+            unit,
+            label,
+            Js.Nullable.t(array(Js.Nullable.t(label))),
+          ),
+        [@bs.optional]
+        pageInfo: Config.resolver(labelConnection, unit, pageInfo, pageInfo),
+        [@bs.optional]
+        totalCount: Config.resolver(labelConnection, unit, int, int),
+      };
+    };
+    module MilestoneEdge: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        cursor: Config.resolver(milestoneEdge, unit, string, string),
+        [@bs.optional]
+        node:
+          Config.resolver(
+            milestoneEdge,
+            unit,
+            milestone,
+            Js.Nullable.t(milestone),
+          ),
+      };
+    };
+    module RepositoryTopicEdge: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        cursor: Config.resolver(repositoryTopicEdge, unit, string, string),
+        [@bs.optional]
+        node:
+          Config.resolver(
+            repositoryTopicEdge,
+            unit,
+            repositoryTopic,
+            Js.Nullable.t(repositoryTopic),
+          ),
+      };
+    };
+    module UpdateProjectPayload: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        clientMutationId:
+          Config.resolver(
+            updateProjectPayload,
+            unit,
+            string,
+            Js.Nullable.t(string),
+          ),
+        [@bs.optional]
+        project:
+          Config.resolver(updateProjectPayload, unit, project, project),
+      };
+    };
+    module Repository: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        assignableUsers:
+          Config.resolver(
+            repository,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+            },
+            userConnection,
+            userConnection,
+          ),
+        [@bs.optional]
+        branchProtectionRules:
+          Config.resolver(
+            repository,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+            },
+            branchProtectionRuleConnection,
+            branchProtectionRuleConnection,
+          ),
+        [@bs.optional]
+        codeOfConduct:
+          Config.resolver(
+            repository,
+            unit,
+            codeOfConduct,
+            Js.Nullable.t(codeOfConduct),
+          ),
+        [@bs.optional]
+        collaborators:
+          Config.resolver(
+            repository,
+            {
+              .
+              "affiliation": Js.Nullable.t(abs_collaboratorAffiliation),
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+            },
+            repositoryCollaboratorConnection,
+            Js.Nullable.t(repositoryCollaboratorConnection),
+          ),
+        [@bs.optional]
+        commitComments:
+          Config.resolver(
+            repository,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+            },
+            commitCommentConnection,
+            commitCommentConnection,
+          ),
+        [@bs.optional]
+        createdAt: Config.resolver(repository, unit, dateTime, dateTime),
+        [@bs.optional]
+        databaseId:
+          Config.resolver(repository, unit, int, Js.Nullable.t(int)),
+        [@bs.optional]
+        defaultBranchRef:
+          Config.resolver(repository, unit, ref, Js.Nullable.t(ref)),
+        [@bs.optional]
+        deployKeys:
+          Config.resolver(
+            repository,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+            },
+            deployKeyConnection,
+            deployKeyConnection,
+          ),
+        [@bs.optional]
+        deployments:
+          Config.resolver(
+            repository,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "environments": Js.Nullable.t(array(string)),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+            },
+            deploymentConnection,
+            deploymentConnection,
+          ),
+        [@bs.optional]
+        description:
+          Config.resolver(repository, unit, string, Js.Nullable.t(string)),
+        [@bs.optional]
+        descriptionHTML: Config.resolver(repository, unit, hTML, hTML),
+        [@bs.optional]
+        diskUsage:
+          Config.resolver(repository, unit, int, Js.Nullable.t(int)),
+        [@bs.optional]
+        forkCount: Config.resolver(repository, unit, int, int),
+        [@bs.optional]
+        forks:
+          Config.resolver(
+            repository,
+            {
+              .
+              "affiliations":
+                Js.Nullable.t(
+                  array(Js.Nullable.t(abs_repositoryAffiliation)),
+                ),
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "isLocked": Js.Nullable.t(bool),
+              "last": Js.Nullable.t(int),
+              "orderBy": Js.Nullable.t(repositoryOrder),
+              "ownerAffiliations":
+                Js.Nullable.t(
+                  array(Js.Nullable.t(abs_repositoryAffiliation)),
+                ),
+              "privacy": Js.Nullable.t(abs_repositoryPrivacy),
+            },
+            repositoryConnection,
+            repositoryConnection,
+          ),
+        [@bs.optional]
+        hasIssuesEnabled: Config.resolver(repository, unit, bool, bool),
+        [@bs.optional]
+        hasWikiEnabled: Config.resolver(repository, unit, bool, bool),
+        [@bs.optional]
+        homepageUrl:
+          Config.resolver(repository, unit, uRI, Js.Nullable.t(uRI)),
+        [@bs.optional]
+        id: Config.resolver(repository, unit, string, string),
+        [@bs.optional]
+        isArchived: Config.resolver(repository, unit, bool, bool),
+        [@bs.optional]
+        isFork: Config.resolver(repository, unit, bool, bool),
+        [@bs.optional]
+        isLocked: Config.resolver(repository, unit, bool, bool),
+        [@bs.optional]
+        isMirror: Config.resolver(repository, unit, bool, bool),
+        [@bs.optional]
+        isPrivate: Config.resolver(repository, unit, bool, bool),
+        [@bs.optional]
+        issue:
+          Config.resolver(
+            repository,
+            {. "number": int},
+            issue,
+            Js.Nullable.t(issue),
+          ),
+        [@bs.optional]
+        issueOrPullRequest:
+          Config.resolver(
+            repository,
+            {. "number": int},
+            issueOrPullRequest,
+            Js.Nullable.t(issueOrPullRequest),
+          ),
+        [@bs.optional]
+        issues:
+          Config.resolver(
+            repository,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "labels": Js.Nullable.t(array(string)),
+              "last": Js.Nullable.t(int),
+              "orderBy": Js.Nullable.t(issueOrder),
+              "states": Js.Nullable.t(array(abs_issueState)),
+            },
+            issueConnection,
+            issueConnection,
+          ),
+        [@bs.optional]
+        label:
+          Config.resolver(
+            repository,
+            {. "name": string},
+            label,
+            Js.Nullable.t(label),
+          ),
+        [@bs.optional]
+        labels:
+          Config.resolver(
+            repository,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+              "query": Js.Nullable.t(string),
+            },
+            labelConnection,
+            Js.Nullable.t(labelConnection),
+          ),
+        [@bs.optional]
+        languages:
+          Config.resolver(
+            repository,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+              "orderBy": Js.Nullable.t(languageOrder),
+            },
+            languageConnection,
+            Js.Nullable.t(languageConnection),
+          ),
+        [@bs.optional]
+        licenseInfo:
+          Config.resolver(repository, unit, license, Js.Nullable.t(license)),
+        [@bs.optional]
+        lockReason:
+          Config.resolver(
+            repository,
+            unit,
+            repositoryLockReason,
+            Js.Nullable.t(repositoryLockReason),
+          ),
+        [@bs.optional]
+        mentionableUsers:
+          Config.resolver(
+            repository,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+            },
+            userConnection,
+            userConnection,
+          ),
+        [@bs.optional]
+        mergeCommitAllowed: Config.resolver(repository, unit, bool, bool),
+        [@bs.optional]
+        milestone:
+          Config.resolver(
+            repository,
+            {. "number": int},
+            milestone,
+            Js.Nullable.t(milestone),
+          ),
+        [@bs.optional]
+        milestones:
+          Config.resolver(
+            repository,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+              "orderBy": Js.Nullable.t(milestoneOrder),
+              "states": Js.Nullable.t(array(abs_milestoneState)),
+            },
+            milestoneConnection,
+            Js.Nullable.t(milestoneConnection),
+          ),
+        [@bs.optional]
+        mirrorUrl:
+          Config.resolver(repository, unit, uRI, Js.Nullable.t(uRI)),
+        [@bs.optional]
+        name: Config.resolver(repository, unit, string, string),
+        [@bs.optional]
+        nameWithOwner: Config.resolver(repository, unit, string, string),
+        [@bs.optional] [@bs.as "object"]
+        object_:
+          Config.resolver(
+            repository,
+            {
+              .
+              "expression": Js.Nullable.t(string),
+              "oid": Js.Nullable.t(gitObjectID),
+            },
+            gitObject,
+            Js.Nullable.t(gitObject),
+          ),
+        [@bs.optional]
+        owner:
+          Config.resolver(repository, unit, repositoryOwner, repositoryOwner),
+        [@bs.optional]
+        parent:
+          Config.resolver(
+            repository,
+            unit,
+            repository,
+            Js.Nullable.t(repository),
+          ),
+        [@bs.optional]
+        primaryLanguage:
+          Config.resolver(
+            repository,
+            unit,
+            language,
+            Js.Nullable.t(language),
+          ),
+        [@bs.optional]
+        project:
+          Config.resolver(
+            repository,
+            {. "number": int},
+            project,
+            Js.Nullable.t(project),
+          ),
+        [@bs.optional]
+        projects:
+          Config.resolver(
+            repository,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+              "orderBy": Js.Nullable.t(projectOrder),
+              "search": Js.Nullable.t(string),
+              "states": Js.Nullable.t(array(abs_projectState)),
+            },
+            projectConnection,
+            projectConnection,
+          ),
+        [@bs.optional]
+        projectsResourcePath: Config.resolver(repository, unit, uRI, uRI),
+        [@bs.optional]
+        projectsUrl: Config.resolver(repository, unit, uRI, uRI),
+        [@bs.optional]
+        protectedBranches:
+          Config.resolver(
+            repository,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+            },
+            protectedBranchConnection,
+            protectedBranchConnection,
+          ),
+        [@bs.optional]
+        pullRequest:
+          Config.resolver(
+            repository,
+            {. "number": int},
+            pullRequest,
+            Js.Nullable.t(pullRequest),
+          ),
+        [@bs.optional]
+        pullRequests:
+          Config.resolver(
+            repository,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "baseRefName": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "headRefName": Js.Nullable.t(string),
+              "labels": Js.Nullable.t(array(string)),
+              "last": Js.Nullable.t(int),
+              "orderBy": Js.Nullable.t(issueOrder),
+              "states": Js.Nullable.t(array(abs_pullRequestState)),
+            },
+            pullRequestConnection,
+            pullRequestConnection,
+          ),
+        [@bs.optional]
+        pushedAt:
+          Config.resolver(
+            repository,
+            unit,
+            dateTime,
+            Js.Nullable.t(dateTime),
+          ),
+        [@bs.optional]
+        rebaseMergeAllowed: Config.resolver(repository, unit, bool, bool),
+        [@bs.optional]
+        ref:
+          Config.resolver(
+            repository,
+            {. "qualifiedName": string},
+            ref,
+            Js.Nullable.t(ref),
+          ),
+        [@bs.optional]
+        refs:
+          Config.resolver(
+            repository,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "direction": Js.Nullable.t(abs_orderDirection),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+              "orderBy": Js.Nullable.t(refOrder),
+              "refPrefix": string,
+            },
+            refConnection,
+            Js.Nullable.t(refConnection),
+          ),
+        [@bs.optional]
+        release:
+          Config.resolver(
+            repository,
+            {. "tagName": string},
+            release,
+            Js.Nullable.t(release),
+          ),
+        [@bs.optional]
+        releases:
+          Config.resolver(
+            repository,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+              "orderBy": Js.Nullable.t(releaseOrder),
+            },
+            releaseConnection,
+            releaseConnection,
+          ),
+        [@bs.optional]
+        repositoryTopics:
+          Config.resolver(
+            repository,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+            },
+            repositoryTopicConnection,
+            repositoryTopicConnection,
+          ),
+        [@bs.optional]
+        resourcePath: Config.resolver(repository, unit, uRI, uRI),
+        [@bs.optional]
+        shortDescriptionHTML:
+          Config.resolver(
+            repository,
+            {. "limit": Js.Nullable.t(int)},
+            hTML,
+            hTML,
+          ),
+        [@bs.optional]
+        squashMergeAllowed: Config.resolver(repository, unit, bool, bool),
+        [@bs.optional]
+        sshUrl: Config.resolver(repository, unit, gitSSHRemote, gitSSHRemote),
+        [@bs.optional]
+        stargazers:
+          Config.resolver(
+            repository,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+              "orderBy": Js.Nullable.t(starOrder),
+            },
+            stargazerConnection,
+            stargazerConnection,
+          ),
+        [@bs.optional]
+        updatedAt: Config.resolver(repository, unit, dateTime, dateTime),
+        [@bs.optional]
+        url: Config.resolver(repository, unit, uRI, uRI),
+        [@bs.optional]
+        viewerCanAdminister: Config.resolver(repository, unit, bool, bool),
+        [@bs.optional]
+        viewerCanCreateProjects:
+          Config.resolver(repository, unit, bool, bool),
+        [@bs.optional]
+        viewerCanSubscribe: Config.resolver(repository, unit, bool, bool),
+        [@bs.optional]
+        viewerCanUpdateTopics: Config.resolver(repository, unit, bool, bool),
+        [@bs.optional]
+        viewerHasStarred: Config.resolver(repository, unit, bool, bool),
+        [@bs.optional]
+        viewerPermission:
+          Config.resolver(
+            repository,
+            unit,
+            repositoryPermission,
+            Js.Nullable.t(repositoryPermission),
+          ),
+        [@bs.optional]
+        viewerSubscription:
+          Config.resolver(
+            repository,
+            unit,
+            subscriptionState,
+            Js.Nullable.t(subscriptionState),
+          ),
+        [@bs.optional]
+        watchers:
+          Config.resolver(
+            repository,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+            },
+            userConnection,
+            userConnection,
+          ),
+      };
+    };
+    module PullRequestReviewThread: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        comments:
+          Config.resolver(
+            pullRequestReviewThread,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+            },
+            pullRequestReviewCommentConnection,
+            pullRequestReviewCommentConnection,
+          ),
+        [@bs.optional]
+        id: Config.resolver(pullRequestReviewThread, unit, string, string),
+        [@bs.optional]
+        pullRequest:
+          Config.resolver(
+            pullRequestReviewThread,
+            unit,
+            pullRequest,
+            pullRequest,
+          ),
+        [@bs.optional]
+        repository:
+          Config.resolver(
+            pullRequestReviewThread,
+            unit,
+            repository,
+            repository,
+          ),
+      };
+    };
+    module BranchProtectionRuleConflict: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        branchProtectionRule:
+          Config.resolver(
+            branchProtectionRuleConflict,
+            unit,
+            branchProtectionRule,
+            Js.Nullable.t(branchProtectionRule),
+          ),
+        [@bs.optional]
+        conflictingBranchProtectionRule:
+          Config.resolver(
+            branchProtectionRuleConflict,
+            unit,
+            branchProtectionRule,
+            Js.Nullable.t(branchProtectionRule),
+          ),
+        [@bs.optional]
+        ref:
+          Config.resolver(
+            branchProtectionRuleConflict,
+            unit,
+            ref,
+            Js.Nullable.t(ref),
+          ),
+      };
+    };
+    module AddReactionPayload: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        clientMutationId:
+          Config.resolver(
+            addReactionPayload,
+            unit,
+            string,
+            Js.Nullable.t(string),
+          ),
+        [@bs.optional]
+        reaction:
+          Config.resolver(addReactionPayload, unit, reaction, reaction),
+        [@bs.optional]
+        subject:
+          Config.resolver(addReactionPayload, unit, reactable, reactable),
+      };
+    };
+    module BranchProtectionRuleConflictEdge: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        cursor:
+          Config.resolver(
+            branchProtectionRuleConflictEdge,
+            unit,
+            string,
+            string,
+          ),
+        [@bs.optional]
+        node:
+          Config.resolver(
+            branchProtectionRuleConflictEdge,
+            unit,
+            branchProtectionRuleConflict,
+            Js.Nullable.t(branchProtectionRuleConflict),
+          ),
+      };
+    };
+    module License: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        body: Config.resolver(license, unit, string, string),
+        [@bs.optional]
+        conditions:
+          Config.resolver(
+            license,
+            unit,
+            licenseRule,
+            array(Js.Nullable.t(licenseRule)),
+          ),
+        [@bs.optional]
+        description:
+          Config.resolver(license, unit, string, Js.Nullable.t(string)),
+        [@bs.optional]
+        featured: Config.resolver(license, unit, bool, bool),
+        [@bs.optional]
+        hidden: Config.resolver(license, unit, bool, bool),
+        [@bs.optional]
+        id: Config.resolver(license, unit, string, string),
+        [@bs.optional]
+        implementation:
+          Config.resolver(license, unit, string, Js.Nullable.t(string)),
+        [@bs.optional]
+        key: Config.resolver(license, unit, string, string),
+        [@bs.optional]
+        limitations:
+          Config.resolver(
+            license,
+            unit,
+            licenseRule,
+            array(Js.Nullable.t(licenseRule)),
+          ),
+        [@bs.optional]
+        name: Config.resolver(license, unit, string, string),
+        [@bs.optional]
+        nickname:
+          Config.resolver(license, unit, string, Js.Nullable.t(string)),
+        [@bs.optional]
+        permissions:
+          Config.resolver(
+            license,
+            unit,
+            licenseRule,
+            array(Js.Nullable.t(licenseRule)),
+          ),
+        [@bs.optional]
+        pseudoLicense: Config.resolver(license, unit, bool, bool),
+        [@bs.optional]
+        spdxId:
+          Config.resolver(license, unit, string, Js.Nullable.t(string)),
+        [@bs.optional]
+        url: Config.resolver(license, unit, uRI, Js.Nullable.t(uRI)),
+      };
+    };
+    module HeadRefDeletedEvent: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        actor:
+          Config.resolver(
+            headRefDeletedEvent,
+            unit,
+            actor,
+            Js.Nullable.t(actor),
+          ),
+        [@bs.optional]
+        createdAt:
+          Config.resolver(headRefDeletedEvent, unit, dateTime, dateTime),
+        [@bs.optional]
+        headRef:
+          Config.resolver(
+            headRefDeletedEvent,
+            unit,
+            ref,
+            Js.Nullable.t(ref),
+          ),
+        [@bs.optional]
+        headRefName:
+          Config.resolver(headRefDeletedEvent, unit, string, string),
+        [@bs.optional]
+        id: Config.resolver(headRefDeletedEvent, unit, string, string),
+        [@bs.optional]
+        pullRequest:
+          Config.resolver(
+            headRefDeletedEvent,
+            unit,
+            pullRequest,
+            pullRequest,
+          ),
+      };
+    };
+    module RemovedFromProjectEvent: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        actor:
+          Config.resolver(
+            removedFromProjectEvent,
+            unit,
+            actor,
+            Js.Nullable.t(actor),
+          ),
+        [@bs.optional]
+        createdAt:
+          Config.resolver(removedFromProjectEvent, unit, dateTime, dateTime),
+        [@bs.optional]
+        databaseId:
+          Config.resolver(
+            removedFromProjectEvent,
+            unit,
+            int,
+            Js.Nullable.t(int),
+          ),
+        [@bs.optional]
+        id: Config.resolver(removedFromProjectEvent, unit, string, string),
+      };
+    };
+    module IssueEdge: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        cursor: Config.resolver(issueEdge, unit, string, string),
+        [@bs.optional]
+        node: Config.resolver(issueEdge, unit, issue, Js.Nullable.t(issue)),
+      };
+    };
+    module ReviewRequestRemovedEvent: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        actor:
+          Config.resolver(
+            reviewRequestRemovedEvent,
+            unit,
+            actor,
+            Js.Nullable.t(actor),
+          ),
+        [@bs.optional]
+        createdAt:
+          Config.resolver(
+            reviewRequestRemovedEvent,
+            unit,
+            dateTime,
+            dateTime,
+          ),
+        [@bs.optional]
+        id: Config.resolver(reviewRequestRemovedEvent, unit, string, string),
+        [@bs.optional]
+        pullRequest:
+          Config.resolver(
+            reviewRequestRemovedEvent,
+            unit,
+            pullRequest,
+            pullRequest,
+          ),
+        [@bs.optional]
+        requestedReviewer:
+          Config.resolver(
+            reviewRequestRemovedEvent,
+            unit,
+            requestedReviewer,
+            Js.Nullable.t(requestedReviewer),
+          ),
+      };
+    };
+    module ReactingUserEdge: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        cursor: Config.resolver(reactingUserEdge, unit, string, string),
+        [@bs.optional]
+        node: Config.resolver(reactingUserEdge, unit, user, user),
+        [@bs.optional]
+        reactedAt:
+          Config.resolver(reactingUserEdge, unit, dateTime, dateTime),
+      };
+    };
+    module UnsubscribedEvent: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        actor:
+          Config.resolver(
+            unsubscribedEvent,
+            unit,
+            actor,
+            Js.Nullable.t(actor),
+          ),
+        [@bs.optional]
+        createdAt:
+          Config.resolver(unsubscribedEvent, unit, dateTime, dateTime),
+        [@bs.optional]
+        id: Config.resolver(unsubscribedEvent, unit, string, string),
+        [@bs.optional]
+        subscribable:
+          Config.resolver(
+            unsubscribedEvent,
+            unit,
+            subscribable,
+            subscribable,
+          ),
+      };
+    };
+    module MilestoneConnection: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        edges:
+          Config.resolver(
+            milestoneConnection,
+            unit,
+            milestoneEdge,
+            Js.Nullable.t(array(Js.Nullable.t(milestoneEdge))),
+          ),
+        [@bs.optional]
+        nodes:
+          Config.resolver(
+            milestoneConnection,
+            unit,
+            milestone,
+            Js.Nullable.t(array(Js.Nullable.t(milestone))),
+          ),
+        [@bs.optional]
+        pageInfo:
+          Config.resolver(milestoneConnection, unit, pageInfo, pageInfo),
+        [@bs.optional]
+        totalCount: Config.resolver(milestoneConnection, unit, int, int),
+      };
+    };
+    module PushAllowanceConnection: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        edges:
+          Config.resolver(
+            pushAllowanceConnection,
+            unit,
+            pushAllowanceEdge,
+            Js.Nullable.t(array(Js.Nullable.t(pushAllowanceEdge))),
+          ),
+        [@bs.optional]
+        nodes:
+          Config.resolver(
+            pushAllowanceConnection,
+            unit,
+            pushAllowance,
+            Js.Nullable.t(array(Js.Nullable.t(pushAllowance))),
+          ),
+        [@bs.optional]
+        pageInfo:
+          Config.resolver(pushAllowanceConnection, unit, pageInfo, pageInfo),
+        [@bs.optional]
+        totalCount: Config.resolver(pushAllowanceConnection, unit, int, int),
+      };
+    };
+    module BranchProtectionRuleConflictConnection: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        edges:
+          Config.resolver(
+            branchProtectionRuleConflictConnection,
+            unit,
+            branchProtectionRuleConflictEdge,
+            Js.Nullable.t(
+              array(Js.Nullable.t(branchProtectionRuleConflictEdge)),
+            ),
+          ),
+        [@bs.optional]
+        nodes:
+          Config.resolver(
+            branchProtectionRuleConflictConnection,
+            unit,
+            branchProtectionRuleConflict,
+            Js.Nullable.t(
+              array(Js.Nullable.t(branchProtectionRuleConflict)),
+            ),
+          ),
+        [@bs.optional]
+        pageInfo:
+          Config.resolver(
+            branchProtectionRuleConflictConnection,
+            unit,
+            pageInfo,
+            pageInfo,
+          ),
+        [@bs.optional]
+        totalCount:
+          Config.resolver(
+            branchProtectionRuleConflictConnection,
+            unit,
+            int,
+            int,
+          ),
+      };
+    };
+    module UpdateProjectCardPayload: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        clientMutationId:
+          Config.resolver(
+            updateProjectCardPayload,
+            unit,
+            string,
+            Js.Nullable.t(string),
+          ),
+        [@bs.optional]
+        projectCard:
+          Config.resolver(
+            updateProjectCardPayload,
+            unit,
+            projectCard,
+            projectCard,
+          ),
+      };
+    };
+    module CodeOfConduct: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        body:
+          Config.resolver(
+            codeOfConduct,
+            unit,
+            string,
+            Js.Nullable.t(string),
+          ),
+        [@bs.optional]
+        key: Config.resolver(codeOfConduct, unit, string, string),
+        [@bs.optional]
+        name: Config.resolver(codeOfConduct, unit, string, string),
+        [@bs.optional]
+        url: Config.resolver(codeOfConduct, unit, uRI, Js.Nullable.t(uRI)),
+      };
+    };
+    module TopicConnection: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        edges:
+          Config.resolver(
+            topicConnection,
+            unit,
+            topicEdge,
+            Js.Nullable.t(array(Js.Nullable.t(topicEdge))),
+          ),
+        [@bs.optional]
+        nodes:
+          Config.resolver(
+            topicConnection,
+            unit,
+            topic,
+            Js.Nullable.t(array(Js.Nullable.t(topic))),
+          ),
+        [@bs.optional]
+        pageInfo: Config.resolver(topicConnection, unit, pageInfo, pageInfo),
+        [@bs.optional]
+        totalCount: Config.resolver(topicConnection, unit, int, int),
+      };
+    };
+    module PullRequestConnection: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        edges:
+          Config.resolver(
+            pullRequestConnection,
+            unit,
+            pullRequestEdge,
+            Js.Nullable.t(array(Js.Nullable.t(pullRequestEdge))),
+          ),
+        [@bs.optional]
+        nodes:
+          Config.resolver(
+            pullRequestConnection,
+            unit,
+            pullRequest,
+            Js.Nullable.t(array(Js.Nullable.t(pullRequest))),
+          ),
+        [@bs.optional]
+        pageInfo:
+          Config.resolver(pullRequestConnection, unit, pageInfo, pageInfo),
+        [@bs.optional]
+        totalCount: Config.resolver(pullRequestConnection, unit, int, int),
+      };
+    };
+    module FollowingConnection: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        edges:
+          Config.resolver(
+            followingConnection,
+            unit,
+            userEdge,
+            Js.Nullable.t(array(Js.Nullable.t(userEdge))),
+          ),
+        [@bs.optional]
+        nodes:
+          Config.resolver(
+            followingConnection,
+            unit,
+            user,
+            Js.Nullable.t(array(Js.Nullable.t(user))),
+          ),
+        [@bs.optional]
+        pageInfo:
+          Config.resolver(followingConnection, unit, pageInfo, pageInfo),
+        [@bs.optional]
+        totalCount: Config.resolver(followingConnection, unit, int, int),
+      };
+    };
+    module DeclineTopicSuggestionPayload: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        clientMutationId:
+          Config.resolver(
+            declineTopicSuggestionPayload,
+            unit,
+            string,
+            Js.Nullable.t(string),
+          ),
+        [@bs.optional]
+        topic:
+          Config.resolver(declineTopicSuggestionPayload, unit, topic, topic),
+      };
+    };
+    module Gist: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        comments:
+          Config.resolver(
+            gist,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+            },
+            gistCommentConnection,
+            gistCommentConnection,
+          ),
+        [@bs.optional]
+        createdAt: Config.resolver(gist, unit, dateTime, dateTime),
+        [@bs.optional]
+        description:
+          Config.resolver(gist, unit, string, Js.Nullable.t(string)),
+        [@bs.optional]
+        id: Config.resolver(gist, unit, string, string),
+        [@bs.optional]
+        isPublic: Config.resolver(gist, unit, bool, bool),
+        [@bs.optional]
+        name: Config.resolver(gist, unit, string, string),
+        [@bs.optional]
+        owner:
+          Config.resolver(
+            gist,
+            unit,
+            repositoryOwner,
+            Js.Nullable.t(repositoryOwner),
+          ),
+        [@bs.optional]
+        pushedAt:
+          Config.resolver(gist, unit, dateTime, Js.Nullable.t(dateTime)),
+        [@bs.optional]
+        stargazers:
+          Config.resolver(
+            gist,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+              "orderBy": Js.Nullable.t(starOrder),
+            },
+            stargazerConnection,
+            stargazerConnection,
+          ),
+        [@bs.optional]
+        updatedAt: Config.resolver(gist, unit, dateTime, dateTime),
+        [@bs.optional]
+        viewerHasStarred: Config.resolver(gist, unit, bool, bool),
+      };
+    };
+    module Ref: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        associatedPullRequests:
+          Config.resolver(
+            ref,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "baseRefName": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "headRefName": Js.Nullable.t(string),
+              "labels": Js.Nullable.t(array(string)),
+              "last": Js.Nullable.t(int),
+              "orderBy": Js.Nullable.t(issueOrder),
+              "states": Js.Nullable.t(array(abs_pullRequestState)),
+            },
+            pullRequestConnection,
+            pullRequestConnection,
+          ),
+        [@bs.optional]
+        id: Config.resolver(ref, unit, string, string),
+        [@bs.optional]
+        name: Config.resolver(ref, unit, string, string),
+        [@bs.optional]
+        prefix: Config.resolver(ref, unit, string, string),
+        [@bs.optional]
+        repository: Config.resolver(ref, unit, repository, repository),
+        [@bs.optional]
+        target: Config.resolver(ref, unit, gitObject, gitObject),
+      };
+    };
+    module PublicKeyConnection: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        edges:
+          Config.resolver(
+            publicKeyConnection,
+            unit,
+            publicKeyEdge,
+            Js.Nullable.t(array(Js.Nullable.t(publicKeyEdge))),
+          ),
+        [@bs.optional]
+        nodes:
+          Config.resolver(
+            publicKeyConnection,
+            unit,
+            publicKey,
+            Js.Nullable.t(array(Js.Nullable.t(publicKey))),
+          ),
+        [@bs.optional]
+        pageInfo:
+          Config.resolver(publicKeyConnection, unit, pageInfo, pageInfo),
+        [@bs.optional]
+        totalCount: Config.resolver(publicKeyConnection, unit, int, int),
+      };
+    };
+    module ReactionEdge: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        cursor: Config.resolver(reactionEdge, unit, string, string),
+        [@bs.optional]
+        node:
+          Config.resolver(
+            reactionEdge,
+            unit,
+            reaction,
+            Js.Nullable.t(reaction),
+          ),
+      };
+    };
+    module MilestonedEvent: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        actor:
+          Config.resolver(
+            milestonedEvent,
+            unit,
+            actor,
+            Js.Nullable.t(actor),
+          ),
+        [@bs.optional]
+        createdAt: Config.resolver(milestonedEvent, unit, dateTime, dateTime),
+        [@bs.optional]
+        id: Config.resolver(milestonedEvent, unit, string, string),
+        [@bs.optional]
+        milestoneTitle:
+          Config.resolver(milestonedEvent, unit, string, string),
+        [@bs.optional]
+        subject:
+          Config.resolver(
+            milestonedEvent,
+            unit,
+            milestoneItem,
+            milestoneItem,
+          ),
+      };
+    };
+    module User: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        avatarUrl:
+          Config.resolver(user, {. "size": Js.Nullable.t(int)}, uRI, uRI),
+        [@bs.optional]
+        bio: Config.resolver(user, unit, string, Js.Nullable.t(string)),
+        [@bs.optional]
+        bioHTML: Config.resolver(user, unit, hTML, hTML),
+        [@bs.optional]
+        commitComments:
+          Config.resolver(
+            user,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+            },
+            commitCommentConnection,
+            commitCommentConnection,
+          ),
+        [@bs.optional]
+        company: Config.resolver(user, unit, string, Js.Nullable.t(string)),
+        [@bs.optional]
+        companyHTML: Config.resolver(user, unit, hTML, hTML),
+        [@bs.optional]
+        createdAt: Config.resolver(user, unit, dateTime, dateTime),
+        [@bs.optional]
+        databaseId: Config.resolver(user, unit, int, Js.Nullable.t(int)),
+        [@bs.optional]
+        email: Config.resolver(user, unit, string, string),
+        [@bs.optional]
+        followers:
+          Config.resolver(
+            user,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+            },
+            followerConnection,
+            followerConnection,
+          ),
+        [@bs.optional]
+        following:
+          Config.resolver(
+            user,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+            },
+            followingConnection,
+            followingConnection,
+          ),
+        [@bs.optional]
+        gist:
+          Config.resolver(
+            user,
+            {. "name": string},
+            gist,
+            Js.Nullable.t(gist),
+          ),
+        [@bs.optional]
+        gistComments:
+          Config.resolver(
+            user,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+            },
+            gistCommentConnection,
+            gistCommentConnection,
+          ),
+        [@bs.optional]
+        gists:
+          Config.resolver(
+            user,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+              "orderBy": Js.Nullable.t(gistOrder),
+              "privacy": Js.Nullable.t(abs_gistPrivacy),
+            },
+            gistConnection,
+            gistConnection,
+          ),
+        [@bs.optional]
+        id: Config.resolver(user, unit, string, string),
+        [@bs.optional]
+        isBountyHunter: Config.resolver(user, unit, bool, bool),
+        [@bs.optional]
+        isCampusExpert: Config.resolver(user, unit, bool, bool),
+        [@bs.optional]
+        isDeveloperProgramMember: Config.resolver(user, unit, bool, bool),
+        [@bs.optional]
+        isEmployee: Config.resolver(user, unit, bool, bool),
+        [@bs.optional]
+        isHireable: Config.resolver(user, unit, bool, bool),
+        [@bs.optional]
+        isSiteAdmin: Config.resolver(user, unit, bool, bool),
+        [@bs.optional]
+        isViewer: Config.resolver(user, unit, bool, bool),
+        [@bs.optional]
+        issueComments:
+          Config.resolver(
+            user,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+            },
+            issueCommentConnection,
+            issueCommentConnection,
+          ),
+        [@bs.optional]
+        issues:
+          Config.resolver(
+            user,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "labels": Js.Nullable.t(array(string)),
+              "last": Js.Nullable.t(int),
+              "orderBy": Js.Nullable.t(issueOrder),
+              "states": Js.Nullable.t(array(abs_issueState)),
+            },
+            issueConnection,
+            issueConnection,
+          ),
+        [@bs.optional]
+        location: Config.resolver(user, unit, string, Js.Nullable.t(string)),
+        [@bs.optional]
+        login: Config.resolver(user, unit, string, string),
+        [@bs.optional]
+        name: Config.resolver(user, unit, string, Js.Nullable.t(string)),
+        [@bs.optional]
+        organization:
+          Config.resolver(
+            user,
+            {. "login": string},
+            organization,
+            Js.Nullable.t(organization),
+          ),
+        [@bs.optional]
+        organizations:
+          Config.resolver(
+            user,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+            },
+            organizationConnection,
+            organizationConnection,
+          ),
+        [@bs.optional]
+        pinnedRepositories:
+          Config.resolver(
+            user,
+            {
+              .
+              "affiliations":
+                Js.Nullable.t(
+                  array(Js.Nullable.t(abs_repositoryAffiliation)),
+                ),
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "isLocked": Js.Nullable.t(bool),
+              "last": Js.Nullable.t(int),
+              "orderBy": Js.Nullable.t(repositoryOrder),
+              "ownerAffiliations":
+                Js.Nullable.t(
+                  array(Js.Nullable.t(abs_repositoryAffiliation)),
+                ),
+              "privacy": Js.Nullable.t(abs_repositoryPrivacy),
+            },
+            repositoryConnection,
+            repositoryConnection,
+          ),
+        [@bs.optional]
+        publicKeys:
+          Config.resolver(
+            user,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+            },
+            publicKeyConnection,
+            publicKeyConnection,
+          ),
+        [@bs.optional]
+        pullRequests:
+          Config.resolver(
+            user,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "baseRefName": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "headRefName": Js.Nullable.t(string),
+              "labels": Js.Nullable.t(array(string)),
+              "last": Js.Nullable.t(int),
+              "orderBy": Js.Nullable.t(issueOrder),
+              "states": Js.Nullable.t(array(abs_pullRequestState)),
+            },
+            pullRequestConnection,
+            pullRequestConnection,
+          ),
+        [@bs.optional]
+        repositories:
+          Config.resolver(
+            user,
+            {
+              .
+              "affiliations":
+                Js.Nullable.t(
+                  array(Js.Nullable.t(abs_repositoryAffiliation)),
+                ),
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "isFork": Js.Nullable.t(bool),
+              "isLocked": Js.Nullable.t(bool),
+              "last": Js.Nullable.t(int),
+              "orderBy": Js.Nullable.t(repositoryOrder),
+              "ownerAffiliations":
+                Js.Nullable.t(
+                  array(Js.Nullable.t(abs_repositoryAffiliation)),
+                ),
+              "privacy": Js.Nullable.t(abs_repositoryPrivacy),
+            },
+            repositoryConnection,
+            repositoryConnection,
+          ),
+        [@bs.optional]
+        repositoriesContributedTo:
+          Config.resolver(
+            user,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "contributionTypes":
+                Js.Nullable.t(
+                  array(Js.Nullable.t(abs_repositoryContributionType)),
+                ),
+              "first": Js.Nullable.t(int),
+              "includeUserRepositories": Js.Nullable.t(bool),
+              "isLocked": Js.Nullable.t(bool),
+              "last": Js.Nullable.t(int),
+              "orderBy": Js.Nullable.t(repositoryOrder),
+              "privacy": Js.Nullable.t(abs_repositoryPrivacy),
+            },
+            repositoryConnection,
+            repositoryConnection,
+          ),
+        [@bs.optional]
+        repository:
+          Config.resolver(
+            user,
+            {. "name": string},
+            repository,
+            Js.Nullable.t(repository),
+          ),
+        [@bs.optional]
+        resourcePath: Config.resolver(user, unit, uRI, uRI),
+        [@bs.optional]
+        starredRepositories:
+          Config.resolver(
+            user,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+              "orderBy": Js.Nullable.t(starOrder),
+              "ownedByViewer": Js.Nullable.t(bool),
+            },
+            starredRepositoryConnection,
+            starredRepositoryConnection,
+          ),
+        [@bs.optional]
+        updatedAt: Config.resolver(user, unit, dateTime, dateTime),
+        [@bs.optional]
+        url: Config.resolver(user, unit, uRI, uRI),
+        [@bs.optional]
+        viewerCanFollow: Config.resolver(user, unit, bool, bool),
+        [@bs.optional]
+        viewerIsFollowing: Config.resolver(user, unit, bool, bool),
+        [@bs.optional]
+        watching:
+          Config.resolver(
+            user,
+            {
+              .
+              "affiliations":
+                Js.Nullable.t(
+                  array(Js.Nullable.t(abs_repositoryAffiliation)),
+                ),
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "isLocked": Js.Nullable.t(bool),
+              "last": Js.Nullable.t(int),
+              "orderBy": Js.Nullable.t(repositoryOrder),
+              "ownerAffiliations":
+                Js.Nullable.t(
+                  array(Js.Nullable.t(abs_repositoryAffiliation)),
+                ),
+              "privacy": Js.Nullable.t(abs_repositoryPrivacy),
+            },
+            repositoryConnection,
+            repositoryConnection,
+          ),
+        [@bs.optional]
+        websiteUrl: Config.resolver(user, unit, uRI, Js.Nullable.t(uRI)),
+      };
+    };
+    module RemoveReactionPayload: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        clientMutationId:
+          Config.resolver(
+            removeReactionPayload,
+            unit,
+            string,
+            Js.Nullable.t(string),
+          ),
+        [@bs.optional]
+        reaction:
+          Config.resolver(removeReactionPayload, unit, reaction, reaction),
+        [@bs.optional]
+        subject:
+          Config.resolver(removeReactionPayload, unit, reactable, reactable),
+      };
+    };
+    module CommitCommentThread: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        comments:
+          Config.resolver(
+            commitCommentThread,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+            },
+            commitCommentConnection,
+            commitCommentConnection,
+          ),
+        [@bs.optional]
+        commit: Config.resolver(commitCommentThread, unit, commit, commit),
+        [@bs.optional]
+        id: Config.resolver(commitCommentThread, unit, string, string),
+        [@bs.optional]
+        path:
+          Config.resolver(
+            commitCommentThread,
+            unit,
+            string,
+            Js.Nullable.t(string),
+          ),
+        [@bs.optional]
+        position:
+          Config.resolver(
+            commitCommentThread,
+            unit,
+            int,
+            Js.Nullable.t(int),
+          ),
+        [@bs.optional]
+        repository:
+          Config.resolver(commitCommentThread, unit, repository, repository),
+      };
+    };
+    module UpdateBranchProtectionRulePayload: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        branchProtectionRule:
+          Config.resolver(
+            updateBranchProtectionRulePayload,
+            unit,
+            branchProtectionRule,
+            Js.Nullable.t(branchProtectionRule),
+          ),
+        [@bs.optional]
+        clientMutationId:
+          Config.resolver(
+            updateBranchProtectionRulePayload,
+            unit,
+            string,
+            Js.Nullable.t(string),
+          ),
+      };
+    };
+    module IssueComment: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        author:
+          Config.resolver(issueComment, unit, actor, Js.Nullable.t(actor)),
+        [@bs.optional]
+        authorAssociation:
+          Config.resolver(
+            issueComment,
+            unit,
+            commentAuthorAssociation,
+            commentAuthorAssociation,
+          ),
+        [@bs.optional]
+        body: Config.resolver(issueComment, unit, string, string),
+        [@bs.optional]
+        bodyHTML: Config.resolver(issueComment, unit, hTML, hTML),
+        [@bs.optional]
+        bodyText: Config.resolver(issueComment, unit, string, string),
+        [@bs.optional]
+        createdAt: Config.resolver(issueComment, unit, dateTime, dateTime),
+        [@bs.optional]
+        createdViaEmail: Config.resolver(issueComment, unit, bool, bool),
+        [@bs.optional]
+        databaseId:
+          Config.resolver(issueComment, unit, int, Js.Nullable.t(int)),
+        [@bs.optional]
+        editor:
+          Config.resolver(issueComment, unit, actor, Js.Nullable.t(actor)),
+        [@bs.optional]
+        id: Config.resolver(issueComment, unit, string, string),
+        [@bs.optional]
+        includesCreatedEdit: Config.resolver(issueComment, unit, bool, bool),
+        [@bs.optional]
+        issue: Config.resolver(issueComment, unit, issue, issue),
+        [@bs.optional]
+        lastEditedAt:
+          Config.resolver(
+            issueComment,
+            unit,
+            dateTime,
+            Js.Nullable.t(dateTime),
+          ),
+        [@bs.optional]
+        publishedAt:
+          Config.resolver(
+            issueComment,
+            unit,
+            dateTime,
+            Js.Nullable.t(dateTime),
+          ),
+        [@bs.optional]
+        pullRequest:
+          Config.resolver(
+            issueComment,
+            unit,
+            pullRequest,
+            Js.Nullable.t(pullRequest),
+          ),
+        [@bs.optional]
+        reactionGroups:
+          Config.resolver(
+            issueComment,
+            unit,
+            reactionGroup,
+            Js.Nullable.t(array(reactionGroup)),
+          ),
+        [@bs.optional]
+        reactions:
+          Config.resolver(
+            issueComment,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "content": Js.Nullable.t(abs_reactionContent),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+              "orderBy": Js.Nullable.t(reactionOrder),
+            },
+            reactionConnection,
+            reactionConnection,
+          ),
+        [@bs.optional]
+        repository:
+          Config.resolver(issueComment, unit, repository, repository),
+        [@bs.optional]
+        resourcePath: Config.resolver(issueComment, unit, uRI, uRI),
+        [@bs.optional]
+        updatedAt: Config.resolver(issueComment, unit, dateTime, dateTime),
+        [@bs.optional]
+        url: Config.resolver(issueComment, unit, uRI, uRI),
+        [@bs.optional]
+        userContentEdits:
+          Config.resolver(
+            issueComment,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+            },
+            userContentEditConnection,
+            Js.Nullable.t(userContentEditConnection),
+          ),
+        [@bs.optional]
+        viewerCanDelete: Config.resolver(issueComment, unit, bool, bool),
+        [@bs.optional]
+        viewerCanReact: Config.resolver(issueComment, unit, bool, bool),
+        [@bs.optional]
+        viewerCanUpdate: Config.resolver(issueComment, unit, bool, bool),
+        [@bs.optional]
+        viewerCannotUpdateReasons:
+          Config.resolver(
+            issueComment,
+            unit,
+            commentCannotUpdateReason,
+            array(commentCannotUpdateReason),
+          ),
+        [@bs.optional]
+        viewerDidAuthor: Config.resolver(issueComment, unit, bool, bool),
+      };
+    };
+    module DemilestonedEvent: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        actor:
+          Config.resolver(
+            demilestonedEvent,
+            unit,
+            actor,
+            Js.Nullable.t(actor),
+          ),
+        [@bs.optional]
+        createdAt:
+          Config.resolver(demilestonedEvent, unit, dateTime, dateTime),
+        [@bs.optional]
+        id: Config.resolver(demilestonedEvent, unit, string, string),
+        [@bs.optional]
+        milestoneTitle:
+          Config.resolver(demilestonedEvent, unit, string, string),
+        [@bs.optional]
+        subject:
+          Config.resolver(
+            demilestonedEvent,
+            unit,
+            milestoneItem,
+            milestoneItem,
+          ),
+      };
+    };
+    module RenamedTitleEvent: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        actor:
+          Config.resolver(
+            renamedTitleEvent,
+            unit,
+            actor,
+            Js.Nullable.t(actor),
+          ),
+        [@bs.optional]
+        createdAt:
+          Config.resolver(renamedTitleEvent, unit, dateTime, dateTime),
+        [@bs.optional]
+        currentTitle:
+          Config.resolver(renamedTitleEvent, unit, string, string),
+        [@bs.optional]
+        id: Config.resolver(renamedTitleEvent, unit, string, string),
+        [@bs.optional]
+        previousTitle:
+          Config.resolver(renamedTitleEvent, unit, string, string),
+        [@bs.optional]
+        subject:
+          Config.resolver(
+            renamedTitleEvent,
+            unit,
+            renamedTitleSubject,
+            renamedTitleSubject,
+          ),
+      };
+    };
+    module DeletePullRequestReviewPayload: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        clientMutationId:
+          Config.resolver(
+            deletePullRequestReviewPayload,
+            unit,
+            string,
+            Js.Nullable.t(string),
+          ),
+        [@bs.optional]
+        pullRequestReview:
+          Config.resolver(
+            deletePullRequestReviewPayload,
+            unit,
+            pullRequestReview,
+            pullRequestReview,
+          ),
+      };
+    };
+    module SearchResultItemEdge: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        cursor: Config.resolver(searchResultItemEdge, unit, string, string),
+        [@bs.optional]
+        node:
+          Config.resolver(
+            searchResultItemEdge,
+            unit,
+            searchResultItem,
+            Js.Nullable.t(searchResultItem),
+          ),
+        [@bs.optional]
+        textMatches:
+          Config.resolver(
+            searchResultItemEdge,
+            unit,
+            textMatch,
+            Js.Nullable.t(array(Js.Nullable.t(textMatch))),
+          ),
+      };
+    };
+    module ReviewDismissalAllowanceConnection: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        edges:
+          Config.resolver(
+            reviewDismissalAllowanceConnection,
+            unit,
+            reviewDismissalAllowanceEdge,
+            Js.Nullable.t(
+              array(Js.Nullable.t(reviewDismissalAllowanceEdge)),
+            ),
+          ),
+        [@bs.optional]
+        nodes:
+          Config.resolver(
+            reviewDismissalAllowanceConnection,
+            unit,
+            reviewDismissalAllowance,
+            Js.Nullable.t(array(Js.Nullable.t(reviewDismissalAllowance))),
+          ),
+        [@bs.optional]
+        pageInfo:
+          Config.resolver(
+            reviewDismissalAllowanceConnection,
+            unit,
+            pageInfo,
+            pageInfo,
+          ),
+        [@bs.optional]
+        totalCount:
+          Config.resolver(reviewDismissalAllowanceConnection, unit, int, int),
+      };
+    };
+    module HeadRefRestoredEvent: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        actor:
+          Config.resolver(
+            headRefRestoredEvent,
+            unit,
+            actor,
+            Js.Nullable.t(actor),
+          ),
+        [@bs.optional]
+        createdAt:
+          Config.resolver(headRefRestoredEvent, unit, dateTime, dateTime),
+        [@bs.optional]
+        id: Config.resolver(headRefRestoredEvent, unit, string, string),
+        [@bs.optional]
+        pullRequest:
+          Config.resolver(
+            headRefRestoredEvent,
+            unit,
+            pullRequest,
+            pullRequest,
+          ),
+      };
+    };
+    module TeamMemberEdge: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        cursor: Config.resolver(teamMemberEdge, unit, string, string),
+        [@bs.optional]
+        memberAccessResourcePath:
+          Config.resolver(teamMemberEdge, unit, uRI, uRI),
+        [@bs.optional]
+        memberAccessUrl: Config.resolver(teamMemberEdge, unit, uRI, uRI),
+        [@bs.optional]
+        node: Config.resolver(teamMemberEdge, unit, user, user),
+        [@bs.optional]
+        role:
+          Config.resolver(
+            teamMemberEdge,
+            unit,
+            teamMemberRole,
+            teamMemberRole,
+          ),
+      };
+    };
+    module RequestReviewsPayload: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        clientMutationId:
+          Config.resolver(
+            requestReviewsPayload,
+            unit,
+            string,
+            Js.Nullable.t(string),
+          ),
+        [@bs.optional]
+        pullRequest:
+          Config.resolver(
+            requestReviewsPayload,
+            unit,
+            pullRequest,
+            pullRequest,
+          ),
+        [@bs.optional]
+        requestedReviewersEdge:
+          Config.resolver(requestReviewsPayload, unit, userEdge, userEdge),
+      };
+    };
+    module DeploymentEdge: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        cursor: Config.resolver(deploymentEdge, unit, string, string),
+        [@bs.optional]
+        node:
+          Config.resolver(
+            deploymentEdge,
+            unit,
+            deployment,
+            Js.Nullable.t(deployment),
+          ),
+      };
+    };
+    module DeleteProjectColumnPayload: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        clientMutationId:
+          Config.resolver(
+            deleteProjectColumnPayload,
+            unit,
+            string,
+            Js.Nullable.t(string),
+          ),
+        [@bs.optional]
+        deletedColumnId:
+          Config.resolver(deleteProjectColumnPayload, unit, string, string),
+        [@bs.optional]
+        project:
+          Config.resolver(deleteProjectColumnPayload, unit, project, project),
+      };
+    };
+    module UserContentEdit: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        createdAt: Config.resolver(userContentEdit, unit, dateTime, dateTime),
+        [@bs.optional]
+        deletedAt:
+          Config.resolver(
+            userContentEdit,
+            unit,
+            dateTime,
+            Js.Nullable.t(dateTime),
+          ),
+        [@bs.optional]
+        deletedBy:
+          Config.resolver(
+            userContentEdit,
+            unit,
+            actor,
+            Js.Nullable.t(actor),
+          ),
+        [@bs.optional]
+        diff:
+          Config.resolver(
+            userContentEdit,
+            unit,
+            string,
+            Js.Nullable.t(string),
+          ),
+        [@bs.optional]
+        editedAt: Config.resolver(userContentEdit, unit, dateTime, dateTime),
+        [@bs.optional]
+        editor:
+          Config.resolver(
+            userContentEdit,
+            unit,
+            actor,
+            Js.Nullable.t(actor),
+          ),
+        [@bs.optional]
+        id: Config.resolver(userContentEdit, unit, string, string),
+        [@bs.optional]
+        updatedAt: Config.resolver(userContentEdit, unit, dateTime, dateTime),
+      };
+    };
+    module PullRequestTimelineConnection: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        edges:
+          Config.resolver(
+            pullRequestTimelineConnection,
+            unit,
+            pullRequestTimelineItemEdge,
+            Js.Nullable.t(
+              array(Js.Nullable.t(pullRequestTimelineItemEdge)),
+            ),
+          ),
+        [@bs.optional]
+        nodes:
+          Config.resolver(
+            pullRequestTimelineConnection,
+            unit,
+            pullRequestTimelineItem,
+            Js.Nullable.t(array(Js.Nullable.t(pullRequestTimelineItem))),
+          ),
+        [@bs.optional]
+        pageInfo:
+          Config.resolver(
+            pullRequestTimelineConnection,
+            unit,
+            pageInfo,
+            pageInfo,
+          ),
+        [@bs.optional]
+        totalCount:
+          Config.resolver(pullRequestTimelineConnection, unit, int, int),
+      };
+    };
+    module AddProjectColumnPayload: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        clientMutationId:
+          Config.resolver(
+            addProjectColumnPayload,
+            unit,
+            string,
+            Js.Nullable.t(string),
+          ),
+        [@bs.optional]
+        columnEdge:
+          Config.resolver(
+            addProjectColumnPayload,
+            unit,
+            projectColumnEdge,
+            projectColumnEdge,
+          ),
+        [@bs.optional]
+        project:
+          Config.resolver(addProjectColumnPayload, unit, project, project),
+      };
+    };
+    module UnassignedEvent: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        actor:
+          Config.resolver(
+            unassignedEvent,
+            unit,
+            actor,
+            Js.Nullable.t(actor),
+          ),
+        [@bs.optional]
+        assignable:
+          Config.resolver(unassignedEvent, unit, assignable, assignable),
+        [@bs.optional]
+        createdAt: Config.resolver(unassignedEvent, unit, dateTime, dateTime),
+        [@bs.optional]
+        id: Config.resolver(unassignedEvent, unit, string, string),
+        [@bs.optional]
+        user:
+          Config.resolver(unassignedEvent, unit, user, Js.Nullable.t(user)),
+      };
+    };
+    module PullRequestEdge: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        cursor: Config.resolver(pullRequestEdge, unit, string, string),
+        [@bs.optional]
+        node:
+          Config.resolver(
+            pullRequestEdge,
+            unit,
+            pullRequest,
+            Js.Nullable.t(pullRequest),
+          ),
+      };
+    };
+    module ProjectConnection: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        edges:
+          Config.resolver(
+            projectConnection,
+            unit,
+            projectEdge,
+            Js.Nullable.t(array(Js.Nullable.t(projectEdge))),
+          ),
+        [@bs.optional]
+        nodes:
+          Config.resolver(
+            projectConnection,
+            unit,
+            project,
+            Js.Nullable.t(array(Js.Nullable.t(project))),
+          ),
+        [@bs.optional]
+        pageInfo:
+          Config.resolver(projectConnection, unit, pageInfo, pageInfo),
+        [@bs.optional]
+        totalCount: Config.resolver(projectConnection, unit, int, int),
+      };
+    };
+    module OrganizationIdentityProvider: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        digestMethod:
+          Config.resolver(
+            organizationIdentityProvider,
+            unit,
+            uRI,
+            Js.Nullable.t(uRI),
+          ),
+        [@bs.optional]
+        externalIdentities:
+          Config.resolver(
+            organizationIdentityProvider,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+            },
+            externalIdentityConnection,
+            externalIdentityConnection,
+          ),
+        [@bs.optional]
+        id:
+          Config.resolver(organizationIdentityProvider, unit, string, string),
+        [@bs.optional]
+        idpCertificate:
+          Config.resolver(
+            organizationIdentityProvider,
+            unit,
+            x509Certificate,
+            Js.Nullable.t(x509Certificate),
+          ),
+        [@bs.optional]
+        issuer:
+          Config.resolver(
+            organizationIdentityProvider,
+            unit,
+            string,
+            Js.Nullable.t(string),
+          ),
+        [@bs.optional]
+        organization:
+          Config.resolver(
+            organizationIdentityProvider,
+            unit,
+            organization,
+            Js.Nullable.t(organization),
+          ),
+        [@bs.optional]
+        signatureMethod:
+          Config.resolver(
+            organizationIdentityProvider,
+            unit,
+            uRI,
+            Js.Nullable.t(uRI),
+          ),
+        [@bs.optional]
+        ssoUrl:
+          Config.resolver(
+            organizationIdentityProvider,
+            unit,
+            uRI,
+            Js.Nullable.t(uRI),
+          ),
+      };
+    };
+    module BaseRefChangedEvent: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        actor:
+          Config.resolver(
+            baseRefChangedEvent,
+            unit,
+            actor,
+            Js.Nullable.t(actor),
+          ),
+        [@bs.optional]
+        createdAt:
+          Config.resolver(baseRefChangedEvent, unit, dateTime, dateTime),
+        [@bs.optional]
+        databaseId:
+          Config.resolver(
+            baseRefChangedEvent,
+            unit,
+            int,
+            Js.Nullable.t(int),
+          ),
+        [@bs.optional]
+        id: Config.resolver(baseRefChangedEvent, unit, string, string),
+      };
+    };
+    module HeadRefForcePushedEvent: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        actor:
+          Config.resolver(
+            headRefForcePushedEvent,
+            unit,
+            actor,
+            Js.Nullable.t(actor),
+          ),
+        [@bs.optional]
+        afterCommit:
+          Config.resolver(
+            headRefForcePushedEvent,
+            unit,
+            commit,
+            Js.Nullable.t(commit),
+          ),
+        [@bs.optional]
+        beforeCommit:
+          Config.resolver(
+            headRefForcePushedEvent,
+            unit,
+            commit,
+            Js.Nullable.t(commit),
+          ),
+        [@bs.optional]
+        createdAt:
+          Config.resolver(headRefForcePushedEvent, unit, dateTime, dateTime),
+        [@bs.optional]
+        id: Config.resolver(headRefForcePushedEvent, unit, string, string),
+        [@bs.optional]
+        pullRequest:
+          Config.resolver(
+            headRefForcePushedEvent,
+            unit,
+            pullRequest,
+            pullRequest,
+          ),
+        [@bs.optional]
+        ref:
+          Config.resolver(
+            headRefForcePushedEvent,
+            unit,
+            ref,
+            Js.Nullable.t(ref),
+          ),
+      };
+    };
+    module DeploymentStatusEdge: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        cursor: Config.resolver(deploymentStatusEdge, unit, string, string),
+        [@bs.optional]
+        node:
+          Config.resolver(
+            deploymentStatusEdge,
+            unit,
+            deploymentStatus,
+            Js.Nullable.t(deploymentStatus),
+          ),
+      };
+    };
+    module RepositoryEdge: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        cursor: Config.resolver(repositoryEdge, unit, string, string),
+        [@bs.optional]
+        node:
+          Config.resolver(
+            repositoryEdge,
+            unit,
+            repository,
+            Js.Nullable.t(repository),
+          ),
+      };
+    };
+    module PublicKeyEdge: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        cursor: Config.resolver(publicKeyEdge, unit, string, string),
+        [@bs.optional]
+        node:
+          Config.resolver(
+            publicKeyEdge,
+            unit,
+            publicKey,
+            Js.Nullable.t(publicKey),
+          ),
+      };
+    };
+    module AddStarPayload: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        clientMutationId:
+          Config.resolver(
+            addStarPayload,
+            unit,
+            string,
+            Js.Nullable.t(string),
+          ),
+        [@bs.optional]
+        starrable:
+          Config.resolver(addStarPayload, unit, starrable, starrable),
+      };
+    };
+    module DeleteProjectPayload: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        clientMutationId:
+          Config.resolver(
+            deleteProjectPayload,
+            unit,
+            string,
+            Js.Nullable.t(string),
+          ),
+        [@bs.optional]
+        owner:
+          Config.resolver(
+            deleteProjectPayload,
+            unit,
+            projectOwner,
+            projectOwner,
+          ),
+      };
+    };
+    module Language: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        color:
+          Config.resolver(language, unit, string, Js.Nullable.t(string)),
+        [@bs.optional]
+        id: Config.resolver(language, unit, string, string),
+        [@bs.optional]
+        name: Config.resolver(language, unit, string, string),
+      };
+    };
+    module RepositoryCollaboratorEdge: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        cursor:
+          Config.resolver(repositoryCollaboratorEdge, unit, string, string),
+        [@bs.optional]
+        node: Config.resolver(repositoryCollaboratorEdge, unit, user, user),
+        [@bs.optional]
+        permission:
+          Config.resolver(
+            repositoryCollaboratorEdge,
+            unit,
+            repositoryPermission,
+            repositoryPermission,
+          ),
+      };
+    };
+    module Deployment: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        commit:
+          Config.resolver(deployment, unit, commit, Js.Nullable.t(commit)),
+        [@bs.optional]
+        createdAt: Config.resolver(deployment, unit, dateTime, dateTime),
+        [@bs.optional]
+        creator:
+          Config.resolver(deployment, unit, actor, Js.Nullable.t(actor)),
+        [@bs.optional]
+        databaseId:
+          Config.resolver(deployment, unit, int, Js.Nullable.t(int)),
+        [@bs.optional]
+        description:
+          Config.resolver(deployment, unit, string, Js.Nullable.t(string)),
+        [@bs.optional]
+        environment:
+          Config.resolver(deployment, unit, string, Js.Nullable.t(string)),
+        [@bs.optional]
+        id: Config.resolver(deployment, unit, string, string),
+        [@bs.optional]
+        latestStatus:
+          Config.resolver(
+            deployment,
+            unit,
+            deploymentStatus,
+            Js.Nullable.t(deploymentStatus),
+          ),
+        [@bs.optional]
+        payload:
+          Config.resolver(deployment, unit, string, Js.Nullable.t(string)),
+        [@bs.optional]
+        ref: Config.resolver(deployment, unit, ref, Js.Nullable.t(ref)),
+        [@bs.optional]
+        repository: Config.resolver(deployment, unit, repository, repository),
+        [@bs.optional]
+        state:
+          Config.resolver(
+            deployment,
+            unit,
+            deploymentState,
+            Js.Nullable.t(deploymentState),
+          ),
+        [@bs.optional]
+        statuses:
+          Config.resolver(
+            deployment,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+            },
+            deploymentStatusConnection,
+            Js.Nullable.t(deploymentStatusConnection),
+          ),
+        [@bs.optional]
+        task:
+          Config.resolver(deployment, unit, string, Js.Nullable.t(string)),
+        [@bs.optional]
+        updatedAt: Config.resolver(deployment, unit, dateTime, dateTime),
+      };
+    };
+    module BranchProtectionRule: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        branchProtectionRuleConflicts:
+          Config.resolver(
+            branchProtectionRule,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+            },
+            branchProtectionRuleConflictConnection,
+            branchProtectionRuleConflictConnection,
+          ),
+        [@bs.optional]
+        creator:
+          Config.resolver(
+            branchProtectionRule,
+            unit,
+            actor,
+            Js.Nullable.t(actor),
+          ),
+        [@bs.optional]
+        databaseId:
+          Config.resolver(
+            branchProtectionRule,
+            unit,
+            int,
+            Js.Nullable.t(int),
+          ),
+        [@bs.optional]
+        dismissesStaleReviews:
+          Config.resolver(branchProtectionRule, unit, bool, bool),
+        [@bs.optional]
+        id: Config.resolver(branchProtectionRule, unit, string, string),
+        [@bs.optional]
+        isAdminEnforced:
+          Config.resolver(branchProtectionRule, unit, bool, bool),
+        [@bs.optional]
+        matchingRefs:
+          Config.resolver(
+            branchProtectionRule,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+            },
+            refConnection,
+            refConnection,
+          ),
+        [@bs.optional]
+        pattern: Config.resolver(branchProtectionRule, unit, string, string),
+        [@bs.optional]
+        pushAllowances:
+          Config.resolver(
+            branchProtectionRule,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+            },
+            pushAllowanceConnection,
+            pushAllowanceConnection,
+          ),
+        [@bs.optional]
+        repository:
+          Config.resolver(
+            branchProtectionRule,
+            unit,
+            repository,
+            Js.Nullable.t(repository),
+          ),
+        [@bs.optional]
+        requiredApprovingReviewCount:
+          Config.resolver(
+            branchProtectionRule,
+            unit,
+            int,
+            Js.Nullable.t(int),
+          ),
+        [@bs.optional]
+        requiredStatusCheckContexts:
+          Config.resolver(
+            branchProtectionRule,
+            unit,
+            string,
+            Js.Nullable.t(array(Js.Nullable.t(string))),
+          ),
+        [@bs.optional]
+        requiresApprovingReviews:
+          Config.resolver(branchProtectionRule, unit, bool, bool),
+        [@bs.optional]
+        requiresCommitSignatures:
+          Config.resolver(branchProtectionRule, unit, bool, bool),
+        [@bs.optional]
+        requiresStatusChecks:
+          Config.resolver(branchProtectionRule, unit, bool, bool),
+        [@bs.optional]
+        requiresStrictStatusChecks:
+          Config.resolver(branchProtectionRule, unit, bool, bool),
+        [@bs.optional]
+        restrictsPushes:
+          Config.resolver(branchProtectionRule, unit, bool, bool),
+        [@bs.optional]
+        restrictsReviewDismissals:
+          Config.resolver(branchProtectionRule, unit, bool, bool),
+        [@bs.optional]
+        reviewDismissalAllowances:
+          Config.resolver(
+            branchProtectionRule,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+            },
+            reviewDismissalAllowanceConnection,
+            reviewDismissalAllowanceConnection,
+          ),
+      };
+    };
+    module Blame: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        ranges: Config.resolver(blame, unit, blameRange, array(blameRange)),
+      };
+    };
+    module TeamRepositoryEdge: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        cursor: Config.resolver(teamRepositoryEdge, unit, string, string),
+        [@bs.optional]
+        node:
+          Config.resolver(teamRepositoryEdge, unit, repository, repository),
+        [@bs.optional]
+        permission:
+          Config.resolver(
+            teamRepositoryEdge,
+            unit,
+            repositoryPermission,
+            repositoryPermission,
+          ),
+      };
+    };
+    module GistEdge: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        cursor: Config.resolver(gistEdge, unit, string, string),
+        [@bs.optional]
+        node: Config.resolver(gistEdge, unit, gist, Js.Nullable.t(gist)),
+      };
+    };
+    module UserConnection: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        edges:
+          Config.resolver(
+            userConnection,
+            unit,
+            userEdge,
+            Js.Nullable.t(array(Js.Nullable.t(userEdge))),
+          ),
+        [@bs.optional]
+        nodes:
+          Config.resolver(
+            userConnection,
+            unit,
+            user,
+            Js.Nullable.t(array(Js.Nullable.t(user))),
+          ),
+        [@bs.optional]
+        pageInfo: Config.resolver(userConnection, unit, pageInfo, pageInfo),
+        [@bs.optional]
+        totalCount: Config.resolver(userConnection, unit, int, int),
+      };
+    };
+    module CommitHistoryConnection: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        edges:
+          Config.resolver(
+            commitHistoryConnection,
+            unit,
+            commitEdge,
+            Js.Nullable.t(array(Js.Nullable.t(commitEdge))),
+          ),
+        [@bs.optional]
+        nodes:
+          Config.resolver(
+            commitHistoryConnection,
+            unit,
+            commit,
+            Js.Nullable.t(array(Js.Nullable.t(commit))),
+          ),
+        [@bs.optional]
+        pageInfo:
+          Config.resolver(commitHistoryConnection, unit, pageInfo, pageInfo),
+        [@bs.optional]
+        totalCount: Config.resolver(commitHistoryConnection, unit, int, int),
+      };
+    };
+    module TeamEdge: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        cursor: Config.resolver(teamEdge, unit, string, string),
+        [@bs.optional]
+        node: Config.resolver(teamEdge, unit, team, Js.Nullable.t(team)),
+      };
+    };
+    module TeamRepositoryConnection: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        edges:
+          Config.resolver(
+            teamRepositoryConnection,
+            unit,
+            teamRepositoryEdge,
+            Js.Nullable.t(array(Js.Nullable.t(teamRepositoryEdge))),
+          ),
+        [@bs.optional]
+        nodes:
+          Config.resolver(
+            teamRepositoryConnection,
+            unit,
+            repository,
+            Js.Nullable.t(array(Js.Nullable.t(repository))),
+          ),
+        [@bs.optional]
+        pageInfo:
+          Config.resolver(teamRepositoryConnection, unit, pageInfo, pageInfo),
+        [@bs.optional]
+        totalCount: Config.resolver(teamRepositoryConnection, unit, int, int),
+      };
+    };
+    module CommitEdge: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        cursor: Config.resolver(commitEdge, unit, string, string),
+        [@bs.optional]
+        node:
+          Config.resolver(commitEdge, unit, commit, Js.Nullable.t(commit)),
+      };
+    };
+    module MarketplaceCategory: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        description:
+          Config.resolver(
+            marketplaceCategory,
+            unit,
+            string,
+            Js.Nullable.t(string),
+          ),
+        [@bs.optional]
+        howItWorks:
+          Config.resolver(
+            marketplaceCategory,
+            unit,
+            string,
+            Js.Nullable.t(string),
+          ),
+        [@bs.optional]
+        id: Config.resolver(marketplaceCategory, unit, string, string),
+        [@bs.optional]
+        name: Config.resolver(marketplaceCategory, unit, string, string),
+        [@bs.optional]
+        primaryListingCount:
+          Config.resolver(marketplaceCategory, unit, int, int),
+        [@bs.optional]
+        resourcePath: Config.resolver(marketplaceCategory, unit, uRI, uRI),
+        [@bs.optional]
+        secondaryListingCount:
+          Config.resolver(marketplaceCategory, unit, int, int),
+        [@bs.optional]
+        slug: Config.resolver(marketplaceCategory, unit, string, string),
+        [@bs.optional]
+        url: Config.resolver(marketplaceCategory, unit, uRI, uRI),
+      };
+    };
+    module BaseRefForcePushedEvent: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        actor:
+          Config.resolver(
+            baseRefForcePushedEvent,
+            unit,
+            actor,
+            Js.Nullable.t(actor),
+          ),
+        [@bs.optional]
+        afterCommit:
+          Config.resolver(
+            baseRefForcePushedEvent,
+            unit,
+            commit,
+            Js.Nullable.t(commit),
+          ),
+        [@bs.optional]
+        beforeCommit:
+          Config.resolver(
+            baseRefForcePushedEvent,
+            unit,
+            commit,
+            Js.Nullable.t(commit),
+          ),
+        [@bs.optional]
+        createdAt:
+          Config.resolver(baseRefForcePushedEvent, unit, dateTime, dateTime),
+        [@bs.optional]
+        id: Config.resolver(baseRefForcePushedEvent, unit, string, string),
+        [@bs.optional]
+        pullRequest:
+          Config.resolver(
+            baseRefForcePushedEvent,
+            unit,
+            pullRequest,
+            pullRequest,
+          ),
+        [@bs.optional]
+        ref:
+          Config.resolver(
+            baseRefForcePushedEvent,
+            unit,
+            ref,
+            Js.Nullable.t(ref),
+          ),
+      };
+    };
+    module BlameRange: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        age: Config.resolver(blameRange, unit, int, int),
+        [@bs.optional]
+        commit: Config.resolver(blameRange, unit, commit, commit),
+        [@bs.optional]
+        endingLine: Config.resolver(blameRange, unit, int, int),
+        [@bs.optional]
+        startingLine: Config.resolver(blameRange, unit, int, int),
+      };
+    };
+    module TreeEntry: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        mode: Config.resolver(treeEntry, unit, int, int),
+        [@bs.optional]
+        name: Config.resolver(treeEntry, unit, string, string),
+        [@bs.optional] [@bs.as "object"]
+        object_:
+          Config.resolver(
+            treeEntry,
+            unit,
+            gitObject,
+            Js.Nullable.t(gitObject),
+          ),
+        [@bs.optional]
+        oid: Config.resolver(treeEntry, unit, gitObjectID, gitObjectID),
+        [@bs.optional]
+        repository: Config.resolver(treeEntry, unit, repository, repository),
+        [@bs.optional] [@bs.as "type"]
+        type_: Config.resolver(treeEntry, unit, string, string),
+      };
+    };
+    module CreateProjectPayload: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        clientMutationId:
+          Config.resolver(
+            createProjectPayload,
+            unit,
+            string,
+            Js.Nullable.t(string),
+          ),
+        [@bs.optional]
+        project:
+          Config.resolver(createProjectPayload, unit, project, project),
+      };
+    };
+    module LabelEdge: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        cursor: Config.resolver(labelEdge, unit, string, string),
+        [@bs.optional]
+        node: Config.resolver(labelEdge, unit, label, Js.Nullable.t(label)),
+      };
+    };
+    module PullRequestReviewCommentConnection: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        edges:
+          Config.resolver(
+            pullRequestReviewCommentConnection,
+            unit,
+            pullRequestReviewCommentEdge,
+            Js.Nullable.t(
+              array(Js.Nullable.t(pullRequestReviewCommentEdge)),
+            ),
+          ),
+        [@bs.optional]
+        nodes:
+          Config.resolver(
+            pullRequestReviewCommentConnection,
+            unit,
+            pullRequestReviewComment,
+            Js.Nullable.t(array(Js.Nullable.t(pullRequestReviewComment))),
+          ),
+        [@bs.optional]
+        pageInfo:
+          Config.resolver(
+            pullRequestReviewCommentConnection,
+            unit,
+            pageInfo,
+            pageInfo,
+          ),
+        [@bs.optional]
+        totalCount:
+          Config.resolver(pullRequestReviewCommentConnection, unit, int, int),
+      };
+    };
+    module CommitCommentConnection: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        edges:
+          Config.resolver(
+            commitCommentConnection,
+            unit,
+            commitCommentEdge,
+            Js.Nullable.t(array(Js.Nullable.t(commitCommentEdge))),
+          ),
+        [@bs.optional]
+        nodes:
+          Config.resolver(
+            commitCommentConnection,
+            unit,
+            commitComment,
+            Js.Nullable.t(array(Js.Nullable.t(commitComment))),
+          ),
+        [@bs.optional]
+        pageInfo:
+          Config.resolver(commitCommentConnection, unit, pageInfo, pageInfo),
+        [@bs.optional]
+        totalCount: Config.resolver(commitCommentConnection, unit, int, int),
+      };
+    };
+    module MarketplaceListing: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        app:
+          Config.resolver(marketplaceListing, unit, app, Js.Nullable.t(app)),
+        [@bs.optional]
+        companyUrl:
+          Config.resolver(marketplaceListing, unit, uRI, Js.Nullable.t(uRI)),
+        [@bs.optional]
+        configurationResourcePath:
+          Config.resolver(marketplaceListing, unit, uRI, uRI),
+        [@bs.optional]
+        configurationUrl: Config.resolver(marketplaceListing, unit, uRI, uRI),
+        [@bs.optional]
+        documentationUrl:
+          Config.resolver(marketplaceListing, unit, uRI, Js.Nullable.t(uRI)),
+        [@bs.optional]
+        extendedDescription:
+          Config.resolver(
+            marketplaceListing,
+            unit,
+            string,
+            Js.Nullable.t(string),
+          ),
+        [@bs.optional]
+        extendedDescriptionHTML:
+          Config.resolver(marketplaceListing, unit, hTML, hTML),
+        [@bs.optional]
+        fullDescription:
+          Config.resolver(marketplaceListing, unit, string, string),
+        [@bs.optional]
+        fullDescriptionHTML:
+          Config.resolver(marketplaceListing, unit, hTML, hTML),
+        [@bs.optional]
+        hasApprovalBeenRequested:
+          Config.resolver(marketplaceListing, unit, bool, bool),
+        [@bs.optional]
+        hasPublishedFreeTrialPlans:
+          Config.resolver(marketplaceListing, unit, bool, bool),
+        [@bs.optional]
+        hasTermsOfService:
+          Config.resolver(marketplaceListing, unit, bool, bool),
+        [@bs.optional]
+        howItWorks:
+          Config.resolver(
+            marketplaceListing,
+            unit,
+            string,
+            Js.Nullable.t(string),
+          ),
+        [@bs.optional]
+        howItWorksHTML: Config.resolver(marketplaceListing, unit, hTML, hTML),
+        [@bs.optional]
+        id: Config.resolver(marketplaceListing, unit, string, string),
+        [@bs.optional]
+        installationUrl:
+          Config.resolver(marketplaceListing, unit, uRI, Js.Nullable.t(uRI)),
+        [@bs.optional]
+        installedForViewer:
+          Config.resolver(marketplaceListing, unit, bool, bool),
+        [@bs.optional]
+        isApproved: Config.resolver(marketplaceListing, unit, bool, bool),
+        [@bs.optional]
+        isDelisted: Config.resolver(marketplaceListing, unit, bool, bool),
+        [@bs.optional]
+        isDraft: Config.resolver(marketplaceListing, unit, bool, bool),
+        [@bs.optional]
+        isPaid: Config.resolver(marketplaceListing, unit, bool, bool),
+        [@bs.optional]
+        isRejected: Config.resolver(marketplaceListing, unit, bool, bool),
+        [@bs.optional]
+        logoBackgroundColor:
+          Config.resolver(marketplaceListing, unit, string, string),
+        [@bs.optional]
+        logoUrl:
+          Config.resolver(
+            marketplaceListing,
+            {. "size": Js.Nullable.t(int)},
+            uRI,
+            Js.Nullable.t(uRI),
+          ),
+        [@bs.optional]
+        name: Config.resolver(marketplaceListing, unit, string, string),
+        [@bs.optional]
+        normalizedShortDescription:
+          Config.resolver(marketplaceListing, unit, string, string),
+        [@bs.optional]
+        pricingUrl:
+          Config.resolver(marketplaceListing, unit, uRI, Js.Nullable.t(uRI)),
+        [@bs.optional]
+        primaryCategory:
+          Config.resolver(
+            marketplaceListing,
+            unit,
+            marketplaceCategory,
+            marketplaceCategory,
+          ),
+        [@bs.optional]
+        privacyPolicyUrl: Config.resolver(marketplaceListing, unit, uRI, uRI),
+        [@bs.optional]
+        resourcePath: Config.resolver(marketplaceListing, unit, uRI, uRI),
+        [@bs.optional]
+        screenshotUrls:
+          Config.resolver(
+            marketplaceListing,
+            unit,
+            string,
+            array(Js.Nullable.t(string)),
+          ),
+        [@bs.optional]
+        secondaryCategory:
+          Config.resolver(
+            marketplaceListing,
+            unit,
+            marketplaceCategory,
+            Js.Nullable.t(marketplaceCategory),
+          ),
+        [@bs.optional]
+        shortDescription:
+          Config.resolver(marketplaceListing, unit, string, string),
+        [@bs.optional]
+        slug: Config.resolver(marketplaceListing, unit, string, string),
+        [@bs.optional]
+        statusUrl:
+          Config.resolver(marketplaceListing, unit, uRI, Js.Nullable.t(uRI)),
+        [@bs.optional]
+        supportEmail:
+          Config.resolver(
+            marketplaceListing,
+            unit,
+            string,
+            Js.Nullable.t(string),
+          ),
+        [@bs.optional]
+        supportUrl: Config.resolver(marketplaceListing, unit, uRI, uRI),
+        [@bs.optional]
+        termsOfServiceUrl:
+          Config.resolver(marketplaceListing, unit, uRI, Js.Nullable.t(uRI)),
+        [@bs.optional]
+        url: Config.resolver(marketplaceListing, unit, uRI, uRI),
+        [@bs.optional]
+        viewerCanAddPlans:
+          Config.resolver(marketplaceListing, unit, bool, bool),
+        [@bs.optional]
+        viewerCanApprove:
+          Config.resolver(marketplaceListing, unit, bool, bool),
+        [@bs.optional]
+        viewerCanDelist:
+          Config.resolver(marketplaceListing, unit, bool, bool),
+        [@bs.optional]
+        viewerCanEdit: Config.resolver(marketplaceListing, unit, bool, bool),
+        [@bs.optional]
+        viewerCanEditCategories:
+          Config.resolver(marketplaceListing, unit, bool, bool),
+        [@bs.optional]
+        viewerCanEditPlans:
+          Config.resolver(marketplaceListing, unit, bool, bool),
+        [@bs.optional]
+        viewerCanRedraft:
+          Config.resolver(marketplaceListing, unit, bool, bool),
+        [@bs.optional]
+        viewerCanReject:
+          Config.resolver(marketplaceListing, unit, bool, bool),
+        [@bs.optional]
+        viewerCanRequestApproval:
+          Config.resolver(marketplaceListing, unit, bool, bool),
+        [@bs.optional]
+        viewerHasPurchased:
+          Config.resolver(marketplaceListing, unit, bool, bool),
+        [@bs.optional]
+        viewerHasPurchasedForAllOrganizations:
+          Config.resolver(marketplaceListing, unit, bool, bool),
+        [@bs.optional]
+        viewerIsListingAdmin:
+          Config.resolver(marketplaceListing, unit, bool, bool),
+      };
+    };
+    module RefEdge: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        cursor: Config.resolver(refEdge, unit, string, string),
+        [@bs.optional]
+        node: Config.resolver(refEdge, unit, ref, Js.Nullable.t(ref)),
+      };
+    };
+    module TopicEdge: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        cursor: Config.resolver(topicEdge, unit, string, string),
+        [@bs.optional]
+        node: Config.resolver(topicEdge, unit, topic, Js.Nullable.t(topic)),
+      };
+    };
+    module LanguageConnection: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        edges:
+          Config.resolver(
+            languageConnection,
+            unit,
+            languageEdge,
+            Js.Nullable.t(array(Js.Nullable.t(languageEdge))),
+          ),
+        [@bs.optional]
+        nodes:
+          Config.resolver(
+            languageConnection,
+            unit,
+            language,
+            Js.Nullable.t(array(Js.Nullable.t(language))),
+          ),
+        [@bs.optional]
+        pageInfo:
+          Config.resolver(languageConnection, unit, pageInfo, pageInfo),
+        [@bs.optional]
+        totalCount: Config.resolver(languageConnection, unit, int, int),
+        [@bs.optional]
+        totalSize: Config.resolver(languageConnection, unit, int, int),
+      };
+    };
+    module ProjectCard: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        column:
+          Config.resolver(
+            projectCard,
+            unit,
+            projectColumn,
+            Js.Nullable.t(projectColumn),
+          ),
+        [@bs.optional]
+        content:
+          Config.resolver(
+            projectCard,
+            unit,
+            projectCardItem,
+            Js.Nullable.t(projectCardItem),
+          ),
+        [@bs.optional]
+        createdAt: Config.resolver(projectCard, unit, dateTime, dateTime),
+        [@bs.optional]
+        creator:
+          Config.resolver(projectCard, unit, actor, Js.Nullable.t(actor)),
+        [@bs.optional]
+        databaseId:
+          Config.resolver(projectCard, unit, int, Js.Nullable.t(int)),
+        [@bs.optional]
+        id: Config.resolver(projectCard, unit, string, string),
+        [@bs.optional]
+        isArchived: Config.resolver(projectCard, unit, bool, bool),
+        [@bs.optional]
+        note:
+          Config.resolver(projectCard, unit, string, Js.Nullable.t(string)),
+        [@bs.optional]
+        project: Config.resolver(projectCard, unit, project, project),
+        [@bs.optional]
+        resourcePath: Config.resolver(projectCard, unit, uRI, uRI),
+        [@bs.optional]
+        state:
+          Config.resolver(
+            projectCard,
+            unit,
+            projectCardState,
+            Js.Nullable.t(projectCardState),
+          ),
+        [@bs.optional]
+        updatedAt: Config.resolver(projectCard, unit, dateTime, dateTime),
+        [@bs.optional]
+        url: Config.resolver(projectCard, unit, uRI, uRI),
+      };
+    };
+    module TextMatchHighlight: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        beginIndice: Config.resolver(textMatchHighlight, unit, int, int),
+        [@bs.optional]
+        endIndice: Config.resolver(textMatchHighlight, unit, int, int),
+        [@bs.optional]
+        text: Config.resolver(textMatchHighlight, unit, string, string),
+      };
+    };
+    module RepositoryInvitationEdge: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        cursor:
+          Config.resolver(repositoryInvitationEdge, unit, string, string),
+        [@bs.optional]
+        node:
+          Config.resolver(
+            repositoryInvitationEdge,
+            unit,
+            repositoryInvitation,
+            Js.Nullable.t(repositoryInvitation),
+          ),
+      };
+    };
+    module OrganizationInvitationEdge: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        cursor:
+          Config.resolver(organizationInvitationEdge, unit, string, string),
+        [@bs.optional]
+        node:
+          Config.resolver(
+            organizationInvitationEdge,
+            unit,
+            organizationInvitation,
+            Js.Nullable.t(organizationInvitation),
+          ),
+      };
+    };
+    module GistComment: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        author:
+          Config.resolver(gistComment, unit, actor, Js.Nullable.t(actor)),
+        [@bs.optional]
+        authorAssociation:
+          Config.resolver(
+            gistComment,
+            unit,
+            commentAuthorAssociation,
+            commentAuthorAssociation,
+          ),
+        [@bs.optional]
+        body: Config.resolver(gistComment, unit, string, string),
+        [@bs.optional]
+        bodyHTML: Config.resolver(gistComment, unit, hTML, hTML),
+        [@bs.optional]
+        bodyText: Config.resolver(gistComment, unit, string, string),
+        [@bs.optional]
+        createdAt: Config.resolver(gistComment, unit, dateTime, dateTime),
+        [@bs.optional]
+        createdViaEmail: Config.resolver(gistComment, unit, bool, bool),
+        [@bs.optional]
+        databaseId:
+          Config.resolver(gistComment, unit, int, Js.Nullable.t(int)),
+        [@bs.optional]
+        editor:
+          Config.resolver(gistComment, unit, actor, Js.Nullable.t(actor)),
+        [@bs.optional]
+        gist: Config.resolver(gistComment, unit, gist, gist),
+        [@bs.optional]
+        id: Config.resolver(gistComment, unit, string, string),
+        [@bs.optional]
+        includesCreatedEdit: Config.resolver(gistComment, unit, bool, bool),
+        [@bs.optional]
+        lastEditedAt:
+          Config.resolver(
+            gistComment,
+            unit,
+            dateTime,
+            Js.Nullable.t(dateTime),
+          ),
+        [@bs.optional]
+        publishedAt:
+          Config.resolver(
+            gistComment,
+            unit,
+            dateTime,
+            Js.Nullable.t(dateTime),
+          ),
+        [@bs.optional]
+        updatedAt: Config.resolver(gistComment, unit, dateTime, dateTime),
+        [@bs.optional]
+        userContentEdits:
+          Config.resolver(
+            gistComment,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+            },
+            userContentEditConnection,
+            Js.Nullable.t(userContentEditConnection),
+          ),
+        [@bs.optional]
+        viewerCanDelete: Config.resolver(gistComment, unit, bool, bool),
+        [@bs.optional]
+        viewerCanUpdate: Config.resolver(gistComment, unit, bool, bool),
+        [@bs.optional]
+        viewerCannotUpdateReasons:
+          Config.resolver(
+            gistComment,
+            unit,
+            commentCannotUpdateReason,
+            array(commentCannotUpdateReason),
+          ),
+        [@bs.optional]
+        viewerDidAuthor: Config.resolver(gistComment, unit, bool, bool),
+      };
+    };
+    module AddProjectCardPayload: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        cardEdge:
+          Config.resolver(
+            addProjectCardPayload,
+            unit,
+            projectCardEdge,
+            projectCardEdge,
+          ),
+        [@bs.optional]
+        clientMutationId:
+          Config.resolver(
+            addProjectCardPayload,
+            unit,
+            string,
+            Js.Nullable.t(string),
+          ),
+        [@bs.optional]
+        projectColumn:
+          Config.resolver(addProjectCardPayload, unit, project, project),
+      };
+    };
+    module Reaction: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        content:
+          Config.resolver(reaction, unit, reactionContent, reactionContent),
+        [@bs.optional]
+        createdAt: Config.resolver(reaction, unit, dateTime, dateTime),
+        [@bs.optional]
+        databaseId: Config.resolver(reaction, unit, int, Js.Nullable.t(int)),
+        [@bs.optional]
+        id: Config.resolver(reaction, unit, string, string),
+        [@bs.optional]
+        reactable: Config.resolver(reaction, unit, reactable, reactable),
+        [@bs.optional]
+        user: Config.resolver(reaction, unit, user, Js.Nullable.t(user)),
+      };
+    };
+    module CrossReferencedEvent: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        actor:
+          Config.resolver(
+            crossReferencedEvent,
+            unit,
+            actor,
+            Js.Nullable.t(actor),
+          ),
+        [@bs.optional]
+        createdAt:
+          Config.resolver(crossReferencedEvent, unit, dateTime, dateTime),
+        [@bs.optional]
+        id: Config.resolver(crossReferencedEvent, unit, string, string),
+        [@bs.optional]
+        isCrossRepository:
+          Config.resolver(crossReferencedEvent, unit, bool, bool),
+        [@bs.optional]
+        referencedAt:
+          Config.resolver(crossReferencedEvent, unit, dateTime, dateTime),
+        [@bs.optional]
+        resourcePath: Config.resolver(crossReferencedEvent, unit, uRI, uRI),
+        [@bs.optional]
+        source:
+          Config.resolver(
+            crossReferencedEvent,
+            unit,
+            referencedSubject,
+            referencedSubject,
+          ),
+        [@bs.optional]
+        target:
+          Config.resolver(
+            crossReferencedEvent,
+            unit,
+            referencedSubject,
+            referencedSubject,
+          ),
+        [@bs.optional]
+        url: Config.resolver(crossReferencedEvent, unit, uRI, uRI),
+        [@bs.optional]
+        willCloseTarget:
+          Config.resolver(crossReferencedEvent, unit, bool, bool),
+      };
+    };
+    module IssueTimelineItemEdge: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        cursor: Config.resolver(issueTimelineItemEdge, unit, string, string),
+        [@bs.optional]
+        node:
+          Config.resolver(
+            issueTimelineItemEdge,
+            unit,
+            issueTimelineItem,
+            Js.Nullable.t(issueTimelineItem),
+          ),
+      };
+    };
+    module RefConnection: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        edges:
+          Config.resolver(
+            refConnection,
+            unit,
+            refEdge,
+            Js.Nullable.t(array(Js.Nullable.t(refEdge))),
+          ),
+        [@bs.optional]
+        nodes:
+          Config.resolver(
+            refConnection,
+            unit,
+            ref,
+            Js.Nullable.t(array(Js.Nullable.t(ref))),
+          ),
+        [@bs.optional]
+        pageInfo: Config.resolver(refConnection, unit, pageInfo, pageInfo),
+        [@bs.optional]
+        totalCount: Config.resolver(refConnection, unit, int, int),
+      };
+    };
+    module UpdateProjectColumnPayload: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        clientMutationId:
+          Config.resolver(
+            updateProjectColumnPayload,
+            unit,
+            string,
+            Js.Nullable.t(string),
+          ),
+        [@bs.optional]
+        projectColumn:
+          Config.resolver(
+            updateProjectColumnPayload,
+            unit,
+            projectColumn,
+            projectColumn,
+          ),
+      };
+    };
+    module AddPullRequestReviewPayload: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        clientMutationId:
+          Config.resolver(
+            addPullRequestReviewPayload,
+            unit,
+            string,
+            Js.Nullable.t(string),
+          ),
+        [@bs.optional]
+        pullRequestReview:
+          Config.resolver(
+            addPullRequestReviewPayload,
+            unit,
+            pullRequestReview,
+            pullRequestReview,
+          ),
+        [@bs.optional]
+        reviewEdge:
+          Config.resolver(
+            addPullRequestReviewPayload,
+            unit,
+            pullRequestReviewEdge,
+            pullRequestReviewEdge,
+          ),
+      };
+    };
+    module Tag: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        abbreviatedOid: Config.resolver(tag, unit, string, string),
+        [@bs.optional]
+        commitResourcePath: Config.resolver(tag, unit, uRI, uRI),
+        [@bs.optional]
+        commitUrl: Config.resolver(tag, unit, uRI, uRI),
+        [@bs.optional]
+        id: Config.resolver(tag, unit, string, string),
+        [@bs.optional]
+        message: Config.resolver(tag, unit, string, Js.Nullable.t(string)),
+        [@bs.optional]
+        name: Config.resolver(tag, unit, string, string),
+        [@bs.optional]
+        oid: Config.resolver(tag, unit, gitObjectID, gitObjectID),
+        [@bs.optional]
+        repository: Config.resolver(tag, unit, repository, repository),
+        [@bs.optional]
+        tagger:
+          Config.resolver(tag, unit, gitActor, Js.Nullable.t(gitActor)),
+        [@bs.optional]
+        target: Config.resolver(tag, unit, gitObject, gitObject),
+      };
+    };
+    module IssueCommentConnection: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        edges:
+          Config.resolver(
+            issueCommentConnection,
+            unit,
+            issueCommentEdge,
+            Js.Nullable.t(array(Js.Nullable.t(issueCommentEdge))),
+          ),
+        [@bs.optional]
+        nodes:
+          Config.resolver(
+            issueCommentConnection,
+            unit,
+            issueComment,
+            Js.Nullable.t(array(Js.Nullable.t(issueComment))),
+          ),
+        [@bs.optional]
+        pageInfo:
+          Config.resolver(issueCommentConnection, unit, pageInfo, pageInfo),
+        [@bs.optional]
+        totalCount: Config.resolver(issueCommentConnection, unit, int, int),
+      };
+    };
+    module LanguageEdge: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        cursor: Config.resolver(languageEdge, unit, string, string),
+        [@bs.optional]
+        node: Config.resolver(languageEdge, unit, language, language),
+        [@bs.optional]
+        size: Config.resolver(languageEdge, unit, int, int),
+      };
+    };
+    module StargazerConnection: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        edges:
+          Config.resolver(
+            stargazerConnection,
+            unit,
+            stargazerEdge,
+            Js.Nullable.t(array(Js.Nullable.t(stargazerEdge))),
+          ),
+        [@bs.optional]
+        nodes:
+          Config.resolver(
+            stargazerConnection,
+            unit,
+            user,
+            Js.Nullable.t(array(Js.Nullable.t(user))),
+          ),
+        [@bs.optional]
+        pageInfo:
+          Config.resolver(stargazerConnection, unit, pageInfo, pageInfo),
+        [@bs.optional]
+        totalCount: Config.resolver(stargazerConnection, unit, int, int),
+      };
+    };
+    module SearchResultItemConnection: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        codeCount:
+          Config.resolver(searchResultItemConnection, unit, int, int),
+        [@bs.optional]
+        edges:
+          Config.resolver(
+            searchResultItemConnection,
+            unit,
+            searchResultItemEdge,
+            Js.Nullable.t(array(Js.Nullable.t(searchResultItemEdge))),
+          ),
+        [@bs.optional]
+        issueCount:
+          Config.resolver(searchResultItemConnection, unit, int, int),
+        [@bs.optional]
+        nodes:
+          Config.resolver(
+            searchResultItemConnection,
+            unit,
+            searchResultItem,
+            Js.Nullable.t(array(Js.Nullable.t(searchResultItem))),
+          ),
+        [@bs.optional]
+        pageInfo:
+          Config.resolver(
+            searchResultItemConnection,
+            unit,
+            pageInfo,
+            pageInfo,
+          ),
+        [@bs.optional]
+        repositoryCount:
+          Config.resolver(searchResultItemConnection, unit, int, int),
+        [@bs.optional]
+        userCount:
+          Config.resolver(searchResultItemConnection, unit, int, int),
+        [@bs.optional]
+        wikiCount:
+          Config.resolver(searchResultItemConnection, unit, int, int),
+      };
+    };
+    module Tree: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        abbreviatedOid: Config.resolver(tree, unit, string, string),
+        [@bs.optional]
+        commitResourcePath: Config.resolver(tree, unit, uRI, uRI),
+        [@bs.optional]
+        commitUrl: Config.resolver(tree, unit, uRI, uRI),
+        [@bs.optional]
+        entries:
+          Config.resolver(
+            tree,
+            unit,
+            treeEntry,
+            Js.Nullable.t(array(treeEntry)),
+          ),
+        [@bs.optional]
+        id: Config.resolver(tree, unit, string, string),
+        [@bs.optional]
+        oid: Config.resolver(tree, unit, gitObjectID, gitObjectID),
+        [@bs.optional]
+        repository: Config.resolver(tree, unit, repository, repository),
+      };
+    };
+    module ReviewRequest: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        databaseId:
+          Config.resolver(reviewRequest, unit, int, Js.Nullable.t(int)),
+        [@bs.optional]
+        id: Config.resolver(reviewRequest, unit, string, string),
+        [@bs.optional]
+        pullRequest:
+          Config.resolver(reviewRequest, unit, pullRequest, pullRequest),
+        [@bs.optional]
+        requestedReviewer:
+          Config.resolver(
+            reviewRequest,
+            unit,
+            requestedReviewer,
+            Js.Nullable.t(requestedReviewer),
+          ),
+      };
+    };
+    module SuggestedReviewer: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        isAuthor: Config.resolver(suggestedReviewer, unit, bool, bool),
+        [@bs.optional]
+        isCommenter: Config.resolver(suggestedReviewer, unit, bool, bool),
+        [@bs.optional]
+        reviewer: Config.resolver(suggestedReviewer, unit, user, user),
+      };
+    };
+    module RemoveStarPayload: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        clientMutationId:
+          Config.resolver(
+            removeStarPayload,
+            unit,
+            string,
+            Js.Nullable.t(string),
+          ),
+        [@bs.optional]
+        starrable:
+          Config.resolver(removeStarPayload, unit, starrable, starrable),
+      };
+    };
+    module PullRequestCommitEdge: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        cursor: Config.resolver(pullRequestCommitEdge, unit, string, string),
+        [@bs.optional]
+        node:
+          Config.resolver(
+            pullRequestCommitEdge,
+            unit,
+            pullRequestCommit,
+            Js.Nullable.t(pullRequestCommit),
+          ),
+      };
+    };
+    module DeployKeyConnection: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        edges:
+          Config.resolver(
+            deployKeyConnection,
+            unit,
+            deployKeyEdge,
+            Js.Nullable.t(array(Js.Nullable.t(deployKeyEdge))),
+          ),
+        [@bs.optional]
+        nodes:
+          Config.resolver(
+            deployKeyConnection,
+            unit,
+            deployKey,
+            Js.Nullable.t(array(Js.Nullable.t(deployKey))),
+          ),
+        [@bs.optional]
+        pageInfo:
+          Config.resolver(deployKeyConnection, unit, pageInfo, pageInfo),
+        [@bs.optional]
+        totalCount: Config.resolver(deployKeyConnection, unit, int, int),
+      };
+    };
+    module ReleaseAsset: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        contentType: Config.resolver(releaseAsset, unit, string, string),
+        [@bs.optional]
+        createdAt: Config.resolver(releaseAsset, unit, dateTime, dateTime),
+        [@bs.optional]
+        downloadCount: Config.resolver(releaseAsset, unit, int, int),
+        [@bs.optional]
+        downloadUrl: Config.resolver(releaseAsset, unit, uRI, uRI),
+        [@bs.optional]
+        id: Config.resolver(releaseAsset, unit, string, string),
+        [@bs.optional]
+        name: Config.resolver(releaseAsset, unit, string, string),
+        [@bs.optional]
+        release:
+          Config.resolver(
+            releaseAsset,
+            unit,
+            release,
+            Js.Nullable.t(release),
+          ),
+        [@bs.optional]
+        size: Config.resolver(releaseAsset, unit, int, int),
+        [@bs.optional]
+        updatedAt: Config.resolver(releaseAsset, unit, dateTime, dateTime),
+        [@bs.optional]
+        uploadedBy: Config.resolver(releaseAsset, unit, user, user),
+        [@bs.optional]
+        url: Config.resolver(releaseAsset, unit, uRI, uRI),
+      };
+    };
+    module BranchProtectionRuleConnection: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        edges:
+          Config.resolver(
+            branchProtectionRuleConnection,
+            unit,
+            branchProtectionRuleEdge,
+            Js.Nullable.t(array(Js.Nullable.t(branchProtectionRuleEdge))),
+          ),
+        [@bs.optional]
+        nodes:
+          Config.resolver(
+            branchProtectionRuleConnection,
+            unit,
+            branchProtectionRule,
+            Js.Nullable.t(array(Js.Nullable.t(branchProtectionRule))),
+          ),
+        [@bs.optional]
+        pageInfo:
+          Config.resolver(
+            branchProtectionRuleConnection,
+            unit,
+            pageInfo,
+            pageInfo,
+          ),
+        [@bs.optional]
+        totalCount:
+          Config.resolver(branchProtectionRuleConnection, unit, int, int),
+      };
+    };
+    module ReleaseAssetConnection: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        edges:
+          Config.resolver(
+            releaseAssetConnection,
+            unit,
+            releaseAssetEdge,
+            Js.Nullable.t(array(Js.Nullable.t(releaseAssetEdge))),
+          ),
+        [@bs.optional]
+        nodes:
+          Config.resolver(
+            releaseAssetConnection,
+            unit,
+            releaseAsset,
+            Js.Nullable.t(array(Js.Nullable.t(releaseAsset))),
+          ),
+        [@bs.optional]
+        pageInfo:
+          Config.resolver(releaseAssetConnection, unit, pageInfo, pageInfo),
+        [@bs.optional]
+        totalCount: Config.resolver(releaseAssetConnection, unit, int, int),
+      };
+    };
+    module PullRequestReview: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        author:
+          Config.resolver(
+            pullRequestReview,
+            unit,
+            actor,
+            Js.Nullable.t(actor),
+          ),
+        [@bs.optional]
+        authorAssociation:
+          Config.resolver(
+            pullRequestReview,
+            unit,
+            commentAuthorAssociation,
+            commentAuthorAssociation,
+          ),
+        [@bs.optional]
+        body: Config.resolver(pullRequestReview, unit, string, string),
+        [@bs.optional]
+        bodyHTML: Config.resolver(pullRequestReview, unit, hTML, hTML),
+        [@bs.optional]
+        bodyText: Config.resolver(pullRequestReview, unit, string, string),
+        [@bs.optional]
+        comments:
+          Config.resolver(
+            pullRequestReview,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+            },
+            pullRequestReviewCommentConnection,
+            pullRequestReviewCommentConnection,
+          ),
+        [@bs.optional]
+        commit:
+          Config.resolver(
+            pullRequestReview,
+            unit,
+            commit,
+            Js.Nullable.t(commit),
+          ),
+        [@bs.optional]
+        createdAt:
+          Config.resolver(pullRequestReview, unit, dateTime, dateTime),
+        [@bs.optional]
+        createdViaEmail: Config.resolver(pullRequestReview, unit, bool, bool),
+        [@bs.optional]
+        databaseId:
+          Config.resolver(pullRequestReview, unit, int, Js.Nullable.t(int)),
+        [@bs.optional]
+        editor:
+          Config.resolver(
+            pullRequestReview,
+            unit,
+            actor,
+            Js.Nullable.t(actor),
+          ),
+        [@bs.optional]
+        id: Config.resolver(pullRequestReview, unit, string, string),
+        [@bs.optional]
+        includesCreatedEdit:
+          Config.resolver(pullRequestReview, unit, bool, bool),
+        [@bs.optional]
+        lastEditedAt:
+          Config.resolver(
+            pullRequestReview,
+            unit,
+            dateTime,
+            Js.Nullable.t(dateTime),
+          ),
+        [@bs.optional]
+        onBehalfOf:
+          Config.resolver(
+            pullRequestReview,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+            },
+            teamConnection,
+            teamConnection,
+          ),
+        [@bs.optional]
+        publishedAt:
+          Config.resolver(
+            pullRequestReview,
+            unit,
+            dateTime,
+            Js.Nullable.t(dateTime),
+          ),
+        [@bs.optional]
+        pullRequest:
+          Config.resolver(pullRequestReview, unit, pullRequest, pullRequest),
+        [@bs.optional]
+        repository:
+          Config.resolver(pullRequestReview, unit, repository, repository),
+        [@bs.optional]
+        resourcePath: Config.resolver(pullRequestReview, unit, uRI, uRI),
+        [@bs.optional]
+        state:
+          Config.resolver(
+            pullRequestReview,
+            unit,
+            pullRequestReviewState,
+            pullRequestReviewState,
+          ),
+        [@bs.optional]
+        submittedAt:
+          Config.resolver(
+            pullRequestReview,
+            unit,
+            dateTime,
+            Js.Nullable.t(dateTime),
+          ),
+        [@bs.optional]
+        updatedAt:
+          Config.resolver(pullRequestReview, unit, dateTime, dateTime),
+        [@bs.optional]
+        url: Config.resolver(pullRequestReview, unit, uRI, uRI),
+        [@bs.optional]
+        userContentEdits:
+          Config.resolver(
+            pullRequestReview,
+            {
+              .
+              "after": Js.Nullable.t(string),
+              "before": Js.Nullable.t(string),
+              "first": Js.Nullable.t(int),
+              "last": Js.Nullable.t(int),
+            },
+            userContentEditConnection,
+            Js.Nullable.t(userContentEditConnection),
+          ),
+        [@bs.optional]
+        viewerCanDelete: Config.resolver(pullRequestReview, unit, bool, bool),
+        [@bs.optional]
+        viewerCanUpdate: Config.resolver(pullRequestReview, unit, bool, bool),
+        [@bs.optional]
+        viewerCannotUpdateReasons:
+          Config.resolver(
+            pullRequestReview,
+            unit,
+            commentCannotUpdateReason,
+            array(commentCannotUpdateReason),
+          ),
+        [@bs.optional]
+        viewerDidAuthor: Config.resolver(pullRequestReview, unit, bool, bool),
+      };
+    };
+    module PublicKey: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        id: Config.resolver(publicKey, unit, string, string),
+        [@bs.optional]
+        key: Config.resolver(publicKey, unit, string, string),
+      };
+    };
+    module ProjectColumnEdge: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        cursor: Config.resolver(projectColumnEdge, unit, string, string),
+        [@bs.optional]
+        node:
+          Config.resolver(
+            projectColumnEdge,
+            unit,
+            projectColumn,
+            Js.Nullable.t(projectColumn),
+          ),
+      };
+    };
+    module PullRequestTimelineItemEdge: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        cursor:
+          Config.resolver(pullRequestTimelineItemEdge, unit, string, string),
+        [@bs.optional]
+        node:
+          Config.resolver(
+            pullRequestTimelineItemEdge,
+            unit,
+            pullRequestTimelineItem,
+            Js.Nullable.t(pullRequestTimelineItem),
+          ),
+      };
+    };
+    module ProtectedBranchConnection: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        edges:
+          Config.resolver(
+            protectedBranchConnection,
+            unit,
+            protectedBranchEdge,
+            Js.Nullable.t(array(Js.Nullable.t(protectedBranchEdge))),
+          ),
+        [@bs.optional]
+        nodes:
+          Config.resolver(
+            protectedBranchConnection,
+            unit,
+            protectedBranch,
+            Js.Nullable.t(array(Js.Nullable.t(protectedBranch))),
+          ),
+        [@bs.optional]
+        pageInfo:
+          Config.resolver(
+            protectedBranchConnection,
+            unit,
+            pageInfo,
+            pageInfo,
+          ),
+        [@bs.optional]
+        totalCount:
+          Config.resolver(protectedBranchConnection, unit, int, int),
+      };
+    };
+    module ExternalIdentityEdge: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        cursor: Config.resolver(externalIdentityEdge, unit, string, string),
+        [@bs.optional]
+        node:
+          Config.resolver(
+            externalIdentityEdge,
+            unit,
+            externalIdentity,
+            Js.Nullable.t(externalIdentity),
+          ),
+      };
+    };
+    module Bot: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        avatarUrl:
+          Config.resolver(bot, {. "size": Js.Nullable.t(int)}, uRI, uRI),
+        [@bs.optional]
+        createdAt: Config.resolver(bot, unit, dateTime, dateTime),
+        [@bs.optional]
+        databaseId: Config.resolver(bot, unit, int, Js.Nullable.t(int)),
+        [@bs.optional]
+        id: Config.resolver(bot, unit, string, string),
+        [@bs.optional]
+        login: Config.resolver(bot, unit, string, string),
+        [@bs.optional]
+        resourcePath: Config.resolver(bot, unit, uRI, uRI),
+        [@bs.optional]
+        updatedAt: Config.resolver(bot, unit, dateTime, dateTime),
+        [@bs.optional]
+        url: Config.resolver(bot, unit, uRI, uRI),
+      };
+    };
+    module CommitConnection: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        edges:
+          Config.resolver(
+            commitConnection,
+            unit,
+            commitEdge,
+            Js.Nullable.t(array(Js.Nullable.t(commitEdge))),
+          ),
+        [@bs.optional]
+        nodes:
+          Config.resolver(
+            commitConnection,
+            unit,
+            commit,
+            Js.Nullable.t(array(Js.Nullable.t(commit))),
+          ),
+        [@bs.optional]
+        pageInfo: Config.resolver(commitConnection, unit, pageInfo, pageInfo),
+        [@bs.optional]
+        totalCount: Config.resolver(commitConnection, unit, int, int),
+      };
+    };
+    module GpgSignature: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        email: Config.resolver(gpgSignature, unit, string, string),
+        [@bs.optional]
+        isValid: Config.resolver(gpgSignature, unit, bool, bool),
+        [@bs.optional]
+        keyId:
+          Config.resolver(gpgSignature, unit, string, Js.Nullable.t(string)),
+        [@bs.optional]
+        payload: Config.resolver(gpgSignature, unit, string, string),
+        [@bs.optional]
+        signature: Config.resolver(gpgSignature, unit, string, string),
+        [@bs.optional]
+        signer:
+          Config.resolver(gpgSignature, unit, user, Js.Nullable.t(user)),
+        [@bs.optional]
+        state:
+          Config.resolver(
+            gpgSignature,
+            unit,
+            gitSignatureState,
+            gitSignatureState,
+          ),
+        [@bs.optional]
+        wasSignedByGitHub: Config.resolver(gpgSignature, unit, bool, bool),
+      };
+    };
+    module StatusContext: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        commit:
+          Config.resolver(
+            statusContext,
+            unit,
+            commit,
+            Js.Nullable.t(commit),
+          ),
+        [@bs.optional]
+        context: Config.resolver(statusContext, unit, string, string),
+        [@bs.optional]
+        createdAt: Config.resolver(statusContext, unit, dateTime, dateTime),
+        [@bs.optional]
+        creator:
+          Config.resolver(statusContext, unit, actor, Js.Nullable.t(actor)),
+        [@bs.optional]
+        description:
+          Config.resolver(
+            statusContext,
+            unit,
+            string,
+            Js.Nullable.t(string),
+          ),
+        [@bs.optional]
+        id: Config.resolver(statusContext, unit, string, string),
+        [@bs.optional]
+        state: Config.resolver(statusContext, unit, statusState, statusState),
+        [@bs.optional]
+        targetUrl:
+          Config.resolver(statusContext, unit, uRI, Js.Nullable.t(uRI)),
+      };
+    };
+    module ProjectColumnConnection: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        edges:
+          Config.resolver(
+            projectColumnConnection,
+            unit,
+            projectColumnEdge,
+            Js.Nullable.t(array(Js.Nullable.t(projectColumnEdge))),
+          ),
+        [@bs.optional]
+        nodes:
+          Config.resolver(
+            projectColumnConnection,
+            unit,
+            projectColumn,
+            Js.Nullable.t(array(Js.Nullable.t(projectColumn))),
+          ),
+        [@bs.optional]
+        pageInfo:
+          Config.resolver(projectColumnConnection, unit, pageInfo, pageInfo),
+        [@bs.optional]
+        totalCount: Config.resolver(projectColumnConnection, unit, int, int),
+      };
+    };
+    module AssignedEvent: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        actor:
+          Config.resolver(assignedEvent, unit, actor, Js.Nullable.t(actor)),
+        [@bs.optional]
+        assignable:
+          Config.resolver(assignedEvent, unit, assignable, assignable),
+        [@bs.optional]
+        createdAt: Config.resolver(assignedEvent, unit, dateTime, dateTime),
+        [@bs.optional]
+        id: Config.resolver(assignedEvent, unit, string, string),
+        [@bs.optional]
+        user:
+          Config.resolver(assignedEvent, unit, user, Js.Nullable.t(user)),
+      };
+    };
+    module CommitCommentEdge: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        cursor: Config.resolver(commitCommentEdge, unit, string, string),
+        [@bs.optional]
+        node:
+          Config.resolver(
+            commitCommentEdge,
+            unit,
+            commitComment,
+            Js.Nullable.t(commitComment),
+          ),
+      };
+    };
+    module ExternalIdentityConnection: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        edges:
+          Config.resolver(
+            externalIdentityConnection,
+            unit,
+            externalIdentityEdge,
+            Js.Nullable.t(array(Js.Nullable.t(externalIdentityEdge))),
+          ),
+        [@bs.optional]
+        nodes:
+          Config.resolver(
+            externalIdentityConnection,
+            unit,
+            externalIdentity,
+            Js.Nullable.t(array(Js.Nullable.t(externalIdentity))),
+          ),
+        [@bs.optional]
+        pageInfo:
+          Config.resolver(
+            externalIdentityConnection,
+            unit,
+            pageInfo,
+            pageInfo,
+          ),
+        [@bs.optional]
+        totalCount:
+          Config.resolver(externalIdentityConnection, unit, int, int),
+      };
+    };
+    module PullRequestReviewConnection: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        edges:
+          Config.resolver(
+            pullRequestReviewConnection,
+            unit,
+            pullRequestReviewEdge,
+            Js.Nullable.t(array(Js.Nullable.t(pullRequestReviewEdge))),
+          ),
+        [@bs.optional]
+        nodes:
+          Config.resolver(
+            pullRequestReviewConnection,
+            unit,
+            pullRequestReview,
+            Js.Nullable.t(array(Js.Nullable.t(pullRequestReview))),
+          ),
+        [@bs.optional]
+        pageInfo:
+          Config.resolver(
+            pullRequestReviewConnection,
+            unit,
+            pageInfo,
+            pageInfo,
+          ),
+        [@bs.optional]
+        totalCount:
+          Config.resolver(pullRequestReviewConnection, unit, int, int),
+      };
+    };
+    module AddPullRequestReviewCommentPayload: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        clientMutationId:
+          Config.resolver(
+            addPullRequestReviewCommentPayload,
+            unit,
+            string,
+            Js.Nullable.t(string),
+          ),
+        [@bs.optional]
+        comment:
+          Config.resolver(
+            addPullRequestReviewCommentPayload,
+            unit,
+            pullRequestReviewComment,
+            pullRequestReviewComment,
+          ),
+        [@bs.optional]
+        commentEdge:
+          Config.resolver(
+            addPullRequestReviewCommentPayload,
+            unit,
+            pullRequestReviewCommentEdge,
+            pullRequestReviewCommentEdge,
+          ),
+      };
+    };
+    module PullRequestCommit: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        commit: Config.resolver(pullRequestCommit, unit, commit, commit),
+        [@bs.optional]
+        id: Config.resolver(pullRequestCommit, unit, string, string),
+        [@bs.optional]
+        pullRequest:
+          Config.resolver(pullRequestCommit, unit, pullRequest, pullRequest),
+        [@bs.optional]
+        resourcePath: Config.resolver(pullRequestCommit, unit, uRI, uRI),
+        [@bs.optional]
+        url: Config.resolver(pullRequestCommit, unit, uRI, uRI),
+      };
+    };
+    module ReviewRequestConnection: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        edges:
+          Config.resolver(
+            reviewRequestConnection,
+            unit,
+            reviewRequestEdge,
+            Js.Nullable.t(array(Js.Nullable.t(reviewRequestEdge))),
+          ),
+        [@bs.optional]
+        nodes:
+          Config.resolver(
+            reviewRequestConnection,
+            unit,
+            reviewRequest,
+            Js.Nullable.t(array(Js.Nullable.t(reviewRequest))),
+          ),
+        [@bs.optional]
+        pageInfo:
+          Config.resolver(reviewRequestConnection, unit, pageInfo, pageInfo),
+        [@bs.optional]
+        totalCount: Config.resolver(reviewRequestConnection, unit, int, int),
+      };
+    };
+    module ReleaseConnection: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        edges:
+          Config.resolver(
+            releaseConnection,
+            unit,
+            releaseEdge,
+            Js.Nullable.t(array(Js.Nullable.t(releaseEdge))),
+          ),
+        [@bs.optional]
+        nodes:
+          Config.resolver(
+            releaseConnection,
+            unit,
+            release,
+            Js.Nullable.t(array(Js.Nullable.t(release))),
+          ),
+        [@bs.optional]
+        pageInfo:
+          Config.resolver(releaseConnection, unit, pageInfo, pageInfo),
+        [@bs.optional]
+        totalCount: Config.resolver(releaseConnection, unit, int, int),
+      };
+    };
+    module OrganizationConnection: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        edges:
+          Config.resolver(
+            organizationConnection,
+            unit,
+            organizationEdge,
+            Js.Nullable.t(array(Js.Nullable.t(organizationEdge))),
+          ),
+        [@bs.optional]
+        nodes:
+          Config.resolver(
+            organizationConnection,
+            unit,
+            organization,
+            Js.Nullable.t(array(Js.Nullable.t(organization))),
+          ),
+        [@bs.optional]
+        pageInfo:
+          Config.resolver(organizationConnection, unit, pageInfo, pageInfo),
+        [@bs.optional]
+        totalCount: Config.resolver(organizationConnection, unit, int, int),
+      };
+    };
+    module UserContentEditEdge: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        cursor: Config.resolver(userContentEditEdge, unit, string, string),
+        [@bs.optional]
+        node:
+          Config.resolver(
+            userContentEditEdge,
+            unit,
+            userContentEdit,
+            Js.Nullable.t(userContentEdit),
+          ),
+      };
+    };
+    module IssueCommentEdge: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        cursor: Config.resolver(issueCommentEdge, unit, string, string),
+        [@bs.optional]
+        node:
+          Config.resolver(
+            issueCommentEdge,
+            unit,
+            issueComment,
+            Js.Nullable.t(issueComment),
+          ),
+      };
+    };
+    module PageInfo: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        endCursor:
+          Config.resolver(pageInfo, unit, string, Js.Nullable.t(string)),
+        [@bs.optional]
+        hasNextPage: Config.resolver(pageInfo, unit, bool, bool),
+        [@bs.optional]
+        hasPreviousPage: Config.resolver(pageInfo, unit, bool, bool),
+        [@bs.optional]
+        startCursor:
+          Config.resolver(pageInfo, unit, string, Js.Nullable.t(string)),
+      };
+    };
+    module Status: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        commit: Config.resolver(status, unit, commit, Js.Nullable.t(commit)),
+        [@bs.optional]
+        context:
+          Config.resolver(
+            status,
+            {. "name": string},
+            statusContext,
+            Js.Nullable.t(statusContext),
+          ),
+        [@bs.optional]
+        contexts:
+          Config.resolver(status, unit, statusContext, array(statusContext)),
+        [@bs.optional]
+        id: Config.resolver(status, unit, string, string),
+        [@bs.optional]
+        state: Config.resolver(status, unit, statusState, statusState),
+      };
+    };
+    module App: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        createdAt: Config.resolver(app, unit, dateTime, dateTime),
+        [@bs.optional]
+        databaseId: Config.resolver(app, unit, int, Js.Nullable.t(int)),
+        [@bs.optional]
+        description:
+          Config.resolver(app, unit, string, Js.Nullable.t(string)),
+        [@bs.optional]
+        id: Config.resolver(app, unit, string, string),
+        [@bs.optional]
+        logoBackgroundColor: Config.resolver(app, unit, string, string),
+        [@bs.optional]
+        logoUrl:
+          Config.resolver(app, {. "size": Js.Nullable.t(int)}, uRI, uRI),
+        [@bs.optional]
+        name: Config.resolver(app, unit, string, string),
+        [@bs.optional]
+        slug: Config.resolver(app, unit, string, string),
+        [@bs.optional]
+        updatedAt: Config.resolver(app, unit, dateTime, dateTime),
+        [@bs.optional]
+        url: Config.resolver(app, unit, uRI, uRI),
+      };
+    };
+    module LabeledEvent: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        actor:
+          Config.resolver(labeledEvent, unit, actor, Js.Nullable.t(actor)),
+        [@bs.optional]
+        createdAt: Config.resolver(labeledEvent, unit, dateTime, dateTime),
+        [@bs.optional]
+        id: Config.resolver(labeledEvent, unit, string, string),
+        [@bs.optional]
+        label: Config.resolver(labeledEvent, unit, label, label),
+        [@bs.optional]
+        labelable: Config.resolver(labeledEvent, unit, labelable, labelable),
+      };
+    };
+    module ConvertedNoteToIssueEvent: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        actor:
+          Config.resolver(
+            convertedNoteToIssueEvent,
+            unit,
+            actor,
+            Js.Nullable.t(actor),
+          ),
+        [@bs.optional]
+        createdAt:
+          Config.resolver(
+            convertedNoteToIssueEvent,
+            unit,
+            dateTime,
+            dateTime,
+          ),
+        [@bs.optional]
+        databaseId:
+          Config.resolver(
+            convertedNoteToIssueEvent,
+            unit,
+            int,
+            Js.Nullable.t(int),
+          ),
+        [@bs.optional]
+        id: Config.resolver(convertedNoteToIssueEvent, unit, string, string),
+      };
+    };
+    module ReviewDismissalAllowance: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        actor:
+          Config.resolver(
+            reviewDismissalAllowance,
+            unit,
+            reviewDismissalAllowanceActor,
+            Js.Nullable.t(reviewDismissalAllowanceActor),
+          ),
+        [@bs.optional]
+        branchProtectionRule:
+          Config.resolver(
+            reviewDismissalAllowance,
+            unit,
+            branchProtectionRule,
+            Js.Nullable.t(branchProtectionRule),
+          ),
+        [@bs.optional]
+        id: Config.resolver(reviewDismissalAllowance, unit, string, string),
+        [@bs.optional]
+        protectedBranch:
+          Config.resolver(
+            reviewDismissalAllowance,
+            unit,
+            protectedBranch,
+            protectedBranch,
+          ),
+      };
+    };
+    module ProjectEdge: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        cursor: Config.resolver(projectEdge, unit, string, string),
+        [@bs.optional]
+        node:
+          Config.resolver(
+            projectEdge,
+            unit,
+            project,
+            Js.Nullable.t(project),
+          ),
+      };
+    };
+    module PushAllowance: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        actor:
+          Config.resolver(
+            pushAllowance,
+            unit,
+            pushAllowanceActor,
+            Js.Nullable.t(pushAllowanceActor),
+          ),
+        [@bs.optional]
+        branchProtectionRule:
+          Config.resolver(
+            pushAllowance,
+            unit,
+            branchProtectionRule,
+            Js.Nullable.t(branchProtectionRule),
+          ),
+        [@bs.optional]
+        id: Config.resolver(pushAllowance, unit, string, string),
+        [@bs.optional]
+        protectedBranch:
+          Config.resolver(
+            pushAllowance,
+            unit,
+            protectedBranch,
+            protectedBranch,
+          ),
+      };
+    };
+    module GitActor: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        avatarUrl:
+          Config.resolver(
+            gitActor,
+            {. "size": Js.Nullable.t(int)},
+            uRI,
+            uRI,
+          ),
+        [@bs.optional]
+        date:
+          Config.resolver(
+            gitActor,
+            unit,
+            gitTimestamp,
+            Js.Nullable.t(gitTimestamp),
+          ),
+        [@bs.optional]
+        email:
+          Config.resolver(gitActor, unit, string, Js.Nullable.t(string)),
+        [@bs.optional]
+        name: Config.resolver(gitActor, unit, string, Js.Nullable.t(string)),
+        [@bs.optional]
+        user: Config.resolver(gitActor, unit, user, Js.Nullable.t(user)),
+      };
+    };
+    module ReactingUserConnection: {
+      [@bs.deriving abstract]
+      type t = {
+        [@bs.optional]
+        edges:
+          Config.resolver(
+            reactingUserConnection,
+            unit,
+            reactingUserEdge,
+            Js.Nullable.t(array(Js.Nullable.t(reactingUserEdge))),
+          ),
+        [@bs.optional]
+        nodes:
+          Config.resolver(
+            reactingUserConnection,
+            unit,
+            user,
+            Js.Nullable.t(array(Js.Nullable.t(user))),
+          ),
+        [@bs.optional]
+        pageInfo:
+          Config.resolver(reactingUserConnection, unit, pageInfo, pageInfo),
+        [@bs.optional]
+        totalCount: Config.resolver(reactingUserConnection, unit, int, int),
+      };
+    };
+    [@bs.deriving abstract]
+    type t = {
+      [@bs.optional] [@bs.as "ReferencedEvent"]
+      referencedEvent: ReferencedEvent.t,
+      [@bs.optional] [@bs.as "MentionedEvent"]
+      mentionedEvent: MentionedEvent.t,
+      [@bs.optional] [@bs.as "ReopenedEvent"]
+      reopenedEvent: ReopenedEvent.t,
+      [@bs.optional] [@bs.as "ReviewDismissedEvent"]
+      reviewDismissedEvent: ReviewDismissedEvent.t,
+      [@bs.optional] [@bs.as "PullRequestReviewCommentEdge"]
+      pullRequestReviewCommentEdge: PullRequestReviewCommentEdge.t,
+      [@bs.optional] [@bs.as "UnknownSignature"]
+      unknownSignature: UnknownSignature.t,
+      [@bs.optional] [@bs.as "IssueConnection"]
+      issueConnection: IssueConnection.t,
+      [@bs.optional] [@bs.as "PullRequestCommitConnection"]
+      pullRequestCommitConnection: PullRequestCommitConnection.t,
+      [@bs.optional] [@bs.as "GistCommentEdge"]
+      gistCommentEdge: GistCommentEdge.t,
+      [@bs.optional] [@bs.as "SubscribedEvent"]
+      subscribedEvent: SubscribedEvent.t,
+      [@bs.optional] [@bs.as "ExternalIdentitySamlAttributes"]
+      externalIdentitySamlAttributes: ExternalIdentitySamlAttributes.t,
+      [@bs.optional] [@bs.as "Milestone"]
+      milestone: Milestone.t,
+      [@bs.optional] [@bs.as "DeployKey"]
+      deployKey: DeployKey.t,
+      [@bs.optional] [@bs.as "RepositoryTopicConnection"]
+      repositoryTopicConnection: RepositoryTopicConnection.t,
+      [@bs.optional] [@bs.as "SmimeSignature"]
+      smimeSignature: SmimeSignature.t,
+      [@bs.optional] [@bs.as "UpdatePullRequestReviewCommentPayload"]
+      updatePullRequestReviewCommentPayload: UpdatePullRequestReviewCommentPayload.t,
+      [@bs.optional] [@bs.as "LockLockablePayload"]
+      lockLockablePayload: LockLockablePayload.t,
+      [@bs.optional] [@bs.as "RepositoryCollaboratorConnection"]
+      repositoryCollaboratorConnection: RepositoryCollaboratorConnection.t,
+      [@bs.optional] [@bs.as "ExternalIdentityScimAttributes"]
+      externalIdentityScimAttributes: ExternalIdentityScimAttributes.t,
+      [@bs.optional] [@bs.as "DeploymentConnection"]
+      deploymentConnection: DeploymentConnection.t,
+      [@bs.optional] [@bs.as "GistConnection"]
+      gistConnection: GistConnection.t,
+      [@bs.optional] [@bs.as "MoveProjectCardPayload"]
+      moveProjectCardPayload: MoveProjectCardPayload.t,
+      [@bs.optional] [@bs.as "PullRequestTimelineItemsEdge"]
+      pullRequestTimelineItemsEdge: PullRequestTimelineItemsEdge.t,
+      [@bs.optional] [@bs.as "TextMatch"]
+      textMatch: TextMatch.t,
+      [@bs.optional] [@bs.as "GitHubMetadata"]
+      gitHubMetadata: GitHubMetadata.t,
+      [@bs.optional] [@bs.as "AddCommentPayload"]
+      addCommentPayload: AddCommentPayload.t,
+      [@bs.optional] [@bs.as "StarredRepositoryConnection"]
+      starredRepositoryConnection: StarredRepositoryConnection.t,
+      [@bs.optional] [@bs.as "UpdateSubscriptionPayload"]
+      updateSubscriptionPayload: UpdateSubscriptionPayload.t,
+      [@bs.optional] [@bs.as "TeamConnection"]
+      teamConnection: TeamConnection.t,
+      [@bs.optional] [@bs.as "CommentDeletedEvent"]
+      commentDeletedEvent: CommentDeletedEvent.t,
+      [@bs.optional] [@bs.as "IssueTimelineItemsEdge"]
+      issueTimelineItemsEdge: IssueTimelineItemsEdge.t,
+      [@bs.optional] [@bs.as "Topic"]
+      topic: Topic.t,
+      [@bs.optional] [@bs.as "OrganizationInvitationConnection"]
+      organizationInvitationConnection: OrganizationInvitationConnection.t,
+      [@bs.optional] [@bs.as "Label"]
+      label: Label.t,
+      [@bs.optional] [@bs.as "ReviewRequestEdge"]
+      reviewRequestEdge: ReviewRequestEdge.t,
+      [@bs.optional] [@bs.as "UnlabeledEvent"]
+      unlabeledEvent: UnlabeledEvent.t,
+      [@bs.optional] [@bs.as "StarredRepositoryEdge"]
+      starredRepositoryEdge: StarredRepositoryEdge.t,
+      [@bs.optional] [@bs.as "DeploymentStatusConnection"]
+      deploymentStatusConnection: DeploymentStatusConnection.t,
+      [@bs.optional] [@bs.as "Query"]
+      query: Query.t,
+      [@bs.optional] [@bs.as "UserEdge"]
+      userEdge: UserEdge.t,
+      [@bs.optional] [@bs.as "GistCommentConnection"]
+      gistCommentConnection: GistCommentConnection.t,
+      [@bs.optional] [@bs.as "LicenseRule"]
+      licenseRule: LicenseRule.t,
+      [@bs.optional] [@bs.as "RepositoryConnection"]
+      repositoryConnection: RepositoryConnection.t,
+      [@bs.optional] [@bs.as "ReleaseEdge"]
+      releaseEdge: ReleaseEdge.t,
+      [@bs.optional] [@bs.as "ProjectCardEdge"]
+      projectCardEdge: ProjectCardEdge.t,
+      [@bs.optional] [@bs.as "ReviewRequestedEvent"]
+      reviewRequestedEvent: ReviewRequestedEvent.t,
+      [@bs.optional] [@bs.as "OrganizationEdge"]
+      organizationEdge: OrganizationEdge.t,
+      [@bs.optional] [@bs.as "AddedToProjectEvent"]
+      addedToProjectEvent: AddedToProjectEvent.t,
+      [@bs.optional] [@bs.as "ReleaseAssetEdge"]
+      releaseAssetEdge: ReleaseAssetEdge.t,
+      [@bs.optional] [@bs.as "Issue"]
+      issue: Issue.t,
+      [@bs.optional] [@bs.as "ReactionConnection"]
+      reactionConnection: ReactionConnection.t,
+      [@bs.optional] [@bs.as "RepositoryTopic"]
+      repositoryTopic: RepositoryTopic.t,
+      [@bs.optional] [@bs.as "IssueTimelineConnection"]
+      issueTimelineConnection: IssueTimelineConnection.t,
+      [@bs.optional] [@bs.as "MarketplaceListingConnection"]
+      marketplaceListingConnection: MarketplaceListingConnection.t,
+      [@bs.optional] [@bs.as "Commit"]
+      commit: Commit.t,
+      [@bs.optional] [@bs.as "Project"]
+      project: Project.t,
+      [@bs.optional] [@bs.as "UserContentEditConnection"]
+      userContentEditConnection: UserContentEditConnection.t,
+      [@bs.optional] [@bs.as "FollowerConnection"]
+      followerConnection: FollowerConnection.t,
+      [@bs.optional] [@bs.as "ReactionGroup"]
+      reactionGroup: ReactionGroup.t,
+      [@bs.optional] [@bs.as "MergedEvent"]
+      mergedEvent: MergedEvent.t,
+      [@bs.optional] [@bs.as "ProtectedBranch"]
+      protectedBranch: ProtectedBranch.t,
+      [@bs.optional] [@bs.as "DeploymentEnvironmentChangedEvent"]
+      deploymentEnvironmentChangedEvent: DeploymentEnvironmentChangedEvent.t,
+      [@bs.optional] [@bs.as "DeployKeyEdge"]
+      deployKeyEdge: DeployKeyEdge.t,
+      [@bs.optional] [@bs.as "CommitComment"]
+      commitComment: CommitComment.t,
+      [@bs.optional] [@bs.as "ProtectedBranchEdge"]
+      protectedBranchEdge: ProtectedBranchEdge.t,
+      [@bs.optional] [@bs.as "RateLimit"]
+      rateLimit: RateLimit.t,
+      [@bs.optional] [@bs.as "RemoveOutsideCollaboratorPayload"]
+      removeOutsideCollaboratorPayload: RemoveOutsideCollaboratorPayload.t,
+      [@bs.optional] [@bs.as "PullRequest"]
+      pullRequest: PullRequest.t,
+      [@bs.optional] [@bs.as "ClosedEvent"]
+      closedEvent: ClosedEvent.t,
+      [@bs.optional] [@bs.as "Team"]
+      team: Team.t,
+      [@bs.optional] [@bs.as "UnlockedEvent"]
+      unlockedEvent: UnlockedEvent.t,
+      [@bs.optional] [@bs.as "ExternalIdentity"]
+      externalIdentity: ExternalIdentity.t,
+      [@bs.optional] [@bs.as "UpdatePullRequestReviewPayload"]
+      updatePullRequestReviewPayload: UpdatePullRequestReviewPayload.t,
+      [@bs.optional] [@bs.as "AppEdge"]
+      appEdge: AppEdge.t,
+      [@bs.optional] [@bs.as "SubmitPullRequestReviewPayload"]
+      submitPullRequestReviewPayload: SubmitPullRequestReviewPayload.t,
+      [@bs.optional] [@bs.as "DeploymentStatus"]
+      deploymentStatus: DeploymentStatus.t,
+      [@bs.optional] [@bs.as "OrganizationInvitation"]
+      organizationInvitation: OrganizationInvitation.t,
+      [@bs.optional] [@bs.as "DismissPullRequestReviewPayload"]
+      dismissPullRequestReviewPayload: DismissPullRequestReviewPayload.t,
+      [@bs.optional] [@bs.as "PullRequestReviewComment"]
+      pullRequestReviewComment: PullRequestReviewComment.t,
+      [@bs.optional] [@bs.as "Organization"]
+      organization: Organization.t,
+      [@bs.optional] [@bs.as "CreateBranchProtectionRulePayload"]
+      createBranchProtectionRulePayload: CreateBranchProtectionRulePayload.t,
+      [@bs.optional] [@bs.as "Blob"]
+      blob: Blob.t,
+      [@bs.optional] [@bs.as "MovedColumnsInProjectEvent"]
+      movedColumnsInProjectEvent: MovedColumnsInProjectEvent.t,
+      [@bs.optional] [@bs.as "TeamMemberConnection"]
+      teamMemberConnection: TeamMemberConnection.t,
+      [@bs.optional] [@bs.as "MarketplaceListingEdge"]
+      marketplaceListingEdge: MarketplaceListingEdge.t,
+      [@bs.optional] [@bs.as "BranchProtectionRuleEdge"]
+      branchProtectionRuleEdge: BranchProtectionRuleEdge.t,
+      [@bs.optional] [@bs.as "PushAllowanceEdge"]
+      pushAllowanceEdge: PushAllowanceEdge.t,
+      [@bs.optional] [@bs.as "AcceptTopicSuggestionPayload"]
+      acceptTopicSuggestionPayload: AcceptTopicSuggestionPayload.t,
+      [@bs.optional] [@bs.as "MoveProjectColumnPayload"]
+      moveProjectColumnPayload: MoveProjectColumnPayload.t,
+      [@bs.optional] [@bs.as "LockedEvent"]
+      lockedEvent: LockedEvent.t,
+      [@bs.optional] [@bs.as "ReviewDismissalAllowanceEdge"]
+      reviewDismissalAllowanceEdge: ReviewDismissalAllowanceEdge.t,
+      [@bs.optional] [@bs.as "UnlockLockablePayload"]
+      unlockLockablePayload: UnlockLockablePayload.t,
+      [@bs.optional] [@bs.as "DeleteBranchProtectionRulePayload"]
+      deleteBranchProtectionRulePayload: DeleteBranchProtectionRulePayload.t,
+      [@bs.optional] [@bs.as "UpdateTopicsPayload"]
+      updateTopicsPayload: UpdateTopicsPayload.t,
+      [@bs.optional] [@bs.as "ProjectCardConnection"]
+      projectCardConnection: ProjectCardConnection.t,
+      [@bs.optional] [@bs.as "PullRequestReviewEdge"]
+      pullRequestReviewEdge: PullRequestReviewEdge.t,
+      [@bs.optional] [@bs.as "StargazerEdge"]
+      stargazerEdge: StargazerEdge.t,
+      [@bs.optional] [@bs.as "DeployedEvent"]
+      deployedEvent: DeployedEvent.t,
+      [@bs.optional] [@bs.as "Release"]
+      release: Release.t,
+      [@bs.optional] [@bs.as "DeleteProjectCardPayload"]
+      deleteProjectCardPayload: DeleteProjectCardPayload.t,
+      [@bs.optional] [@bs.as "RepositoryInvitation"]
+      repositoryInvitation: RepositoryInvitation.t,
+      [@bs.optional] [@bs.as "ProjectColumn"]
+      projectColumn: ProjectColumn.t,
+      [@bs.optional] [@bs.as "LabelConnection"]
+      labelConnection: LabelConnection.t,
+      [@bs.optional] [@bs.as "MilestoneEdge"]
+      milestoneEdge: MilestoneEdge.t,
+      [@bs.optional] [@bs.as "RepositoryTopicEdge"]
+      repositoryTopicEdge: RepositoryTopicEdge.t,
+      [@bs.optional] [@bs.as "UpdateProjectPayload"]
+      updateProjectPayload: UpdateProjectPayload.t,
+      [@bs.optional] [@bs.as "Repository"]
+      repository: Repository.t,
+      [@bs.optional] [@bs.as "PullRequestReviewThread"]
+      pullRequestReviewThread: PullRequestReviewThread.t,
+      [@bs.optional] [@bs.as "BranchProtectionRuleConflict"]
+      branchProtectionRuleConflict: BranchProtectionRuleConflict.t,
+      [@bs.optional] [@bs.as "AddReactionPayload"]
+      addReactionPayload: AddReactionPayload.t,
+      [@bs.optional] [@bs.as "BranchProtectionRuleConflictEdge"]
+      branchProtectionRuleConflictEdge: BranchProtectionRuleConflictEdge.t,
+      [@bs.optional] [@bs.as "License"]
+      license: License.t,
+      [@bs.optional] [@bs.as "HeadRefDeletedEvent"]
+      headRefDeletedEvent: HeadRefDeletedEvent.t,
+      [@bs.optional] [@bs.as "Mutation"]
+      mutation: Mutation.t,
+      [@bs.optional] [@bs.as "RemovedFromProjectEvent"]
+      removedFromProjectEvent: RemovedFromProjectEvent.t,
+      [@bs.optional] [@bs.as "IssueEdge"]
+      issueEdge: IssueEdge.t,
+      [@bs.optional] [@bs.as "ReviewRequestRemovedEvent"]
+      reviewRequestRemovedEvent: ReviewRequestRemovedEvent.t,
+      [@bs.optional] [@bs.as "ReactingUserEdge"]
+      reactingUserEdge: ReactingUserEdge.t,
+      [@bs.optional] [@bs.as "UnsubscribedEvent"]
+      unsubscribedEvent: UnsubscribedEvent.t,
+      [@bs.optional] [@bs.as "MilestoneConnection"]
+      milestoneConnection: MilestoneConnection.t,
+      [@bs.optional] [@bs.as "PushAllowanceConnection"]
+      pushAllowanceConnection: PushAllowanceConnection.t,
+      [@bs.optional] [@bs.as "BranchProtectionRuleConflictConnection"]
+      branchProtectionRuleConflictConnection: BranchProtectionRuleConflictConnection.t,
+      [@bs.optional] [@bs.as "UpdateProjectCardPayload"]
+      updateProjectCardPayload: UpdateProjectCardPayload.t,
+      [@bs.optional] [@bs.as "CodeOfConduct"]
+      codeOfConduct: CodeOfConduct.t,
+      [@bs.optional] [@bs.as "TopicConnection"]
+      topicConnection: TopicConnection.t,
+      [@bs.optional] [@bs.as "PullRequestConnection"]
+      pullRequestConnection: PullRequestConnection.t,
+      [@bs.optional] [@bs.as "FollowingConnection"]
+      followingConnection: FollowingConnection.t,
+      [@bs.optional] [@bs.as "DeclineTopicSuggestionPayload"]
+      declineTopicSuggestionPayload: DeclineTopicSuggestionPayload.t,
+      [@bs.optional] [@bs.as "Gist"]
+      gist: Gist.t,
+      [@bs.optional] [@bs.as "Ref"]
+      ref: Ref.t,
+      [@bs.optional] [@bs.as "PublicKeyConnection"]
+      publicKeyConnection: PublicKeyConnection.t,
+      [@bs.optional] [@bs.as "ReactionEdge"]
+      reactionEdge: ReactionEdge.t,
+      [@bs.optional] [@bs.as "MilestonedEvent"]
+      milestonedEvent: MilestonedEvent.t,
+      [@bs.optional] [@bs.as "User"]
+      user: User.t,
+      [@bs.optional] [@bs.as "RemoveReactionPayload"]
+      removeReactionPayload: RemoveReactionPayload.t,
+      [@bs.optional] [@bs.as "CommitCommentThread"]
+      commitCommentThread: CommitCommentThread.t,
+      [@bs.optional] [@bs.as "UpdateBranchProtectionRulePayload"]
+      updateBranchProtectionRulePayload: UpdateBranchProtectionRulePayload.t,
+      [@bs.optional] [@bs.as "IssueComment"]
+      issueComment: IssueComment.t,
+      [@bs.optional] [@bs.as "DemilestonedEvent"]
+      demilestonedEvent: DemilestonedEvent.t,
+      [@bs.optional] [@bs.as "RenamedTitleEvent"]
+      renamedTitleEvent: RenamedTitleEvent.t,
+      [@bs.optional] [@bs.as "DeletePullRequestReviewPayload"]
+      deletePullRequestReviewPayload: DeletePullRequestReviewPayload.t,
+      [@bs.optional] [@bs.as "SearchResultItemEdge"]
+      searchResultItemEdge: SearchResultItemEdge.t,
+      [@bs.optional] [@bs.as "ReviewDismissalAllowanceConnection"]
+      reviewDismissalAllowanceConnection: ReviewDismissalAllowanceConnection.t,
+      [@bs.optional] [@bs.as "HeadRefRestoredEvent"]
+      headRefRestoredEvent: HeadRefRestoredEvent.t,
+      [@bs.optional] [@bs.as "TeamMemberEdge"]
+      teamMemberEdge: TeamMemberEdge.t,
+      [@bs.optional] [@bs.as "RequestReviewsPayload"]
+      requestReviewsPayload: RequestReviewsPayload.t,
+      [@bs.optional] [@bs.as "DeploymentEdge"]
+      deploymentEdge: DeploymentEdge.t,
+      [@bs.optional] [@bs.as "DeleteProjectColumnPayload"]
+      deleteProjectColumnPayload: DeleteProjectColumnPayload.t,
+      [@bs.optional] [@bs.as "UserContentEdit"]
+      userContentEdit: UserContentEdit.t,
+      [@bs.optional] [@bs.as "PullRequestTimelineConnection"]
+      pullRequestTimelineConnection: PullRequestTimelineConnection.t,
+      [@bs.optional] [@bs.as "AddProjectColumnPayload"]
+      addProjectColumnPayload: AddProjectColumnPayload.t,
+      [@bs.optional] [@bs.as "UnassignedEvent"]
+      unassignedEvent: UnassignedEvent.t,
+      [@bs.optional] [@bs.as "PullRequestEdge"]
+      pullRequestEdge: PullRequestEdge.t,
+      [@bs.optional] [@bs.as "ProjectConnection"]
+      projectConnection: ProjectConnection.t,
+      [@bs.optional] [@bs.as "OrganizationIdentityProvider"]
+      organizationIdentityProvider: OrganizationIdentityProvider.t,
+      [@bs.optional] [@bs.as "BaseRefChangedEvent"]
+      baseRefChangedEvent: BaseRefChangedEvent.t,
+      [@bs.optional] [@bs.as "HeadRefForcePushedEvent"]
+      headRefForcePushedEvent: HeadRefForcePushedEvent.t,
+      [@bs.optional] [@bs.as "DeploymentStatusEdge"]
+      deploymentStatusEdge: DeploymentStatusEdge.t,
+      [@bs.optional] [@bs.as "RepositoryEdge"]
+      repositoryEdge: RepositoryEdge.t,
+      [@bs.optional] [@bs.as "PublicKeyEdge"]
+      publicKeyEdge: PublicKeyEdge.t,
+      [@bs.optional] [@bs.as "AddStarPayload"]
+      addStarPayload: AddStarPayload.t,
+      [@bs.optional] [@bs.as "DeleteProjectPayload"]
+      deleteProjectPayload: DeleteProjectPayload.t,
+      [@bs.optional] [@bs.as "Language"]
+      language: Language.t,
+      [@bs.optional] [@bs.as "RepositoryCollaboratorEdge"]
+      repositoryCollaboratorEdge: RepositoryCollaboratorEdge.t,
+      [@bs.optional] [@bs.as "Deployment"]
+      deployment: Deployment.t,
+      [@bs.optional] [@bs.as "BranchProtectionRule"]
+      branchProtectionRule: BranchProtectionRule.t,
+      [@bs.optional] [@bs.as "Blame"]
+      blame: Blame.t,
+      [@bs.optional] [@bs.as "TeamRepositoryEdge"]
+      teamRepositoryEdge: TeamRepositoryEdge.t,
+      [@bs.optional] [@bs.as "GistEdge"]
+      gistEdge: GistEdge.t,
+      [@bs.optional] [@bs.as "UserConnection"]
+      userConnection: UserConnection.t,
+      [@bs.optional] [@bs.as "CommitHistoryConnection"]
+      commitHistoryConnection: CommitHistoryConnection.t,
+      [@bs.optional] [@bs.as "TeamEdge"]
+      teamEdge: TeamEdge.t,
+      [@bs.optional] [@bs.as "TeamRepositoryConnection"]
+      teamRepositoryConnection: TeamRepositoryConnection.t,
+      [@bs.optional] [@bs.as "CommitEdge"]
+      commitEdge: CommitEdge.t,
+      [@bs.optional] [@bs.as "MarketplaceCategory"]
+      marketplaceCategory: MarketplaceCategory.t,
+      [@bs.optional] [@bs.as "BaseRefForcePushedEvent"]
+      baseRefForcePushedEvent: BaseRefForcePushedEvent.t,
+      [@bs.optional] [@bs.as "BlameRange"]
+      blameRange: BlameRange.t,
+      [@bs.optional] [@bs.as "TreeEntry"]
+      treeEntry: TreeEntry.t,
+      [@bs.optional] [@bs.as "CreateProjectPayload"]
+      createProjectPayload: CreateProjectPayload.t,
+      [@bs.optional] [@bs.as "LabelEdge"]
+      labelEdge: LabelEdge.t,
+      [@bs.optional] [@bs.as "PullRequestReviewCommentConnection"]
+      pullRequestReviewCommentConnection: PullRequestReviewCommentConnection.t,
+      [@bs.optional] [@bs.as "CommitCommentConnection"]
+      commitCommentConnection: CommitCommentConnection.t,
+      [@bs.optional] [@bs.as "MarketplaceListing"]
+      marketplaceListing: MarketplaceListing.t,
+      [@bs.optional] [@bs.as "RefEdge"]
+      refEdge: RefEdge.t,
+      [@bs.optional] [@bs.as "TopicEdge"]
+      topicEdge: TopicEdge.t,
+      [@bs.optional] [@bs.as "LanguageConnection"]
+      languageConnection: LanguageConnection.t,
+      [@bs.optional] [@bs.as "ProjectCard"]
+      projectCard: ProjectCard.t,
+      [@bs.optional] [@bs.as "TextMatchHighlight"]
+      textMatchHighlight: TextMatchHighlight.t,
+      [@bs.optional] [@bs.as "RepositoryInvitationEdge"]
+      repositoryInvitationEdge: RepositoryInvitationEdge.t,
+      [@bs.optional] [@bs.as "OrganizationInvitationEdge"]
+      organizationInvitationEdge: OrganizationInvitationEdge.t,
+      [@bs.optional] [@bs.as "GistComment"]
+      gistComment: GistComment.t,
+      [@bs.optional] [@bs.as "AddProjectCardPayload"]
+      addProjectCardPayload: AddProjectCardPayload.t,
+      [@bs.optional] [@bs.as "Reaction"]
+      reaction: Reaction.t,
+      [@bs.optional] [@bs.as "CrossReferencedEvent"]
+      crossReferencedEvent: CrossReferencedEvent.t,
+      [@bs.optional] [@bs.as "IssueTimelineItemEdge"]
+      issueTimelineItemEdge: IssueTimelineItemEdge.t,
+      [@bs.optional] [@bs.as "RefConnection"]
+      refConnection: RefConnection.t,
+      [@bs.optional] [@bs.as "UpdateProjectColumnPayload"]
+      updateProjectColumnPayload: UpdateProjectColumnPayload.t,
+      [@bs.optional] [@bs.as "AddPullRequestReviewPayload"]
+      addPullRequestReviewPayload: AddPullRequestReviewPayload.t,
+      [@bs.optional] [@bs.as "Tag"]
+      tag: Tag.t,
+      [@bs.optional] [@bs.as "IssueCommentConnection"]
+      issueCommentConnection: IssueCommentConnection.t,
+      [@bs.optional] [@bs.as "LanguageEdge"]
+      languageEdge: LanguageEdge.t,
+      [@bs.optional] [@bs.as "StargazerConnection"]
+      stargazerConnection: StargazerConnection.t,
+      [@bs.optional] [@bs.as "SearchResultItemConnection"]
+      searchResultItemConnection: SearchResultItemConnection.t,
+      [@bs.optional] [@bs.as "Tree"]
+      tree: Tree.t,
+      [@bs.optional] [@bs.as "ReviewRequest"]
+      reviewRequest: ReviewRequest.t,
+      [@bs.optional] [@bs.as "SuggestedReviewer"]
+      suggestedReviewer: SuggestedReviewer.t,
+      [@bs.optional] [@bs.as "RemoveStarPayload"]
+      removeStarPayload: RemoveStarPayload.t,
+      [@bs.optional] [@bs.as "PullRequestCommitEdge"]
+      pullRequestCommitEdge: PullRequestCommitEdge.t,
+      [@bs.optional] [@bs.as "DeployKeyConnection"]
+      deployKeyConnection: DeployKeyConnection.t,
+      [@bs.optional] [@bs.as "ReleaseAsset"]
+      releaseAsset: ReleaseAsset.t,
+      [@bs.optional] [@bs.as "BranchProtectionRuleConnection"]
+      branchProtectionRuleConnection: BranchProtectionRuleConnection.t,
+      [@bs.optional] [@bs.as "ReleaseAssetConnection"]
+      releaseAssetConnection: ReleaseAssetConnection.t,
+      [@bs.optional] [@bs.as "PullRequestReview"]
+      pullRequestReview: PullRequestReview.t,
+      [@bs.optional] [@bs.as "PublicKey"]
+      publicKey: PublicKey.t,
+      [@bs.optional] [@bs.as "ProjectColumnEdge"]
+      projectColumnEdge: ProjectColumnEdge.t,
+      [@bs.optional] [@bs.as "PullRequestTimelineItemEdge"]
+      pullRequestTimelineItemEdge: PullRequestTimelineItemEdge.t,
+      [@bs.optional] [@bs.as "ProtectedBranchConnection"]
+      protectedBranchConnection: ProtectedBranchConnection.t,
+      [@bs.optional] [@bs.as "ExternalIdentityEdge"]
+      externalIdentityEdge: ExternalIdentityEdge.t,
+      [@bs.optional] [@bs.as "Bot"]
+      bot: Bot.t,
+      [@bs.optional] [@bs.as "CommitConnection"]
+      commitConnection: CommitConnection.t,
+      [@bs.optional] [@bs.as "GpgSignature"]
+      gpgSignature: GpgSignature.t,
+      [@bs.optional] [@bs.as "StatusContext"]
+      statusContext: StatusContext.t,
+      [@bs.optional] [@bs.as "ProjectColumnConnection"]
+      projectColumnConnection: ProjectColumnConnection.t,
+      [@bs.optional] [@bs.as "AssignedEvent"]
+      assignedEvent: AssignedEvent.t,
+      [@bs.optional] [@bs.as "CommitCommentEdge"]
+      commitCommentEdge: CommitCommentEdge.t,
+      [@bs.optional] [@bs.as "ExternalIdentityConnection"]
+      externalIdentityConnection: ExternalIdentityConnection.t,
+      [@bs.optional] [@bs.as "PullRequestReviewConnection"]
+      pullRequestReviewConnection: PullRequestReviewConnection.t,
+      [@bs.optional] [@bs.as "AddPullRequestReviewCommentPayload"]
+      addPullRequestReviewCommentPayload: AddPullRequestReviewCommentPayload.t,
+      [@bs.optional] [@bs.as "PullRequestCommit"]
+      pullRequestCommit: PullRequestCommit.t,
+      [@bs.optional] [@bs.as "ReviewRequestConnection"]
+      reviewRequestConnection: ReviewRequestConnection.t,
+      [@bs.optional] [@bs.as "ReleaseConnection"]
+      releaseConnection: ReleaseConnection.t,
+      [@bs.optional] [@bs.as "OrganizationConnection"]
+      organizationConnection: OrganizationConnection.t,
+      [@bs.optional] [@bs.as "UserContentEditEdge"]
+      userContentEditEdge: UserContentEditEdge.t,
+      [@bs.optional] [@bs.as "IssueCommentEdge"]
+      issueCommentEdge: IssueCommentEdge.t,
+      [@bs.optional] [@bs.as "PageInfo"]
+      pageInfo: PageInfo.t,
+      [@bs.optional] [@bs.as "Status"]
+      status: Status.t,
+      [@bs.optional] [@bs.as "App"]
+      app: App.t,
+      [@bs.optional] [@bs.as "LabeledEvent"]
+      labeledEvent: LabeledEvent.t,
+      [@bs.optional] [@bs.as "ConvertedNoteToIssueEvent"]
+      convertedNoteToIssueEvent: ConvertedNoteToIssueEvent.t,
+      [@bs.optional] [@bs.as "ReviewDismissalAllowance"]
+      reviewDismissalAllowance: ReviewDismissalAllowance.t,
+      [@bs.optional] [@bs.as "ProjectEdge"]
+      projectEdge: ProjectEdge.t,
+      [@bs.optional] [@bs.as "PushAllowance"]
+      pushAllowance: PushAllowance.t,
+      [@bs.optional] [@bs.as "GitActor"]
+      gitActor: GitActor.t,
+      [@bs.optional] [@bs.as "ReactingUserConnection"]
+      reactingUserConnection: ReactingUserConnection.t,
     };
   };

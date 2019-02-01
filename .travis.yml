@@ -7,9 +7,6 @@ os:
   - linux
   - osx
 
-env:
-  - NODE_ENV=production
-
 before_install:
   - npm install --global esy@latest
   - if [ "$TRAVIS_OS_NAME" = "osx" ]; then export TARGET_NAME=darwin-x64; fi
@@ -25,11 +22,12 @@ cache:
 
 install:
   - esy install
-  - cd test && yarn install && cd ..
+  - yarn
+  - cd test && yarn && cd ..
 
 script:
   - esy build
-  - esy test
+  - make test
   - mv _build/default/graphql_to_reason.exe graphql-to-reason-$TARGET_NAME.exe
 
 deploy:

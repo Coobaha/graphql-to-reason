@@ -1,12 +1,12 @@
 module type SchemaConfig = {
   module Scalars: {type id;};
-  type resolver('payload, 'fieldType, 'result);
+  type resolver('parent, 'payload, 'fieldType, 'result);
   type directiveResolver('payload);
 };
 module MakeSchema = (Config: SchemaConfig) => {
   include Config.Scalars;
-  type resolver('payload, 'fieldType, 'result) =
-    Config.resolver('payload, 'fieldType, 'result);
+  type rootResolver('payload, 'fieldType, 'result) =
+    Config.resolver(unit, 'payload, 'fieldType, 'result);
   type directiveResolver('payload) = Config.directiveResolver('payload);
   [@bs.deriving {jsConverter: newType}]
   type userTypes = [
@@ -42,15 +42,15 @@ module MakeSchema = (Config: SchemaConfig) => {
     "getGender": gender,
     "self": user,
   };
-  module Queries = {
+  module Query = {
     [@bs.deriving abstract]
     type t = {
       [@bs.optional]
-      user: resolver(unit, user, Js.Nullable.t(user)),
+      user: rootResolver(unit, user, Js.Nullable.t(user)),
     };
   };
-  module Mutations = {};
-  module Subscriptions = {};
+  module Mutation = {};
+  module Subscription = {};
   module Directives = {
     [@bs.deriving abstract]
     type t = {
@@ -61,5 +61,44 @@ module MakeSchema = (Config: SchemaConfig) => {
       [@bs.optional]
       deprecated: directiveResolver({. "reason": Js.Nullable.t(string)}),
     };
+  };
+  module User = {
+    [@bs.deriving abstract]
+    type t = {
+      [@bs.optional]
+      name: Config.resolver(user, unit, string, string),
+      [@bs.optional]
+      email: Config.resolver(user, unit, string, string),
+      [@bs.optional]
+      gender: Config.resolver(user, unit, gender, Js.Nullable.t(gender)),
+      [@bs.optional]
+      listNullable:
+        Config.resolver(
+          user,
+          unit,
+          string,
+          Js.Nullable.t(array(Js.Nullable.t(string))),
+        ),
+      [@bs.optional]
+      list:
+        Config.resolver(user, unit, string, array(Js.Nullable.t(string))),
+      [@bs.optional]
+      getGender:
+        Config.resolver(
+          user,
+          {. "check": Js.Nullable.t(genderInput)},
+          gender,
+          gender,
+        ),
+      [@bs.optional]
+      self: Config.resolver(user, {. "check": bool}, user, user),
+    };
+  };
+  [@bs.deriving abstract]
+  type t = {
+    [@bs.optional] [@bs.as "User"]
+    user: User.t,
+    [@bs.optional] [@bs.as "Query"]
+    query: Query.t,
   };
 };

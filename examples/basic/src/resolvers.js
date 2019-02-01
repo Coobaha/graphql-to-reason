@@ -1,8 +1,3 @@
-import { query, mutation } from './Resolvers.bs'
-
-const resolvers = {
-  Query: query,
-  Mutation: mutation,
-};
+import { resolvers } from './Resolvers.bs'
 
 export default resolvers;
