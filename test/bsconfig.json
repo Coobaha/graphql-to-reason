@@ -100,7 +100,7 @@
   "generators": [
     {
       "name": "graphql",
-      "command": "node ../../../schema.js $in $in.json && ../../../_build/default/graphql_to_reason.exe $in.json $out"
+      "command": "NODE_PATH=../../../node_modules node ../../../schema.js $in $in.json && ../../../_build/default/graphql_to_reason.exe $in.json $out"
     }
   ],
   "package-specs": [
