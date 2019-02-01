@@ -5,7 +5,7 @@ module type SchemaConfig = {
 };
 module MakeSchema:
   (Config: SchemaConfig) =>
-  {
+   {
     type rootResolver('payload, 'fieldType, 'result) =
       Config.resolver(unit, 'payload, 'fieldType, 'result);
     type directiveResolver('payload) = Config.directiveResolver('payload);
@@ -35,5 +35,10 @@ module MakeSchema:
         [@bs.optional]
         deprecated: directiveResolver({. "reason": Js.Nullable.t(string)}),
       };
+    };
+    [@bs.deriving abstract]
+    type t = {
+      [@bs.optional] [@bs.as "Query"]
+      query: Query.t,
     };
   };

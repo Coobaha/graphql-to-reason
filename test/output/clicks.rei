@@ -5,7 +5,7 @@ module type SchemaConfig = {
 };
 module MakeSchema:
   (Config: SchemaConfig) =>
-  {
+   {
     type click = Config.Scalars.click;
     type rootResolver('payload, 'fieldType, 'result) =
       Config.resolver(unit, 'payload, 'fieldType, 'result);
@@ -37,5 +37,12 @@ module MakeSchema:
         [@bs.optional]
         deprecated: directiveResolver({. "reason": Js.Nullable.t(string)}),
       };
+    };
+    [@bs.deriving abstract]
+    type t = {
+      [@bs.optional] [@bs.as "Query"]
+      query: Query.t,
+      [@bs.optional] [@bs.as "Mutation"]
+      mutation: Mutation.t,
     };
   };

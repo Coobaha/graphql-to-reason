@@ -1,11 +1,14 @@
 module type SchemaConfig = {
-  module Scalars: {type json; type dateTime;};
+  module Scalars: {
+    type json;
+    type dateTime;
+  };
   type resolver('parent, 'payload, 'fieldType, 'result);
   type directiveResolver('payload);
 };
 module MakeSchema:
   (Config: SchemaConfig) =>
-  {
+   {
     type json = Config.Scalars.json;
     type dateTime = Config.Scalars.dateTime;
     type rootResolver('payload, 'fieldType, 'result) =
@@ -37,5 +40,10 @@ module MakeSchema:
         [@bs.optional]
         deprecated: directiveResolver({. "reason": Js.Nullable.t(string)}),
       };
+    };
+    [@bs.deriving abstract]
+    type t = {
+      [@bs.optional] [@bs.as "Query"]
+      query: Query.t,
     };
   };

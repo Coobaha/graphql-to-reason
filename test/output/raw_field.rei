@@ -5,7 +5,7 @@ module type SchemaConfig = {
 };
 module MakeSchema:
   (Config: SchemaConfig) =>
-  {
+   {
     type rootResolver('payload, 'fieldType, 'result) =
       Config.resolver(unit, 'payload, 'fieldType, 'result);
     type directiveResolver('payload) = Config.directiveResolver('payload);
@@ -27,7 +27,11 @@ module MakeSchema:
       type t = {
         [@bs.optional]
         nullableArrayOfNullableInts:
-          rootResolver(unit, int, Js.Nullable.t(array(Js.Nullable.t(int)))),
+          rootResolver(
+            unit,
+            int,
+            Js.Nullable.t(array(Js.Nullable.t(int))),
+          ),
       };
     };
     module Subscription: {};
@@ -41,5 +45,12 @@ module MakeSchema:
         [@bs.optional]
         deprecated: directiveResolver({. "reason": Js.Nullable.t(string)}),
       };
+    };
+    [@bs.deriving abstract]
+    type t = {
+      [@bs.optional] [@bs.as "Query"]
+      query: Query.t,
+      [@bs.optional] [@bs.as "Mutation"]
+      mutation: Mutation.t,
     };
   };

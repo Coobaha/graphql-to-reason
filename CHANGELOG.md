@@ -11,7 +11,7 @@
 ## 1.0.0-alpha.0 - 2018-01.02
 
 - :rocket: All possible resolvers are now being printed
-- :boom: SchemaConfig.resolver type was changed, it now accepts parent type
+- :boom: SchemaConfig.resolver type was changed, now it accepts parent type
 - :boom: Module names for Query, Mutation and Subscription are now singular instead of plural (Queries -> Query)
 
 ### Breaking changes
