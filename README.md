@@ -116,7 +116,7 @@ include SchemaTypes_builder.MakeSchema({
       unit,
       'args,
       /*context args depend on your graphql setup*/
-      ServerContext.GraphqlContext.t,
+      ServerContext.t,
       ServerContext.ResolveInfo.t,
       ServerContext.FieldInfo.t('fieldType)
     ) =>
@@ -136,20 +136,13 @@ module Clicks = {
 };
 
 
+/* Clicks.resolver now infers SchemaTypes.Mutation.clicksCount type */
 let mutationResolvers =
-  SchemaTypes.Mutations.t(
-    /* Clicks.resolver now infers SchemaTypes.Mutations.clicksCount type */
-    ~clicksCount=Clicks.resolver,
-    (),
-  );
-  
-let resolvers =
-  SchemaTypes.t(
-    ~mutation=SchemaTypes.Mutation.t(~clicksCount=Clicks.resolver, ()),
-    (),
-  );
+  SchemaTypes.Mutation.t(~clicksCount=Clicks.resolver, ());
 
-createGraphqlServer(resolvers);
+let resolvers = SchemaTypes.t(~mutation, ());
+
+createMyGraphqlServer(resolvers);
 ```
 
 
