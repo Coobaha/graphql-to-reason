@@ -161,5 +161,6 @@ To build executables:
 `make build`
 
 To run tests:
+`yarn install` in root directory then..
 
-`make test` 
+`make test`
