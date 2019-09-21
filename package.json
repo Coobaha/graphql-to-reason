@@ -1,33 +1,34 @@
 {
-  "name": "graphql-to-reason",
-  "version": "1.0.0-alpha.0",
-  "description": "Converts Graphql schema to ReasonML types",
-  "repository": "https://github.com/Coobaha/graphql-to-reason",
-  "keywords": [
-    "graphql",
-    "reason",
-    "generator",
-    "bucklescript",
-    "reasonml"
-  ],
-  "bugs": "https://github.com/Coobaha/graphql-to-reason/issues",
-  "author": "Alexander Ryzhikov <coobaha@gmail.com>",
-  "license": "MIT",
-  "engines": {
-    "node": ">=7.10.1"
-  },
-  "bin": {
-    "graphql-to-reason": "./bin.js",
-    "graphql-to-reason-schema": "./schema.js"
-  },
-  "scripts": {
-    "postinstall": "node postinstall.js"
-  },
-  "devDependencies": {
-    "graphql": "^14.0.0",
-    "graphql-tools": "^4.0.0"  },
-  "peerDependencies": {
-    "graphql": "^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0",
-    "graphql-tools": "^1.0.0 || ^2.0.0 || ^3.0.0 || ^4.0.0"
-  }
+	"name": "graphql-to-reason",
+	"version": "1.0.0-alpha.0",
+	"description": "Converts Graphql schema to ReasonML types",
+	"repository": "https://github.com/Coobaha/graphql-to-reason",
+	"keywords": [
+		"graphql",
+		"reason",
+		"generator",
+		"bucklescript",
+		"reasonml"
+	],
+	"bugs": "https://github.com/Coobaha/graphql-to-reason/issues",
+	"author": "Alexander Ryzhikov <coobaha@gmail.com>",
+	"license": "MIT",
+	"engines": {
+		"node": ">=7.10.1"
+	},
+	"bin": {
+		"graphql-to-reason": "./bin.js",
+		"graphql-to-reason-schema": "./schema.js"
+	},
+	"scripts": {
+		"postinstall": "node postinstall.js"
+	},
+	"devDependencies": {
+		"graphql": "^14.0.0",
+		"graphql-tools": "^4.0.0"
+	},
+	"peerDependencies": {
+		"graphql": "^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0",
+		"graphql-tools": "^1.0.0 || ^2.0.0 || ^3.0.0 || ^4.0.0"
+	}
 }
