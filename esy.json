@@ -21,8 +21,10 @@
     "@opam/ppx_tools_versioned": "*",
     "@opam/reason": "3.5.0",
     "@opam/yojson": "*",
+    "debug": "^4.1.1",
     "graphql": "^14.0.0",
     "graphql-tools": "^4.0.3",
+    "nodemon": "^1.19.2",
     "ocaml": "~4.6.0",
     "refmterr": "*"
   },
