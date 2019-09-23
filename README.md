@@ -138,7 +138,7 @@ module Clicks = {
 
 /* Clicks.resolver now infers SchemaTypes.Mutation.clicksCount type */
 let mutationResolvers =
-  SchemaTypes.Mutation.t(~clicksCount=Clicks.resolver, ());
+  SchemaTypes.Mutation.t(~clicks=Clicks.resolver, ());
 
 let resolvers = SchemaTypes.t(~mutation, ());
 
