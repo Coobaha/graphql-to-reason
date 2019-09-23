@@ -108,7 +108,7 @@ include SchemaTypes_builder.MakeSchema({
     type click = int;
   };
 
-  /* args - our arguments Array
+  /* args - our arguments object
      fieldType - original field type
      result - resoved value (for example Js.Nullable.t(fieldType)) */
   type resolver('args, 'fieldType, 'result) =
