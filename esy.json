@@ -13,20 +13,17 @@
     "buildsInSource": "_build"
   },
   "dependencies": {
-    "@esy-ocaml/reason": "3.5.0",
+    "@esy-ocaml/reason": "3.3.7",
     "@opam/core": "v0.11.3",
     "@opam/dune": "*",
     "@opam/ocaml-migrate-parsetree": "*",
     "@opam/ppx_tools": "5.1+4.06.0",
     "@opam/ppx_tools_versioned": "*",
-    "@opam/reason": "3.5.0",
     "@opam/yojson": "*",
-    "debug": "^4.1.1",
-    "graphql": "^14.0.0",
-    "graphql-tools": "^4.0.3",
-    "nodemon": "^1.19.2",
     "ocaml": "~4.6.0",
-    "refmterr": "*"
+    "refmterr": "*",
+    "graphql": "^14.0.0",
+    "graphql-tools": "^4.0.3"
   },
   "resolutions": { "@opam/menhir": "20171013" },
   "devDependencies": { "@esy-ocaml/merlin": "*" }
