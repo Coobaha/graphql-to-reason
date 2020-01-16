@@ -11,3 +11,4 @@ esy.lock
 test/fixtures/*.graphql.json
 test/lib
 test/output/*.bs.js
+examples/basic/.bsb.lock
