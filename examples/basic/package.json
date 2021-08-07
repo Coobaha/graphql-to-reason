@@ -12,10 +12,10 @@
     "build": "graphpack build"
   },
   "dependencies": {
-    "bs-platform": "^4.0.7",
-    "graphpack": "^1.0.2",
-    "graphql-to-reason": "^0.4.0",
-    "graphql-tools": "^4.0.3",
-    "graphql": "^0.13.2"
+    "bs-platform": "^5.2.0",
+    "graphpack": "^1.0.9",
+    "graphql-to-reason": "^1.0.0-alpha.0",
+    "graphql-tools": "^4.0.5",
+    "graphql": "^14.5.7"
   }
 }
